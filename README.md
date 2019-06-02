@@ -39,7 +39,7 @@ ___
 
 ### Plan:
 
-##### 1. Data cleaning
+#### 1. Data cleaning
 
 Input data is from a social media platform (tweeter-like). The process of data cleaning includes 
 - Filtering out 
@@ -47,7 +47,7 @@ spam/unreliable posts. The accounts that provide these posts also need to be omi
 
 - Lemmatize and stemming root words.
 
-##### 2. Data extraction
+#### 2. Data extraction
 These main points lead to:
 
 (1a) The problems can be extracted from:
