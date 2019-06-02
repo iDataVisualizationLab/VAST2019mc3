@@ -12,22 +12,66 @@ additional information to determine the best way to allocate emergency resources
 Himark. Your task, using your visual analytics on the community Y\*INT data, is to determine the types of problems 
 that are occurring across the St. Himark. Then, advise the City on how to prioritize the distribution of resources. Keep in mind that not all sources on Y\*INT are reliable, and that priorities may change over time as the state of neighborhoods also changes.
 
-1. Using visual analytics, characterize conditions across the city and recommend how resources should be allocated at 5 hours and 30 hours after the earthquake. Include evidence from the data to support these recommendations. Consider how to allocate resources such as road crews, sewer repair crews, power, and rescue teams. Limit your response to 1000 words and 12 images.
+1. **Task 1** [T1] - Using visual analytics, characterize conditions across the city and recommend how resources 
+should
+ be allocated 
+at 5 hours and 30 hours after the earthquake. Include evidence from the data to support these recommendations. Consider how to allocate resources such as road crews, sewer repair crews, power, and rescue teams. Limit your response to 1000 words and 12 images.
 
-2. Identify at least 3 times when conditions change in a way that warrants a re-allocation of city resources. What were the conditions before and after the inflection point? What locations were affected? Which resources are involved? Limit your response to 1000 words and 10 images.
+2. **Task 2** [T2] - Identify at least 3 times when conditions change in a way that warrants a re-allocation of city 
+resources. What were the conditions before and after the inflection point? What locations were affected? Which resources are involved? Limit your response to 1000 words and 10 images.
 
-3. Take the pulse of the community. How has the earthquake affect life in St. Himark? What is the community experiencing outside the realm of the first two questions? Show decision makers summary information and relevant/characteristic examples. Limit your response to 800 words and 8 images
+3. **Task 3** [T3] - Take the pulse of the community. How has the earthquake affect life in St. Himark? What is the 
+community experiencing outside the realm of the first two questions? Show decision makers summary information and relevant/characteristic examples. Limit your response to 800 words and 8 images
 
-4. The data for this challenge can be analyzed either as a static collection or as a dynamic stream of data, as it would occur in a real emergency. Describe how you analyzed the data - as a static collection or a stream. How do you think this choice affected your analysis? Limit your response to 200 words and 3 images.
+4. **Task 4** [T4] - The data for this challenge can be analyzed either as a static collection or as a dynamic stream 
+of data, as it would occur in a real emergency. Describe how you analyzed the data - as a static collection or a stream. How do you think this choice affected your analysis? Limit your response to 200 words and 3 images.
 
-_____________________________
+___
 
-Notes:
-- determine the types of problems
-- prioritize the distribution of resources -> resource allocation
-- not all sources on Y\*INT are reliable -> uncertainty
-- priorities may change over time
-- state of neighborhoods also changes
+### Main points:
+- (1) determine the types of problems
+- (2) prioritize the distribution of resources -> resource allocation
+- (3) not all sources on Y\*INT are reliable -> uncertainty
+- (4) priorities may change over time
+- (5) state of neighborhoods also changes
+
+___
+
+### Plan:
+
+##### 1. Data cleaning
+
+Input data is from a social media platform (tweeter-like). The process of data cleaning includes 
+- Filtering out 
+spam/unreliable posts. The accounts that provide these posts also need to be omitted. 
+
+- Lemmatize and stemming root words.
+
+##### 2. Data extraction
+These main points lead to:
+
+(1a) The problems can be extracted from:
+
+- Repetitive keywords
+- Words from 2 kinds of accounts: The one with high level (degree) or the one who connects the community (these kind 
+of accounts can be detected by force directed network)
+
+(1b) Types of problems: From the problems extracted from (1a), classify them based on domain algorithm or domain 
+documentation of 
+rescue/disaster.
+
+This can use **TimeArcs** to detect cluster/community/issues over time.
+
+(2a) Need to research **resource allocation** algorithm.
+
+(3a) Need to research **reliability info from social media** topic.
+
+(4a) Attached to (2a)
+
+(5a) Can use **WordStream** to detect changes in context of neighborhood.
+
+
+
 
 
 
