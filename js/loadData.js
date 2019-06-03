@@ -5,6 +5,7 @@ const postfixTags = ["can", "waste", "wonder"];
 
 for (let i = 0; i < prefixTags.length; i++){
     prefix[prefixTags[i]] = {
+        tags: [],
         count: 0,
         occurrences: 0,
     }
@@ -12,6 +13,7 @@ for (let i = 0; i < prefixTags.length; i++){
 
 for (let i = 0; i < postfixTags.length; i++){
     postfix[postfixTags[i]] = {
+        tags: [],
         count: 0,
         occurrences: 0,
     }
@@ -48,6 +50,9 @@ d3.csv("../data/YInt.csv", function (error, data) {
 
             for (let i = 0; i < prefixTags.length; i++){
                 if (tag.indexOf("#" + prefixTags[i]) === 0){
+                    prefix[prefixTags[i]].tags.push({
+                        [tag]: hashtags[tag]
+                    });
                     prefix[prefixTags[i]].count += 1;
                     prefix[prefixTags[i]].occurrences += hashtags[tag];
                     break;
@@ -65,12 +70,18 @@ d3.csv("../data/YInt.csv", function (error, data) {
 
         hashtagArray.sort((a,b) => {
             return b.count - a.count;
-        })
+        });
         d3.keys(prefix).forEach(pre => {
             prefix[pre].percent = (prefix[pre].count/hashtagCount*100).toFixed(1) + "%";
+            prefix[pre].tags.sort((a,b) => {
+                return b[d3.keys(b)[0]] - a[d3.keys(a)[0]];
+            })
         });
         d3.keys(postfix).forEach(post => {
             postfix[post].percent = (postfix[post].count/hashtagCount*100).toFixed(1) + "%";
+            postfix[post].tags.sort((a,b) => {
+                return b[d3.keys(b)[0]] - a[d3.keys(a)[0]];
+            })
         })
     }
 });
