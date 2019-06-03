@@ -39,7 +39,7 @@ ___
 
 ### Plan:
 
-#### 0. Data characteristic 
+### 0. Data characteristic 
 
 
 Each record contains:
@@ -55,7 +55,7 @@ ones of twitter.
 Domain specific: Take a look through all records. 
 
 
-#### 1. Data cleaning
+### 1. Data cleaning
 
 Input data is from a social media platform (tweeter-like). The process of data cleaning includes 
 - Filter out 
@@ -65,7 +65,7 @@ spam/unreliable posts. The accounts that provide these posts also need to be omi
 
 - Use hashtag to match and omit message.
 
-#### 2. Data extraction - problem perspective
+### 2. Data extraction - problem perspective
 These main points lead to:
 
 **(1) determine the types of problems**
@@ -93,7 +93,7 @@ This can use **TimeArcs** to detect cluster/community/issues over time.
 **5a.** Can use **WordStream** to detect changes in context of neighborhood.
 
 ___
-#### 3. Data extraction - data perspective
+### 3. Data extraction - data perspective
 
 To get a broad view of the data, get into the attributes:
 
@@ -113,7 +113,7 @@ To get a broad view of the data, get into the attributes:
 **Message:**
 
 - Do the messages of this location have some special pattern? i.e. Apart from usual norm for tweets and social media 
-posts, is there any typical/special points about messages from this city? -> Domain specific
+posts, is there any typical/special points about messages from this city? -> Domain specific. Slang, ...
 
 
 
