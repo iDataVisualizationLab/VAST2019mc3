@@ -39,36 +39,81 @@ ___
 
 ### Plan:
 
+#### 0. Data characteristic 
+
+
+Each record contains:
+
+- Timestamp (date-time)
+- Location
+- Account
+- Content
+
+The content also contains *#hashtag*, which will be useful in many cases. These hashtags will be treated the same as 
+ones of twitter. 
+
+Domain specific: Take a look through all records. 
+
+
 #### 1. Data cleaning
 
 Input data is from a social media platform (tweeter-like). The process of data cleaning includes 
-- Filtering out 
+- Filter out 
 spam/unreliable posts. The accounts that provide these posts also need to be omitted. 
 
 - Lemmatize and stemming root words.
 
-#### 2. Data extraction
+- Use hashtag to match and omit message.
+
+#### 2. Data extraction - problem perspective
 These main points lead to:
 
-(1a) The problems can be extracted from:
+**(1) determine the types of problems**
+
+**1a.** The problems can be extracted from:
 
 - Repetitive keywords
 - Words from 2 kinds of accounts: The one with high level (degree) or the one who connects the community (these kind 
 of accounts can be detected by force directed network)
 
-(1b) Types of problems: From the problems extracted from (1a), classify them based on domain algorithm or domain 
+**1b.** Types of problems: From the problems extracted from (1a), classify them based on domain algorithm or domain 
 documentation of 
 rescue/disaster.
 
 This can use **TimeArcs** to detect cluster/community/issues over time.
 
-(2a) Need to research **resource allocation** algorithm.
+**(2) prioritize the distribution of resources -> resource allocation**
 
-(3a) Need to research **reliability info from social media** topic.
+**2a.** Need to research **resource allocation** algorithm.
 
-(4a) Attached to (2a)
+**3a.** Need to research **reliability info from social media** topic.
 
-(5a) Can use **WordStream** to detect changes in context of neighborhood.
+**4a.** Attached to **2a**
+
+**5a.** Can use **WordStream** to detect changes in context of neighborhood.
+
+___
+#### 3. Data extraction - data perspective
+
+To get a broad view of the data, get into the attributes:
+
+**Timestamp:** 
+- When do people tweet the most?
+
+**Location:**
+
+- Where do people tweet the most?
+- Number of accounts per each location?
+- Main accounts at each location? <- find out who have big roles: high level, connect communities,...
+
+**Account:**
+
+- What accounts tweet the most? Where? When? What are their networks?
+
+**Message:**
+
+- Do the messages of this location have some special pattern? i.e. Apart from usual norm for tweets and social media 
+posts, is there any typical/special points about messages from this city? -> Domain specific
 
 
 
