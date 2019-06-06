@@ -4,3 +4,7 @@
     stroke: #bd6f41;
     stroke-width: 2px;
 }
+
+.tooltip {
+    position: absolute;
+}

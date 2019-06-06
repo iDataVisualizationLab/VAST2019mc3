@@ -11,8 +11,6 @@ const keywordsFlat = disasterKeywords.flat();
 const startDate = Date.parse("2020-04-06 00:00:00");
 const endDate = Date.parse("2020-04-10 11:59:00");
 const step = 60*60*1000; // one hour
-let messageFiltered = [];
-let binnedMessage = [];
 let streamData00 = {};
 for (let i = 0; i < disasterKeywords.length; i++){
     streamData00[disasterKeywords[i]] = [];
@@ -30,15 +28,29 @@ let xScale = d3.scaleTime()
 let yScale = d3.scaleLinear()
     .range([height, 0]);
 
-let valueline = d3.line();
-
-let svg = d3.select("body")
+let svg = d3.select(".main")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+let vertical = d3.select(".main")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "19")
+    .style("width", "1px")
+    .style("height", height)
+    .style("top", "10px")
+    .style("bottom", "30px")
+    .style("left", "0px")
+    .style("background", "#000000");
+
+let tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0)
+    .style("top", height + margin.top + margin.bottom);
 
 d3.csv("data/YInt.csv", function (error, data) {
     if (error) throw error;
@@ -96,8 +108,6 @@ d3.csv("data/YInt.csv", function (error, data) {
         //The x axis
         const xAxisGroup = svg.append("g").attr("transform", "translate(0," + height + ")");
         const xAxis = d3.axisBottom(xScale)
-            // .tickFormat(d3.timeFormat('%b-%d'))
-            // .ticks(stacks[0].length);
         xAxisGroup.call(xAxis);
 
         //The y Axis
@@ -106,13 +116,21 @@ d3.csv("data/YInt.csv", function (error, data) {
         yAxisGroup.call(yAxis);
         //The area function used to generate path data for the area.
         const areaGen = d3.area()
-            .x(d=>xScale(d.data.time))
+            .x(d=>{
+                console.log(d);
+                return xScale(d.data.time)
+            })
             .y0(d=>yScale(d[0]))
             .y1(d=>yScale(d[1]))
             .curve(d3.curveBasis)
         ;
-        svg.selectAll(".path").data(stacks).enter().append("path").attr("d", areaGen)
-            .attr("fill", (d, i)=> d3.schemeCategory10[i]);
+
+        svg.append("svg")
+            .attr("id", "streamG")
+            .selectAll(".stream")
+            .data(stacks).enter()
+            .append("path").attr("d", areaGen)
+            .attr("fill", (d, i)=> d3.schemeCategory10[i]) ;
 
         let legend = svg
             .append("g")
@@ -133,33 +151,35 @@ d3.csv("data/YInt.csv", function (error, data) {
             .append("text")
             .text(d => d)
             .attr("x", 20)
-            .attr("y", (d,i) => 70 - 20*i)
+            .attr("y", (d,i) => 70 - 20*i);
             // .attr("fill", (d, i)=> d3.schemeCategory10[i]);
-        // // xScale
-        // xScale.domain([startDate, endDate]);
-        //
-        // // yScale
-        // yScale.domain([0, d3.max(binnedMessage, d => d.count.length)]);
-        //
-        // // define the line
-        // valueline
-        //     .x(function(d) { return xScale(d.timestamp); })
-        //     .y(function(d) { return yScale(d.count.length); });
-        //
-        // svg.selectAll("path")
-        //     .data([binnedMessage])
-        //     .enter()
-        //     .append("path")
-        //     .attr("class", "line")
-        //     .attr("d", valueline);
-        //
-        // // x-axis
-        // svg.append("g")
-        //     .attr("transform", "translate(0," + height + ")")
-        //     .call(d3.axisBottom(xScale));
-        //
-        // // Add the Y Axis
-        // svg.append("g")
-        //     .call(d3.axisLeft(yScale));
+
+        d3.select(".main")
+            .on("mousemove", function(){
+                mousex = d3.mouse(this);
+                mousex = mousex[0] + 5;
+                vertical.style("left", mousex + "px" );
+
+                tooltip.transition()
+                    .duration(100)
+                    .style("opacity", 1);
+
+                tooltip.html(
+                    '<text class = "bold">' + xScale.invert(mousex-margin.left-8)+ "</text>"
+                )
+                    .style("left", ((d3.event.pageX)) + "px")
+                    .style("pointer-events", "none")
+
+            })
+            .on("mouseover", function(){
+                mousex = d3.mouse(this);
+                mousex = mousex[0] + 5;
+                vertical.style("left", mousex + "px")
+                tooltip.transition()
+                    .duration(100)
+                    .style("opacity", 0);
+            });
+
+
     }
 });
