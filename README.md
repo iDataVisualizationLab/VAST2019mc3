@@ -141,6 +141,5 @@ stay safe", "staysafe", "evacuate", "evacuated", "evacuating", "evacuation", "ev
 4. Food: 
 "feed victims", "food trucks", "free lunch", "free meals", "get meals", "refugee meal", "nutri", "nutrition"
 
-
-
+Because it's binned -> info in the whole hour is compressed into one tick.
 

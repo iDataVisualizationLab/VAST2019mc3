@@ -34,7 +34,7 @@ const margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = 1000 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-const firstStrike = [1586193927000, ]
+const firstStrike = [1586200615000, 1586223187000];
 let xScale = d3.scaleTime()
     .range([0, width]);
 
@@ -135,7 +135,7 @@ d3.csv("data/YInt.csv", function (error, data) {
             })
             .y0(d => yScale(d[0]))
             .y1(d => yScale(d[1]))
-            .curve(d3.curveBasis)
+            .curve(d3.curveCardinal)
         ;
 
         svg.append("svg")
@@ -177,7 +177,7 @@ d3.csv("data/YInt.csv", function (error, data) {
                     .duration(100)
                     .style("opacity", 1);
 
-                console.log(Date.parse(xScale.invert(mousex - margin.left - 8)));
+                // console.log(Date.parse(xScale.invert(mousex - margin.left - 8)));
                 tooltip.html(
                     '<text class = "bold">' + formatTime(xScale.invert(mousex - margin.left - 8)) + "</text>")
                     .style("left", ((d3.event.pageX)) + "px")
