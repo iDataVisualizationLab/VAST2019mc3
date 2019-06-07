@@ -21,7 +21,7 @@ const resources = {
 const keywordsFlat = disasterKeywords.flat();
 const startDate = Date.parse("2020-04-06 00:00:00");
 const endDate = Date.parse("2020-04-10 11:59:00");
-const step = 60 * 60 * 1000; // one hour
+const step = 60 * 60 * 1000 * 0.5; // half hour
 let streamData00 = {};
 let formatTime = d3.timeFormat("%B %d, %-I:%M:%S %p");
 for (let i = 0; i < disasterKeywords.length; i++) {
@@ -34,7 +34,8 @@ const margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = 1000 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-const firstStrike = [1586200615000, 1586223187000];
+const firstStrike = [1586201869000, 1586205631000];
+const fisrt5hrsRange = [1586216917000, 1586220679000];
 let xScale = d3.scaleTime()
     .range([0, width]);
 
@@ -70,7 +71,7 @@ d3.csv("data/YInt.csv", function (error, data) {
     if (error) throw error;
     else {
         console.log(data);
-        data.some(d => {
+        data.forEach(d => {
             let flag = false;
             for (let i = 0; i < disasterKeywords.length; i++) {
                 for (let j = 0; j < disasterKeywords[i].length; j++) {
@@ -84,6 +85,7 @@ d3.csv("data/YInt.csv", function (error, data) {
             }
         });
 
+        // streamData
         keyList = d3.keys(streamData00);
 
         keyList.forEach(d => {
@@ -108,12 +110,52 @@ d3.csv("data/YInt.csv", function (error, data) {
             streamData.push(obj);
         }
 
+        // first 5 hours
+        let first5hoursData =
+            d3.nest()
+                .key(d => d.location)
+                .entries(
+            data.filter(d => {
+            return ((fisrt5hrsRange[0] < Date.parse(d.time)) &&
+                (Date.parse(d.time) < fisrt5hrsRange[1]))
+        }))
+
+        ;
+        let cities = first5hoursData.map(d => d.key);
+
+        let utilitiesMessage = [];
+
+        // first5hoursData.forEach(city => {
+        //     city.values.forEach(d => {
+        //         let flag = false;
+        //         for (let i = 0; i < resources.utilities.length; i++){
+        //             if (d.message.toLowerCase().indexOf(resources.food[i]) >= 0){
+        //                 utilitiesMessage.push(d);
+        //                 flag = true;
+        //                 break;
+        //             }
+        //         }
+        //     })
+        // });
+
+        data.forEach(d => {
+            let flag = false;
+            for (let i = 0; i < resources.utilities.length; i++){
+                if (d.message.toLowerCase().indexOf(resources.food[i]) >= 0){
+                    utilitiesMessage.push(d);
+                    flag = true;
+                    break;
+                }
+            }
+        });
+
+
+        console.log(utilitiesMessage);
         //Create the stack layout for the data
         const stack = d3.stack().keys(keyList)
             .offset(d3.stackOffsetNone)
         ;
         const stacks = stack(streamData);
-        console.log(stacks);
         //The scales
         xScale.domain([startDate, endDate]);
 
@@ -135,7 +177,7 @@ d3.csv("data/YInt.csv", function (error, data) {
             })
             .y0(d => yScale(d[0]))
             .y1(d => yScale(d[1]))
-            .curve(d3.curveCardinal)
+            .curve(d3.curveMonotoneX)
         ;
 
         svg.append("svg")
@@ -147,7 +189,7 @@ d3.csv("data/YInt.csv", function (error, data) {
 
         let legend = svg
             .append("g")
-            .attr("transform", "translate(80, 80)");
+            .attr("transform", "translate(30, 60)");
 
         legend.selectAll("circle")
             .data(keyList)
