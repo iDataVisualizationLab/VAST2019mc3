@@ -1,11 +1,8 @@
 const disasterKeywords = [
     ["rumble"],
     ["emergency", "urgent"],
-    ["earthquake", "seismic"],
-    ["quake", "quaking"],
-    ["shake", "shaking"],
-    ["wobble", "wobbling"],
-    ["quiver", "quivering"],
+    ["earthquake", "seismic", "quake", "quaking"],
+    ["shake", "shaking", "wobble", "wobbling","quiver", "quivering" ],
 ];
 
 const resources = {
@@ -22,20 +19,23 @@ const keywordsFlat = disasterKeywords.flat();
 const startDate = Date.parse("2020-04-06 00:00:00");
 const endDate = Date.parse("2020-04-10 11:59:00");
 const step = 60 * 60 * 1000 * 0.5; // half hour
+const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
+const formatTimeReadData = d3.timeFormat("%B %d, %-I %p");
+
 let streamData00 = {};
-let formatTime = d3.timeFormat("%B %d, %-I:%M:%S %p");
 for (let i = 0; i < disasterKeywords.length; i++) {
     streamData00[disasterKeywords[i]] = [];
 }
+
 let streamData11 = {};
 let streamData = [];
 let keyList;
 const margin = {top: 30, right: 20, bottom: 30, left: 50},
-    width = 1000 - margin.left - margin.right,
+    width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 const firstStrike = [1586201869000, 1586205631000];
-const fisrt5hrsRange = [1586216917000, 1586220679000];
+const fisrt5hrsRange = [1586201491000, 1586219491000];
 let xScale = d3.scaleTime()
     .range([0, width]);
 
@@ -111,46 +111,23 @@ d3.csv("data/YInt.csv", function (error, data) {
         }
 
         // first 5 hours
-        let first5hoursData =
-            d3.nest()
-                .key(d => d.location)
-                .entries(
-            data.filter(d => {
+        let first5Data = data.filter(d => {
             return ((fisrt5hrsRange[0] < Date.parse(d.time)) &&
                 (Date.parse(d.time) < fisrt5hrsRange[1]))
-        }))
-
-        ;
-        let cities = first5hoursData.map(d => d.key);
-
-        let utilitiesMessage = [];
-
-        // first5hoursData.forEach(city => {
-        //     city.values.forEach(d => {
-        //         let flag = false;
-        //         for (let i = 0; i < resources.utilities.length; i++){
-        //             if (d.message.toLowerCase().indexOf(resources.food[i]) >= 0){
-        //                 utilitiesMessage.push(d);
-        //                 flag = true;
-        //                 break;
-        //             }
-        //         }
-        //     })
-        // });
-
-        data.forEach(d => {
-            let flag = false;
-            for (let i = 0; i < resources.utilities.length; i++){
-                if (d.message.toLowerCase().indexOf(resources.food[i]) >= 0){
-                    utilitiesMessage.push(d);
-                    flag = true;
-                    break;
-                }
-            }
         });
 
+        let data00 = {};
+        first5Data.forEach(d => {
+            let date = Date.parse(d.time);
+            date = formatTimeReadData(new Date(date));
 
-        console.log(utilitiesMessage);
+            if(!data[date]) data[date] = "";
+            data[date] = data[date] ? (data[date] + '|' +d.message): (d.message);
+        });
+        console.log(first5Data);
+
+
+
         //Create the stack layout for the data
         const stack = d3.stack().keys(keyList)
             .offset(d3.stackOffsetNone)
@@ -172,20 +149,34 @@ d3.csv("data/YInt.csv", function (error, data) {
         yAxisGroup.call(yAxis);
         //The area function used to generate path data for the area.
         const areaGen = d3.area()
-            .x(d => {
-                return xScale(d.data.time)
-            })
+            .x(d => xScale(d.data.time))
             .y0(d => yScale(d[0]))
             .y1(d => yScale(d[1]))
-            .curve(d3.curveMonotoneX)
-        ;
+            .curve(d3.curveMonotoneX);
 
         svg.append("svg")
             .attr("id", "streamG")
-            .selectAll(".stream")
+            .selectAll(".layer")
             .data(stacks).enter()
-            .append("path").attr("d", areaGen)
+            .append("path")
+            .attr("class", "layer")
+            .attr("d", areaGen)
             .attr("fill", (d, i) => d3.schemeCategory10[i]);
+
+        svg.selectAll(".layer")
+            .attr("opacity", 1)
+            .on("mouseover", function(d, i) {
+                svg.selectAll(".layer").transition()
+                    .duration(250)
+                    .attr("opacity", function(d, j) {
+                        return j != i ? 0.6 : 1;
+                    })})
+            .on("mouseout", function(d, i) {
+                svg.selectAll(".layer")
+                    .transition()
+                    .duration(250)
+                    .attr("opacity", "1");
+            });
 
         let legend = svg
             .append("g")
@@ -221,7 +212,7 @@ d3.csv("data/YInt.csv", function (error, data) {
 
                 // console.log(Date.parse(xScale.invert(mousex - margin.left - 8)));
                 tooltip.html(
-                    '<text class = "bold">' + formatTime(xScale.invert(mousex - margin.left - 8)) + "</text>")
+                    '<text class = "bold">' + Date.parse(xScale.invert(mousex - margin.left - 8)) + "</text>")
                     .style("left", ((d3.event.pageX)) + "px")
                     .style("pointer-events", "none")
 
