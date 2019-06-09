@@ -2,7 +2,7 @@ const disasterKeywords = [
     ["rumble"],
     ["emergency", "urgent"],
     ["earthquake", "seismic", "quake", "quaking"],
-    ["shake", "shaking", "wobble", "wobbling","quiver", "quivering" ],
+    ["shake", "shaking", "wobble", "wobbling", "quiver", "quivering"],
 ];
 
 const resources = {
@@ -16,7 +16,7 @@ const resources = {
 
 };
 
-const stopwords = ["ourselves", "hers", "between", "yourself", "but", "again", "there", "about", "once", "during", "out", "very", "having", "with", "they", "own", "an", "be", "some", "for", "do", "its", "yours", "such", "into", "of", "most", "itself", "other", "off", "is", "s", "am", "or", "who", "as", "from", "him", "each", "the", "themselves", "until", "below", "are", "we", "these", "your", "his", "through", "don", "nor", "me", "were", "her", "more", "himself", "this", "down", "should", "our", "their", "while", "above", "both", "up", "to", "ours", "had", "she", "all", "no", "when", "at", "any", "before", "them", "same", "and", "been", "have", "in", "will", "on", "does", "yourselves", "then", "that", "because", "what", "over", "why", "so", "can", "did", "not", "now", "under", "he", "you", "herself", "has", "just", "where", "too", "only", "myself", "which", "those", "i", "after", "few", "whom", "t", "being", "if", "theirs", "my", "against", "a", "by", "doing", "it", "how", "further", "was", "here", "than", "something", "someone", "anyone", "everything", "whereís", "anything", "youu", "us", "u"]
+const stopwords = ["ourselves", "hers", "between", "yourself", "but", "again", "there", "about", "once", "during", "out", "very", "having", "with", "they", "own", "an", "be", "some", "for", "do", "its", "yours", "such", "into", "of", "most", "itself", "other", "off", "is", "s", "am", "or", "who", "as", "from", "him", "each", "the", "themselves", "until", "below", "are", "we", "these", "your", "his", "through", "don", "nor", "me", "were", "her", "more", "himself", "this", "down", "should", "our", "their", "while", "above", "both", "up", "to", "ours", "had", "she", "all", "no", "when", "at", "any", "before", "them", "same", "and", "been", "have", "in", "will", "on", "does", "yourselves", "then", "that", "because", "what", "over", "why", "so", "can", "did", "not", "now", "under", "he", "you", "herself", "has", "just", "where", "too", "only", "myself", "which", "those", "i", "after", "few", "whom", "t", "being", "if", "theirs", "my", "against", "a", "by", "doing", "it", "how", "further", "was", "here", "than", "something", "someone", "anyone", "everything", "whereís", "anything", "youu", "us", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "8", "9", "0", "re", "guys", "", "don't","didn't", "i'm", "hi"];
 
 const keywordsFlat = disasterKeywords.flat();
 const startDate = Date.parse("2020-04-06 00:00:00");
@@ -24,7 +24,8 @@ const endDate = Date.parse("2020-04-10 11:59:00");
 const step = 60 * 60 * 1000 * 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 const formatTimeReadData = d3.timeFormat("%B %d, %-I %p");
-
+const topics = ["message", "location"];
+const topword = 40;
 let streamData00 = {};
 for (let i = 0; i < disasterKeywords.length; i++) {
     streamData00[disasterKeywords[i]] = [];
@@ -119,29 +120,63 @@ d3.csv("data/YInt.csv", function (error, data) {
                 (Date.parse(d.time) < fisrt5hrsRange[1]))
         });
 
-        let data00 = {};
+        let wsData = {};
         first5Data.forEach(d => {
             let date = Date.parse(d.time);
             date = formatTimeReadData(new Date(date));
 
             let wordArray = d.message.toLowerCase()
                 .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"/gi, '')
+                .replace(/\d/g, "")
                 .split(" ")
                 .filter(d => {
                     return stopwords.indexOf(d) < 0;
                 });
 
-            if(!data00[date]) data00[date] = [];
-            data00[date] = data00[date] ? (data00[date].concat(wordArray)): (wordArray);
+            if (!wsData[date]) wsData[date] = {};
+
+            wsData[date]["message"] = wsData[date]["message"] ? (wsData[date]["message"].concat(wordArray)) : (wordArray);
+            wsData[date]["location"] = wsData[date]["location"] ? (wsData[date]["location"].concat(d.location)) : [d.location];
         });
-        console.log(data00);
 
-
+        wsData = d3.keys(wsData).map(function (date, i) {
+            var words = {};
+            topics.forEach(topic => {
+                //Count word frequencies
+                var counts = wsData[date][topic].reduce(function (obj, word) {
+                    if (!obj[word]) {
+                        obj[word] = 0;
+                    }
+                    obj[word]++;
+                    return obj;
+                }, {});
+                //Convert to array of objects
+                words[topic] = d3.keys(counts).map(function (d) {
+                    return {
+                        sudden: 1,
+                        text: d,
+                        frequency: counts[d],
+                        topic: topic,
+                        id: d.replace(/[^a-zA-Z0-9]/g, '_') + "_" + topic + "_" + (i)
+                    }
+                }).sort(function (a, b) {//sort the terms by frequency
+                    return b.frequency - a.frequency;
+                }).filter(function (d) {
+                    return d.text;
+                });//filter out empty words
+                // words[topic] = words[topic].slice(0, Math.min(words[topic].length, topword));
+            });
+            return {
+                date: date,
+                words: words
+            }
+        });
+        console.log(wsData);
 
         //Create the stack layout for the data
         const stack = d3.stack().keys(keyList)
-            .offset(d3.stackOffsetNone)
-        ;
+            .offset(d3.stackOffsetNone);
+
         const stacks = stack(streamData);
         //The scales
         xScale.domain([startDate, endDate]);
@@ -157,6 +192,7 @@ d3.csv("data/YInt.csv", function (error, data) {
         const yAxisGroup = svg.append('g');
         const yAxis = d3.axisLeft(yScale);
         yAxisGroup.call(yAxis);
+
         //The area function used to generate path data for the area.
         const areaGen = d3.area()
             .x(d => xScale(d.data.time))
@@ -173,20 +209,22 @@ d3.csv("data/YInt.csv", function (error, data) {
             .attr("d", areaGen)
             .attr("fill", (d, i) => d3.schemeCategory10[i]);
 
-        svg.selectAll(".layer")
-            .attr("opacity", 1)
-            .on("mouseover", function(d, i) {
-                svg.selectAll(".layer").transition()
-                    .duration(250)
-                    .attr("opacity", function(d, j) {
-                        return j != i ? 0.6 : 1;
-                    })})
-            .on("mouseout", function(d, i) {
-                svg.selectAll(".layer")
-                    .transition()
-                    .duration(250)
-                    .attr("opacity", "1");
-            });
+        // svg.selectAll(".layer")
+        //     .attr("opacity", 1)
+        //     .on("mouseover", function (d, i) {
+        //         svg.selectAll(".layer").transition()
+        //             .duration(250)
+        //             .attr("opacity", function (d, j) {
+        //                 return j != i ? 0.5 : 1;
+        //             })
+        //     })
+        //     .on("mouseout", function (d, i) {
+        //         svg.selectAll(".layer")
+        //             .transition()
+        //             .duration(250)
+        //             .attr("opacity", "1");
+        //     })
+        // ;
 
         let legend = svg
             .append("g")
@@ -222,21 +260,37 @@ d3.csv("data/YInt.csv", function (error, data) {
 
                 // console.log(Date.parse(xScale.invert(mousex - margin.left - 8)));
                 tooltip.html(
-                    '<text class = "bold">' + Date.parse(xScale.invert(mousex - margin.left - 8)) + "</text>")
+                    '<text class = "bold">' + formatTimeLegend(xScale.invert(mousex - margin.left - 8)) + "</text>")
                     .style("left", ((d3.event.pageX)) + "px")
                     .style("pointer-events", "none")
-
-
             })
             .on("mouseover", function () {
                 mousex = d3.mouse(this);
                 mousex = mousex[0] + 5;
-                vertical.style("left", mousex + "px")
+                vertical.style("left", mousex + "px");
                 tooltip.transition()
                     .duration(100)
                     .style("opacity", 0);
             });
-
-
     }
 });
+
+function processSudden(data) {
+    const subjects = d3.keys(data[0].words);
+    subjects.forEach((topic, i) => {
+        for (var j = 1; j < data.length; j++) {
+            data[j]["words"][topic].forEach((word, k) => {
+                var prev = 0;
+                if (data[j - 1]["words"][topic].find(d => d.text === word.text)) {
+                    prev = data[j - 1]["words"][topic].find(d => d.text === word.text).frequency;
+                }
+                word.sudden = (word.frequency + 1) / (prev + 1)
+            })
+        }
+    });
+    return data;
+}
+
+function getWSdata(data) {
+
+}

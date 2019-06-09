@@ -2,6 +2,170 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9c66168-06db-4020-85db-d4f317041201" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/WordStream/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/.idea/WordStream.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/.idea/dictionaries/huyennguyen.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/References/TIARA2012.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/References/TextFlow.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/_config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/CVE20172018CloudDataProcessed.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/Cards_Fries.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/Cards_PC.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/CrooksAndLiars.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/EmptyWheel.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/Esquire.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/FactCheck.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/Huffington.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/HuffingtonFrom2009.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/IMDB.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/PopCha.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/QuantumComputing.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/VIS_papers.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/WikiNews.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/extremism copy.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/extremism.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/linksHuff2012.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/outputExtreme.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/quantum.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/test5hrs.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/wcloudEmptyWheel.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/data/wcloudHuff.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/examples.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/Huffington.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/av.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/flow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/font.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/height.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/1273404841_tick_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/Amex-56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/Cash-56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/Discover-56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/Mastercard-56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/Paypal-56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/Thumbs.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/Visa-56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/blank.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/browser-chrome.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/browser-firefox.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/browser-msie.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/browser-opera.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/browser-safari.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/button-large.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/demoaction.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/enabled.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/flagssprite_small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/giftlelo_dot_com.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon-search.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_calendar.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_cart.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_cd.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_email.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_faq.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_games.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_lockopen.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_music.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_phone.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_sales.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_secure.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/icon_video.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/jquery-msdropdown.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/msDropDown.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/preview.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/sprite.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/sprite.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/icons/tick.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/skin1/dd_arrow.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/skin1/title-bg.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/skin2/dd_arrow.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/skin2/icon-ok.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/msdropdown/skin2/title-bg.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/toprank.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/toprank2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/toprank3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/width.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images/ws.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/ACLED.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/Cards_Fries.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/Cards_PC.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/CrooksAndLiars.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/EmptyWheel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/Esquire.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/FactCheck.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/GTD.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/H.E.A.T.Map.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/Huffington.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/IMDB.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/PopCha.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/QuantumComputing.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/VIS_papers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/images2/datasetThumnails/WikiNews.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/init.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/jquery/jquery-1.9.0.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/jquery/tester.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/metric.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/msdropdown/jquery.dd.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/msdropdown/jquery.dd.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/msdropdown/select.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/update.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/javascripts/util.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/lib/d3-queue.v3.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/lib/d3-tip.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/lib/d3.layout.cloud.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/lib/d3.layout.wordstream.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/lib/d3.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/lib/d3.slider.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/lib/d3.v4.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/lib/loaddata.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/Esquire.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/acled_africa.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/acled_asia.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/acled_me.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/combined.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/crook.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/emptywheel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/fact.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/fries.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/gtd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/highlight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/huff.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/imdb.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/pc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/popcha.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/quantum.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/vis.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/wiki.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/media/ws.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/presentation/EuroVis-2019-WS-Slide-video-updated.pptx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/presentation/vid.pptx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/styles/d3.slider.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/styles/jquery-ui.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/styles/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/styles/msdropdown/dd.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/styles/msdropdown/flags.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/styles/msdropdown/skin2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/styles/msdropdown/sprite.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/achemedeanspiral.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/buildboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/data.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/drawstream.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/finalboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/nest.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/sprite.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/testbuildboxes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/testgetsprite.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/testutil.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/test/wordcloud.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WordStream/video.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/js/wordstream.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/extractData.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/extractData.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,20 +192,20 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="css" value="1" />
+          <entry key="css" value="2" />
           <entry key="csv" value="1" />
-          <entry key="html" value="1" />
-          <entry key="js" value="2" />
+          <entry key="html" value="2" />
+          <entry key="js" value="8" />
           <entry key="md" value="2" />
           <entry key="ts" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="1" />
+          <entry key="CSS" value="2" />
           <entry key="CSV" value="1" />
-          <entry key="HTML" value="1" />
-          <entry key="JavaScript" value="2" />
+          <entry key="HTML" value="2" />
+          <entry key="JavaScript" value="8" />
           <entry key="Markdown" value="2" />
           <entry key="TypeScript" value="1" />
         </counts>
@@ -51,7 +215,7 @@
           <entry key="css" value="66" />
           <entry key="dummy" value="13" />
           <entry key="html" value="124" />
-          <entry key="js" value="5543" />
+          <entry key="js" value="6059" />
           <entry key="md" value="3076" />
         </counts>
       </usages-collector>
@@ -59,7 +223,7 @@
         <counts>
           <entry key="CSS" value="66" />
           <entry key="HTML" value="124" />
-          <entry key="JavaScript" value="5543" />
+          <entry key="JavaScript" value="6059" />
           <entry key="Markdown" value="3076" />
           <entry key="PLAIN_TEXT" value="13" />
         </counts>
@@ -68,11 +232,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="4" column="53" lean-forward="true" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
+            <state relative-caret-position="120">
+              <caret line="5" column="44" lean-forward="true" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WordStream/lib/loaddata.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="945">
+              <caret line="262" column="12" selection-start-line="262" selection-start-column="15" selection-end-line="264" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -80,8 +253,56 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/extractData.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="18" column="1109" selection-start-line="18" selection-start-column="1109" selection-end-line="18" selection-end-column="1109" />
+            <state relative-caret-position="-2230">
+              <caret line="162" column="21" lean-forward="true" selection-start-line="162" selection-start-column="21" selection-end-line="162" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WordStream/javascripts/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="770">
+              <caret line="598" column="1" lean-forward="true" selection-start-line="598" selection-start-column="1" selection-end-line="598" selection-end-column="1" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WordStream/styles/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="740">
+              <caret line="305" column="5" selection-start-line="305" selection-start-column="1" selection-end-line="305" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/WordStream/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="28" column="6" lean-forward="true" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/wordstream.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1678">
+              <caret line="117" column="10" selection-start-line="117" selection-start-column="8" selection-end-line="117" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/loadData.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="21" selection-start-line="21" selection-end-line="21" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -91,18 +312,9 @@
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="315">
-                <caret line="132" column="81" lean-forward="true" selection-start-line="132" selection-start-column="81" selection-end-line="132" selection-end-column="81" />
+                <caret line="132" column="81" selection-start-line="132" selection-start-column="81" selection-end-line="132" selection-end-column="81" />
               </first_editor>
               <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/plotData.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -132,6 +344,11 @@
       <find>body</find>
       <find>,</find>
       <find>80</find>
+      <find>0.5</find>
+      <find>0.6</find>
+      <find>middle</find>
+      <find>tick</find>
+      <find>middl</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;,</replace>
@@ -149,6 +366,8 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/js/extractData.js" />
+        <option value="$PROJECT_DIR$/WordStream/lib/loaddata.js" />
+        <option value="$PROJECT_DIR$/WordStream/javascripts/main.js" />
       </list>
     </option>
   </component>
@@ -160,7 +379,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1123" />
+    <option name="width" value="1166" />
     <option name="height" value="1417" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -196,12 +415,31 @@
             <path>
               <item name="VAST2019mc3" type="b2602c69:ProjectViewProjectNode" />
               <item name="VAST2019mc3" type="462c0819:PsiDirectoryNode" />
+              <item name="WordStream" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VAST2019mc3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VAST2019mc3" type="462c0819:PsiDirectoryNode" />
+              <item name="WordStream" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="VAST2019mc3" type="b2602c69:ProjectViewProjectNode" />
               <item name="VAST2019mc3" type="462c0819:PsiDirectoryNode" />
+              <item name="WordStream" type="462c0819:PsiDirectoryNode" />
+              <item name="javascripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VAST2019mc3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VAST2019mc3" type="462c0819:PsiDirectoryNode" />
+              <item name="WordStream" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VAST2019mc3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VAST2019mc3" type="462c0819:PsiDirectoryNode" />
+              <item name="WordStream" type="462c0819:PsiDirectoryNode" />
+              <item name="styles" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -219,6 +457,11 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/wordstream" />
+      <recent name="$PROJECT_DIR$/js" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -259,22 +502,21 @@
       <workItem from="1559584247911" duration="10909000" />
       <workItem from="1559672601562" duration="20599000" />
       <workItem from="1559847744684" duration="11738000" />
-      <workItem from="1559930851187" duration="20158000" />
+      <workItem from="1559930851187" duration="28437000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71505000" />
+    <option name="totallyTimeSpent" value="79784000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1123" height="1417" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1166" height="1417" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21572052" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32925898" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.24293354" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -296,13 +538,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/loadData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="21" selection-start-line="21" selection-end-line="21" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="410">
@@ -328,23 +563,74 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="315">
-            <caret line="132" column="81" lean-forward="true" selection-start-line="132" selection-start-column="81" selection-end-line="132" selection-end-column="81" />
+            <caret line="132" column="81" selection-start-line="132" selection-start-column="81" selection-end-line="132" selection-end-column="81" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/extractData.js">
+    <entry file="file://$PROJECT_DIR$/js/loadData.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="18" column="1109" selection-start-line="18" selection-start-column="1109" selection-end-line="18" selection-end-column="1109" />
+        <state relative-caret-position="504">
+          <caret line="21" selection-start-line="21" selection-end-line="21" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wordstream/WordStream/lib/d3-tip.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WordStream/lib/d3-tip.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/wordstream.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1678">
+          <caret line="117" column="10" selection-start-line="117" selection-start-column="8" selection-end-line="117" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="53" lean-forward="true" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
+        <state relative-caret-position="120">
+          <caret line="5" column="44" lean-forward="true" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WordStream/styles/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="740">
+          <caret line="305" column="5" selection-start-line="305" selection-start-column="1" selection-end-line="305" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WordStream/lib/loaddata.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="262" column="12" selection-start-line="262" selection-start-column="15" selection-end-line="264" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/extractData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2230">
+          <caret line="162" column="21" lean-forward="true" selection-start-line="162" selection-start-column="21" selection-end-line="162" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WordStream/javascripts/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="770">
+          <caret line="598" column="1" lean-forward="true" selection-start-line="598" selection-start-column="1" selection-end-line="598" selection-end-column="1" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WordStream/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="28" column="6" lean-forward="true" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
         </state>
       </provider>
     </entry>

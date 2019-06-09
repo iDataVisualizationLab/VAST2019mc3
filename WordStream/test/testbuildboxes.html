@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WordStream</title>
+    <script src="../lib/d3.min.js"></script>
+    <script src="../lib/d3.layout.wordstream.js"></script>
+</head>
+<body>
+    <script>
+
+        var fileName = "../data/VIS_papers.tsv";
+        categories = categories = ["Vis","VAST","InfoVis","SciVis"];
+        var topics = categories;
+        d3.tsv(fileName, function(error, rawData) {
+            if (error) throw error;
+            //Filter
+            var startYear = 2011;
+            var endYear = 2016;
+            if(fileName.indexOf("PopCha")>=0 || fileName.indexOf("Cards_Fries")>=0 || fileName.indexOf("Cards_PC")>=0){
+                startYear = 2007;
+                endYear = 2013;
+            }
+            rawData = rawData.filter(d=>{
+                return d.Year >= startYear && d.Year <= endYear;
+            });
+            var data={};
+            d3.map(rawData, function(d, i){
+                var year = +d["Year"];
+                var topic = d["Conference"];
+                if(!data[year]) data[year] = {};
+                data[year][topic] = (data[year][topic]) ? ((data[year][topic])+";" + d["Author Names"]): (d["Author Names"]);
+            });
+            var data = d3.keys(data).map(function(year, i){
+                var words = {};
+                topics.forEach(topic => {
+                    var raw = {};
+                    if(!data[year][topic]) data[year][topic] = "";
+                    raw[topic] = data[year][topic].split(";");
+                    //Count word frequencies
+                    var counts = raw[topic].reduce(function(obj, word){
+                        if(!obj[word]){
+                            obj[word] = 0;
+                        }
+                        obj[word]++;
+                        return obj;
+                    }, {});
+                    //Convert to array of objects
+                    words[topic] = d3.keys(counts).map(function(d){
+                        return{
+                            text: d,
+                            frequency: counts[d],
+                            topic: topic
+                        }
+                    }).sort(function(a, b){//sort the terms by frequency
+                        return b.frequency-a.frequency;
+                    }).filter(function(d){return d.text; })//filter out empty words
+                        .slice(0, 45);
+                });
+                return {
+                    date: year,
+                    words: words
+                }
+            }).sort(function(a, b){//sort by date
+                return a.date - b.date;
+            });
+            draw(data);
+        });
+
+        function draw(data){
+            var width = 800, height = 500;
+            var ws = d3.layout.wordStream()
+            .size([width, height])
+            .data(data);
+            var boxWidth = width/data.length;
+            var boxes = ws.buildBoxes(data);
+
+            var frequencyScale = ws.frequencyScale();
+
+            var area = d3.svg.area()
+            .interpolate('cardinal')
+            .x(function(d){return (d.x);})
+            .y0(function(d){return frequencyScale(d.y0);})
+            .y1(function(d){return frequencyScale(d.y0 + d.y); });
+
+            var color = d3.scale.category10();
+            var svg = d3.select("body").append('svg').attr({
+                width: width,
+                height: height
+            });
+            var paths = svg.append('g').attr('transform', 'translate(' + 0 + ',' + 0 + ')');
+            // boxes.layers = boxes.layers.slice(0, 2);
+            paths.selectAll('path')
+                .data(boxes.layers)
+                .enter()
+                .append('path')
+                .attr({
+                    'd': area,
+                    'fill-opacity': 0.3,
+                    'stroke-size': 0.3,
+                    'stroke': 'black'
+                })
+                .style('fill', function () {
+                    return color(Math.random());
+                }); 
+            // var topics = boxes.topics.slice(0, 2);
+            topics.forEach(topic=>{
+                var topicGroup = svg.append('g');
+                topicGroup.selectAll('g').data(boxes.innerBoxes[topic]).enter()
+                .append('g').attr({
+                    transform: function(d){return 'translate('+d.x+', '+frequencyScale(d.y)+')';}
+                }).append('rect').attr({
+                    x: 0,
+                    y: 0,
+                    width: boxWidth,
+                    height: function(d){return frequencyScale(d.height);},
+                    fill: 'none',
+                    stroke: 'black',
+                    'stroke-size': 1,
+                    'opacity': 0.5,
+                    'stroke-dasharray': "3, 3"
+                });
+            });
+        };
+    </script>
+</body>
+</html>

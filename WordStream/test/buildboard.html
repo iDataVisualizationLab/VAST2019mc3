@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WordStream</title>
+    <script src="../lib/d3.min.js"></script>
+    <script src="../lib/d3.layout.wordstream.js"></script>
+    <script src="./testutil.js"></script>
+</head>
+<body>
+    <script>
+        var fileName = "../data/VIS_papers.tsv";
+        categories = categories = ["Vis","VAST","InfoVis","SciVis"];
+        var topics = categories;
+        d3.tsv(fileName, function(error, rawData) {
+            if (error) throw error;
+            //Filter
+            var startYear = 2011;
+            var endYear = 2016;
+            if(fileName.indexOf("PopCha")>=0 || fileName.indexOf("Cards_Fries")>=0 || fileName.indexOf("Cards_PC")>=0){
+                startYear = 2007;
+                endYear = 2013;
+            }
+            rawData = rawData.filter(d=>{
+                return d.Year >= startYear && d.Year <= endYear;
+            });
+            var data={};
+            d3.map(rawData, function(d, i){
+                var year = +d["Year"];
+                var topic = d["Conference"];
+                if(!data[year]) data[year] = {};
+                data[year][topic] = (data[year][topic]) ? ((data[year][topic])+";" + d["Author Names"]): (d["Author Names"]);
+            });
+            var data = d3.keys(data).map(function(year, i){
+                var words = {};
+                topics.forEach(topic => {
+                    var raw = {};
+                    if(!data[year][topic]) data[year][topic] = "";
+                    raw[topic] = data[year][topic].split(";");
+                    //Count word frequencies
+                    var counts = raw[topic].reduce(function(obj, word){
+                        if(!obj[word]){
+                            obj[word] = 0;
+                        }
+                        obj[word]++;
+                        return obj;
+                    }, {});
+                    //Convert to array of objects
+                    words[topic] = d3.keys(counts).map(function(d){
+                        return{
+                            text: d,
+                            frequency: counts[d],
+                            topic: topic
+                        }
+                    }).sort(function(a, b){//sort the terms by frequency
+                        return b.frequency-a.frequency;
+                    }).filter(function(d){return d.text; })//filter out empty words
+                        .slice(0, 45);
+                });
+                return {
+                    date: year,
+                    words: words
+                }
+            }).sort(function(a, b){//sort by date
+                return a.date - b.date;
+            });
+            draw(data);
+        });
+
+        function draw(data){
+            var width = 1200, height = 600;
+            var ws = d3.layout.wordStream()
+            .size([width, height])
+            .data(data);
+            
+            ws.buildFontScale(data);
+            var boxes = ws.buildBoxes(data);
+            //Set the sprite for each word
+            ws.getImageData(boxes);
+            boxes.topics.forEach(topic=>{
+                var board = ws.buildBoard(boxes, topic);
+                var canvas = document.createElement('canvas');
+                document.body.append(canvas);
+                canvas.width = width;
+                canvas.height = height;
+                var c = canvas.getContext("2d");
+                spriteToScreen(c, board);
+            });
+        };
+    </script>
+</body>
+</html>
