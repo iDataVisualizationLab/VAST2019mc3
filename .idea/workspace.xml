@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9c66168-06db-4020-85db-d4f317041201" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/extractData.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/extractData.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -52,7 +51,7 @@
           <entry key="css" value="66" />
           <entry key="dummy" value="13" />
           <entry key="html" value="124" />
-          <entry key="js" value="5478" />
+          <entry key="js" value="5543" />
           <entry key="md" value="3076" />
         </counts>
       </usages-collector>
@@ -60,7 +59,7 @@
         <counts>
           <entry key="CSS" value="66" />
           <entry key="HTML" value="124" />
-          <entry key="JavaScript" value="5478" />
+          <entry key="JavaScript" value="5543" />
           <entry key="Markdown" value="3076" />
           <entry key="PLAIN_TEXT" value="13" />
         </counts>
@@ -69,20 +68,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+            <state relative-caret-position="96">
+              <caret line="4" column="53" lean-forward="true" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/extractData.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="126" column="12" lean-forward="true" selection-start-line="126" selection-start-column="12" selection-end-line="126" selection-end-column="12" />
+            <state relative-caret-position="621">
+              <caret line="18" column="1109" selection-start-line="18" selection-start-column="1109" selection-end-line="18" selection-end-column="1109" />
             </state>
           </provider>
         </entry>
@@ -260,12 +259,12 @@
       <workItem from="1559584247911" duration="10909000" />
       <workItem from="1559672601562" duration="20599000" />
       <workItem from="1559847744684" duration="11738000" />
-      <workItem from="1559930851187" duration="20049000" />
+      <workItem from="1559930851187" duration="20158000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71396000" />
+    <option name="totallyTimeSpent" value="71505000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1123" height="1417" extended-state="0" />
@@ -335,17 +334,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/js/extractData.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+        <state relative-caret-position="621">
+          <caret line="18" column="1109" selection-start-line="18" selection-start-column="1109" selection-end-line="18" selection-end-column="1109" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/extractData.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="126" column="12" lean-forward="true" selection-start-line="126" selection-start-column="12" selection-end-line="126" selection-end-column="12" />
+        <state relative-caret-position="96">
+          <caret line="4" column="53" lean-forward="true" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
         </state>
       </provider>
     </entry>
