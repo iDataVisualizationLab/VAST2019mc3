@@ -121,10 +121,14 @@ d3.csv("data/YInt.csv", function (error, data) {
             let date = Date.parse(d.time);
             date = formatTimeReadData(new Date(date));
 
-            if(!data[date]) data[date] = "";
-            data[date] = data[date] ? (data[date] + '|' +d.message): (d.message);
+            let wordArray = d.message.toLowerCase()
+                .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"/gi, '')
+                .split(" ");
+            
+            if(!data00[date]) data00[date] = [];
+            data00[date] = data00[date] ? (data00[date].concat(wordArray)): (wordArray);
         });
-        console.log(first5Data);
+        console.log(data00);
 
 
 
