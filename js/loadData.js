@@ -17,9 +17,7 @@ for (let i = 0; i < postfixTags.length; i++){
         count: 0,
         occurrences: 0,
     }
-}
 
-d3.csv("../data/YInt.csv", function (error, data) {
     if (error){
         throw error;
     }
