@@ -25,7 +25,6 @@ const step = 60 * 60 * 1000 * 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 const formatTimeReadData = d3.timeFormat("%B %d, %-I %p");
 const topics = ["message", "location"];
-const topword = 40;
 
 const margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = 1200 - margin.left - margin.right,
@@ -42,7 +41,7 @@ let xScale = d3.scaleTime()
 let yScale = d3.scaleLinear()
     .range([height, 0]);
 
-let main = "#main";
+let main = "#mainContent";
 
 loadData();
 function loadData(){
@@ -61,7 +60,18 @@ function loadData(){
             let wsData = getWSdata(first5Data);
             console.log(wsData);
             drawGraph();
-            wordstream(wsData);
+            let wsContainer = d3.select("body").append("svg")
+                .attr("width", 800)
+                .attr("height", 600);
+            let config = {
+                topWord: 50,
+                minFont: 10,
+                maxFont: 30,
+                tickFont: 12,
+                legendFont: 12,
+                curve: d3.curveMonotoneX
+            };
+            wordStream(wsContainer, wsData, config);
         }
     });
 }
@@ -177,13 +187,6 @@ function drawGraph() {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    let wsContainer = d3.select(main).append("svg")   // wordstream
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("id", "wordstream")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     let vertical = d3.select(main)
