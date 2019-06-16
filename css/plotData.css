@@ -1,10 +1,19 @@
 /* ----------------- LINE GRAPH ----------------- */
-.line {
+/*.line {*/
+    /*fill: none;*/
+    /*stroke: #bd6f41;*/
+    /*stroke-width: 2px;*/
+/*}*/
+.focusLine {
     fill: none;
-    stroke: #bd6f41;
-    stroke-width: 2px;
+    stroke: steelblue;
+    stroke-width: 0.5px;
 }
-
+.overlay {
+    fill: none;
+    stroke: none;
+    pointer-events: all;
+}
 .tooltip {
     position: absolute;
 }

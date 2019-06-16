@@ -16,12 +16,14 @@ const resources = {
 
 };
 
-const stopwords = ["ourselves", "hers", "between", "yourself", "but", "again", "there", "about", "once", "during", "out", "very", "having", "with", "they", "own", "an", "be", "some", "for", "do", "its", "yours", "such", "into", "of", "most", "itself", "other", "off", "is", "s", "am", "or", "who", "as", "from", "him", "each", "the", "themselves", "until", "below", "are", "we", "these", "your", "his", "through", "don", "nor", "me", "were", "her", "more", "himself", "this", "down", "should", "our", "their", "while", "above", "both", "up", "to", "ours", "had", "she", "all", "no", "when", "at", "any", "before", "them", "same", "and", "been", "have", "in", "will", "on", "does", "yourselves", "then", "that", "because", "what", "over", "why", "so", "can", "did", "not", "now", "under", "he", "you", "herself", "has", "just", "where", "too", "only", "myself", "which", "those", "i", "after", "few", "whom", "t", "being", "if", "theirs", "my", "against", "a", "by", "doing", "it", "how", "further", "was", "here", "than", "something", "someone", "anyone", "everything", "whereís", "anything", "youu", "us", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "8", "9", "0", "re", "guys", "", "don't", "didn't", "i'm", "hi"];
+const stopwords = [
+    "ourselves", "hers", "between", "yourself", "but", "again", "there", "about", "once", "during", "out", "very", "having", "with", "they", "own", "an", "be", "some", "for", "do", "its", "yours", "such", "into", "of", "most", "itself", "other", "off", "is", "s", "am", "or", "who", "as", "from", "him", "each", "the", "themselves", "until", "below", "are", "we", "these", "your", "his", "through", "don", "nor", "me", "were", "her", "more", "himself", "this", "down", "should", "our", "their", "while", "above", "both", "up", "to", "ours", "had", "she", "all", "no", "when", "at", "any", "before", "them", "same", "and", "been", "have", "in", "will", "on", "does", "yourselves", "then", "that", "because", "what", "over", "why", "so", "can", "did", "not", "now", "under", "he", "you", "herself", "has", "just", "where", "too", "only", "myself", "which", "those", "i", "after", "few", "whom", "t", "being", "if", "theirs", "my", "against", "a", "by", "doing", "it", "how", "further", "was", "here", "than", "something", "someone", "anyone", "everything", "whereís", "anything", "youu", "us", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "8", "9", "0", "re", "guys", "", "don't", "didn't", "i'm", "hi"];
 
 const keywordsFlat = disasterKeywords.flat();
 const startDate = Date.parse("2020-04-06 00:00:00");
 const endDate = Date.parse("2020-04-10 11:59:00");
-const step = 60 * 60 * 1000 * 0.5; // half hour
+const hourToMS = 60 * 60 * 1000;
+const streamStepUnit = 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 const formatTimeReadData = d3.timeFormat("%B %d, %-I %p");
 const topics = ["message", "location"];
@@ -30,9 +32,10 @@ const margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-const firstStrike = [1586201869000, 1586205631000];
 const fisrt5hrsRange = [1586201491000, 1586219491000];
 
+let hourAfter = 5;
+let streamStep = streamStepUnit * hourToMS;
 let streamData;
 let keyList;
 let xScale = d3.scaleTime()
@@ -60,6 +63,7 @@ function loadData(){
             let wsData = getWSdata(first5Data);
             console.log(wsData);
             drawGraph();
+
             let wsContainer = d3.select("body").append("svg")
                 .attr("width", 800)
                 .attr("height", 600);
@@ -71,7 +75,7 @@ function loadData(){
                 legendFont: 12,
                 curve: d3.curveMonotoneX
             };
-            wordStream(wsContainer, wsData, config);
+            wordstream(wsContainer, wsData, config);
         }
     });
 }
@@ -104,12 +108,12 @@ function getStreamData(data){
 
     keyList.forEach(d => {
         streamData11[d] = [];
-        for (let i = startDate; i < endDate; i += step) {
+        for (let i = startDate; i < endDate; i += streamStep) {
             streamData11[d].push({
                 timestamp: i,
                 count: streamData00[d].filter(d => {
                     let time = Date.parse(d.time);
-                    return time >= i && time < i + step;
+                    return time >= i && time < i + streamStep;
                 })
             })
         }
@@ -126,9 +130,10 @@ function getStreamData(data){
     return streamData;
 }
 
-function getWSdata(earthquakeData) {
+function getWSdata(rangedData) {
+    console.log(rangedData);
     let wsData = {};
-    earthquakeData.forEach(d => {
+    rangedData.forEach(d => {
         let date = Date.parse(d.time);
         date = formatTimeReadData(new Date(date));
 
@@ -185,28 +190,10 @@ function drawGraph() {
     let svg = d3.select(main)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
+        .attr("height", height + margin.top + margin.bottom);
+
+    let g = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    let vertical = d3.select(main)
-        .append("div")
-        .attr("id", "vertical")
-        .style("position", "absolute")
-        .style("z-index", "19")
-        .style("width", "1px")
-        .style("height", height + margin.top + margin.bottom + "px")
-        .style("top", margin.top + "px")
-        .style("bottom", "30px")
-        .style("left", "0px")
-        .style("background", "#000000");
-
-    let tooltip = d3.select(main)
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0)
-        .style("top", (height + margin.top + margin.bottom) + "px");
-
 
     //Create the stack layout for the data
     const stack = d3.stack().keys(keyList)
@@ -216,16 +203,15 @@ function drawGraph() {
     console.log(stacks);
     //The scales
     xScale.domain([startDate, endDate]);
-
     yScale.domain(d3.extent(stacks.flat().flat()));
 
     //The x axis
-    const xAxisGroup = svg.append("g").attr("transform", "translate(0," + height + ")");
+    const xAxisGroup = g.append("g").attr("transform", "translate(0," + height + ")");
     const xAxis = d3.axisBottom(xScale);
     xAxisGroup.call(xAxis);
 
     //The y Axis
-    const yAxisGroup = svg.append('g');
+    const yAxisGroup = g.append('g');
     const yAxis = d3.axisLeft(yScale);
     yAxisGroup.call(yAxis);
 
@@ -236,7 +222,24 @@ function drawGraph() {
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
 
-    svg.append("svg")
+    let indexGroup = d3.select(main).append("g");
+    let tooltip = indexGroup
+        .append("div")
+        .attr("class", "tooltip")
+        .style("top", (height + margin.top + margin.bottom) + "px");
+
+    let vertical = indexGroup
+        .append("div")
+        .attr("id", "vertical")
+        .style("position", "absolute")
+        .style("z-index", "19")
+        .style("width", "1px")
+        .style("height", height + margin.top + margin.bottom + "px")
+        .style("top", margin.top + "px")
+        .style("bottom", "30px")
+        .style("background", "#000000");
+
+    g.append("g")
         .attr("id", "streamG")
         .selectAll(".layer")
         .data(stacks).enter()
@@ -263,9 +266,44 @@ function drawGraph() {
     //     })
     // ;
 
-    let legend = svg
+    let focus = g.append("g").style("display", "none");
+
+    focus.append("line")
+        .attr("id", "focusLineX")
+        .attr("class", "focusLine");
+
+    focus.append("line")
+        .attr("id", "focusLineY")
+        .attr("class", "focusLine");
+
+    g.append("rect")
+        .attr('class', 'overlay')
+        .attr('width', width)
+        .attr('height', height)
+        .on('mouseover', function() {
+            indexGroup.style('display', null);
+        })
+        .on('mouseout', function() {
+            indexGroup.style('display', 'none');})
+        .on("mousemove", function () {
+            let mousex = d3.mouse(this);
+            mousex = mousex[0] + 6;
+
+            // tooltip and vertical line
+            vertical.style("left", (mousex + margin.left)+ "px");
+
+            tooltip.html(
+                '<text class = "bold">' + formatTimeLegend(xScale.invert(mousex - 8)) + "</text>")
+                .style("left", ((d3.event.pageX) + 10) + "px")
+                .style("pointer-events", "none");
+
+            // get data for ws
+            console.log(Date.parse(xScale.invert(mousex - 8)));
+        });
+
+    let legend = g
         .append("g")
-        .attr("transform", "translate(30, 60)");
+        .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
 
     legend.selectAll("circle")
         .data(keyList)
@@ -285,28 +323,27 @@ function drawGraph() {
         .attr("y", (d, i) => 70 - 20 * i);
     // .attr("fill", (d, i)=> d3.schemeCategory10[i]);
 
-    d3.select(main)
-        .on("mousemove", function () {
-            mousex = d3.mouse(this);
-            mousex = mousex[0] + 5;
-            vertical.style("left", mousex + "px");
-
-            tooltip.transition()
-                .duration(100)
-                .style("opacity", 1);
-
-            tooltip.html(
-                '<text class = "bold">' + formatTimeLegend(xScale.invert(mousex - margin.left - 8)) + "</text>")
-                .style("left", ((d3.event.pageX)) + "px")
-                .style("pointer-events", "none")
-        })
-        .on("mouseover", function () {
-            mousex = d3.mouse(this);
-            mousex = mousex[0] + 5;
-            vertical.style("left", mousex + "px");
-            tooltip.transition()
-                .duration(100)
-                .style("opacity", 0);
-        });
+    // d3.select(main)
+    //     .on("mousemove", function () {
+    //         mousex = d3.mouse(this);
+    //         mousex = mousex[0] + 5;
+    //         vertical.style("left", mousex + "px");
+    //
+    //         tooltip.transition()
+    //             .duration(100)
+    //             .style("opacity", 1);
+    //
+    //         tooltip.html(
+    //             '<text class = "bold">' + formatTimeLegend(xScale.invert(mousex - margin.left - 8)) + "</text>")
+    //             .style("left", ((d3.event.pageX)) + "px")
+    //             .style("pointer-events", "none");
+    //     })
+    //     .on("mouseover", function () {
+    //         mousex = d3.mouse(this);
+    //         mousex = mousex[0] + 5;
+    //
+    //         // console.log(mousex);
+    //     })
+    // ;
 }
 
