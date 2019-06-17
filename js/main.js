@@ -7,21 +7,13 @@ const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
 const topics = ["message", "location"];
 const topicColor = ["#919191", "#161616"];
-const margin = {top: 30, right: 20, bottom: 30, left: 50},
+const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 const fisrt5hrsRange = [1586201491000, 1586219491000];
 
-let wsContainer;
-const typeHours = [5, 10, 20, 30];
-let wsContainerWidth = function (numHourAfter) {
-    return d3.scaleLinear()
-        .domain([0,30])
-        .range([600, 2000])(numHourAfter);
-};
 let data;
-let numHourAfter = 5;
 let streamStep = streamStepUnit * hourToMS;
 let streamData;
 let keyList;
@@ -40,6 +32,19 @@ let config = {
 };
 let main = "#mainContent";
 let current;
+let numHourAfter = 5;
+let wsContainer;
+let wsContainerWidth = function (numHourAfter) {
+    return d3.scaleLinear()
+        .domain([0,30])
+        .range([600, 2000])(numHourAfter);
+};
+let slidingWindow;
+let slidingWidth = function(numHourAfter){
+    return d3.scaleLinear()
+        .domain([0,30])
+        .range([0, (30/108) * width])(numHourAfter)
+};
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -173,11 +178,6 @@ function drawGraph() {
 
     d3.select(main)
         .append("div")
-        .attr("class", "customSelect")
-        .append("select");
-
-    d3.select(main)
-        .append("div")
         .attr("id", "slider-simple");
 
     let sliderSimple = d3
@@ -235,25 +235,12 @@ function drawGraph() {
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
 
-    initList();
-
-    let indexGroup = d3.select(main).append("g");
-    let tooltip = indexGroup
+    let tooltip = d3.select(main)
         .append("div")
         .attr("class", "tooltip")
-        .style("top", (height + margin.top + margin.bottom) + "px");
-
-    let vertical = indexGroup
-        .append("div")
-        .attr("id", "vertical")
-        .style("position", "absolute")
-        .style("z-index", "19")
-        .style("width", "1px")
-        .style("height", height + margin.top + margin.bottom + "px")
-        .style("top", margin.top + "px")
-        .style("bottom", "30px")
-        .style("left", (margin.left + 8) + "px")
-        .style("background", "#000000");
+        .style("top", (height + margin.top/2 + margin.bottom) + "px")
+        .style("font-size", "15px")
+        .style("pointer-events", "none");
 
     g.append("g")
         .attr("id", "streamG")
@@ -263,6 +250,27 @@ function drawGraph() {
         .attr("class", "layer")
         .attr("d", areaGen)
         .attr("fill", (d, i) => d3.schemeCategory10[i]);
+
+    let vertical = g
+        .append("line")
+        .attr("id", "vertical")
+        .style("stroke", "black")
+        .attr("y1", 0)
+        .attr("y2", height + margin.top + margin.bottom);
+
+    let windowSize = {
+        height: 100,
+        width: 100,
+    };
+
+    slidingWindow = g.append("rect")
+        .attr("x", 0)
+        .attr("y", height - windowSize.height)
+        .attr("width", windowSize.width)
+        .attr("height", windowSize.height)
+        .attr("fill", "#aaaaaa")
+        .attr("fill-opacity", 0.1)
+        .attr("stroke", "black");
 
     // highlight layers
     // svg.selectAll(".layer")
@@ -282,37 +290,27 @@ function drawGraph() {
     //     })
     // ;
 
-    // let focus = g.append("g").style("display", "none");
-    //
-    // focus.append("line")
-    //     .attr("id", "focusLineX")
-    //     .attr("class", "focusLine");
-    //
-    // focus.append("line")
-    //     .attr("id", "focusLineY")
-    //     .attr("class", "focusLine");
-
     g.append("rect")
         .attr('class', 'overlay')
         .attr('width', width)
         .attr('height', height)
-        // .on('mouseover', function() {
-        //     indexGroup.style('display', null);
-        // })
-        // .on('mouseout', function() {
-        //     indexGroup.style('display', 'none');})
         .on("mousemove", function () {
             let mouseX = d3.mouse(this);
-            mouseX = mouseX[0] + 6;
+            mouseX = mouseX[0] + 8;
 
             current = Date.parse(xScale.invert(mouseX - 8));
-            // tooltip and vertical line
-            vertical.style("left", (mouseX + margin.left)+ "px");
+
+            // vertical line, sliding window and tooltip
+            vertical
+                .attr("x1", mouseX - 8)
+                .attr("x2", mouseX - 8);
+
+            slidingWindow
+                .attr("x", mouseX - 8);
 
             tooltip.html(
                 '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX - 8)) + "</text>")
-                .style("left", ((d3.event.pageX) + 10) + "px")
-                .style("pointer-events", "none");
+                .style("left", (d3.event.pageX + 8) + "px");
 
             // get data for ws
             update(current);
@@ -339,30 +337,6 @@ function drawGraph() {
         .text(d => d)
         .attr("x", 20)
         .attr("y", (d, i) => 70 - 20 * i);
-    // .attr("fill", (d, i)=> d3.schemeCategory10[i]);
-
-    // d3.select(main)
-    //     .on("mousemove", function () {
-    //         mousex = d3.mouse(this);
-    //         mousex = mousex[0] + 5;
-    //         vertical.style("left", mousex + "px");
-    //
-    //         tooltip.transition()
-    //             .duration(100)
-    //             .style("opacity", 1);
-    //
-    //         tooltip.html(
-    //             '<text class = "bold">' + formatTimeLegend(xScale.invert(mousex - margin.left - 8)) + "</text>")
-    //             .style("left", ((d3.event.pageX)) + "px")
-    //             .style("pointer-events", "none");
-    //     })
-    //     .on("mouseover", function () {
-    //         mousex = d3.mouse(this);
-    //         mousex = mousex[0] + 5;
-    //
-    //         // console.log(mousex);
-    //     })
-    // ;
 }
 
 function nearestHour(milliseconds) {
@@ -375,22 +349,6 @@ function getRangedData(data, start, end) {
             (Date.parse(d.time) < end))
     });
 }
-function initList() {
-    const comboList = d3.select(".customSelect").select("select");
-    comboList.selectAll("option")
-        .data(typeHours)
-        .enter()
-        .append("option")
-        .property("value", d => d)
-        .text(d => d + " hours");
-
-    comboList.on("change", function () {
-        numHourAfter = this.value;
-        wsContainer
-            .attr("width", wsContainerWidth(numHourAfter));
-        update(current)
-    })
-}
 
 function update(current) {
     // get data for ws
@@ -398,6 +356,7 @@ function update(current) {
     let rangedData = getRangedData(data, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
     let wsData = getWSdata(rangedData);
 
+    slidingWindow.attr("width", slidingWidth(numHourAfter));
     wsContainer.selectAll("*").remove();
     wsContainer
         .attr("width", wsContainerWidth(numHourAfter));
