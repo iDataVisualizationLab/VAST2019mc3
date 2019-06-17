@@ -171,10 +171,10 @@ function drawGraph() {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
 
-    // d3.select(main)
-    //     .append("div")
-    //     .attr("class", "customSelect")
-    //     .append("select");
+    d3.select(main)
+        .append("div")
+        .attr("class", "customSelect")
+        .append("select");
 
     d3.select(main)
         .append("div")
@@ -234,6 +234,8 @@ function drawGraph() {
         .y0(d => yScale(d[0]))
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
+
+    initList();
 
     let indexGroup = d3.select(main).append("g");
     let tooltip = indexGroup
