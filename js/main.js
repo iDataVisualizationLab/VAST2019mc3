@@ -17,7 +17,7 @@ const resources = {
 };
 
 const stopwords = [
-    "ourselves", "hers", "between", "yourself", "but", "again", "there", "about", "once", "during", "out", "very", "having", "with", "they", "own", "an", "be", "some", "for", "do", "its", "yours", "such", "into", "of", "most", "itself", "other", "off", "is", "s", "am", "or", "who", "as", "from", "him", "each", "the", "themselves", "until", "below", "are", "we", "these", "your", "his", "through", "don", "nor", "me", "were", "her", "more", "himself", "this", "down", "should", "our", "their", "while", "above", "both", "up", "to", "ours", "had", "she", "all", "no", "when", "at", "any", "before", "them", "same", "and", "been", "have", "in", "will", "on", "does", "yourselves", "then", "that", "because", "what", "over", "why", "so", "can", "did", "not", "now", "under", "he", "you", "herself", "has", "just", "where", "too", "only", "myself", "which", "those", "i", "after", "few", "whom", "t", "being", "if", "theirs", "my", "against", "a", "by", "doing", "it", "how", "further", "was", "here", "than", "something", "someone", "anyone", "everything", "whereís", "anything", "youu", "us", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "8", "9", "0", "re", "guys", "", "don't", "didn't", "i'm", "hi"];
+    "0","1","2","3","4","5","6","7","8","9","brazo","we're","it's","can't","we’re","thk","it’","chk","you're","you'll","us","thx","the","a","an","republicans","republican","democrats","democratic","and","democrat","americans","american","america","hey","ok","wanna","lmao","lot","ur","im","thank","you?","&amp;","dm","just","dont","lol","lil","gonna","rt","...","..","--","about","above","according","accordingly","across","actually","adj","adv","after","afterwards","again","against","ago","ah","aint","al","albeit","all","almost","alone","along","already","also","alt","although","always","am","among","amongst","another","any","anybody","anyhow","anyone","anything","anyway","anyways","anywhere","apparently","appear","apply","are","area","areas","arent","around","as","aside","ask","asked","asking","asks","at","available","ave","away","aye","ba","back","backed","backing","backs","basic","basis","be","became","because","become","becomes","becoming","been","before","beforehand","began","begin","behind","being","beings","below","beside","besides","best","better","between","beyond","bi","big","both","brief","but","by","call","called","came","can","cannot","cant","certain","certainly","cf","clear","clearly","cm","co","come","comes","concerning","consequently","considering","contain","containing","contains","contrariwise","corresponding","could","couldnt","course","currently","date","dc","de","definitely","describe","described","describes","despite","determine","determined","di","did","didnt","differ","different","differently","do","does","doesnt","doing","done","double","down","downed","downing","downs","downwards","dr","dual","during","each","early","ed","eg","eight","either","eleven","else","elsewhere","empty","end","ended","ending","ends","enough","entirely","especially","est","et","etc","even","evenly","ever","every","everybody","everyone","everything","everywhere","exactly","example","except","excepted","excepting","exception","exclude","excluding","exclusive","face","faces","fact","facts","far","felt","few","fifteen","fifth","find","finds","first","five","for","forth","forty","forward","found","four","fr","free","from","front","ft","full","fully","further","furthered","furthering","furthermore","furthers","furthest","gave","general","generally","get","gets","getting","give","given","gives","go","goes","going","gone","good","goods","got","gotten","great","greater","greatest","group","grouped","grouping","groups","had","hadnt","half","halves","happens","hardly","has","hasnt","hast","hath","have","having","he","hear","heard","hed","hello","help","hence","henceforth","her","here","hereabouts","hereafter","hereby","herein","hereto","hereupon","hers","herself","hes","high","higher","highest","him","himself","hindmost","his","hither","hitherto","hopefully","how","howbeit","however","howsoever","hr","hundred","hyper","id","ie","if","ii","iii","immediate","important","in","inasmuch","inc","including","indeed","indicate","indicated","indicates","insofar","insomuch","instead","int","interest","interested","interesting","interests","into","intra","intro","inward","inwards","is","isnt","it","itd","item","itll","its","itself","iv","ive","ix","keep","keeps","kept","kg","km","knew","know","known","knows","large","largely","last","lat","lately","later","latest","latter","latterly","least","left","less","lest","let","lets","like","likely","little","ll","lon","long","longer","longest","look","looks","ltd","lt","made","mainly","make","making","man","many","may","maybe","md","me","mean","means","meant","meantime","meanwhile","merely","micro","might","mine","mm","more","moreover","morning","most","mostly","move","mph","mr","mrs","ms","mt","much","multi","must","mustnt","my","myself","name","namely","near","nearly","necessary","need","needed","needing","neednt","needs","neither","never","nevertheless","new","newer","newest","news","next","nine","no","nobody","non","none","nonetheless","noone","nope","nor","normally","not","nothing","notwithstanding","novel","now","nowadays","nowhere","nt","number","obs","obviously","of","off","often","oh","okay","old","older","oldest","on","once","one","ones","only","onto","op","open","opened","opening","opens","or","other","others","otherwise","ought","our","ours","ourselves","out","outside","over","overall","own","oz","page","part","parted","particular","particularly","parting","parts","per","perhaps","phr","pl","please","plus","pm","possible","pre","presumably","pro","probably","provided","pt","put","puts","quite","rather","re","really","reasonably","regarding","regardless","regards","related","relatively","required","respectively","results","right","said","saith","same","saw","say","saying","says","sec","second","secondly","seconds","see","seeing","seem","seemed","seeming","seems","seen","sees","seldom","self","selves","semi","seven","several","shall","shalt","she","shes","should","shouldnt","show","showed","showing","shown","shows","side","sides","since","sir","sixty","so","some","somebody","somehow","someone","something","sometime","sometimes","somewhat","somewhere","st","still","such","supposing","sure","take","tell","tends","th","than","thanks","thanx","that","thatd","thatll","thats","thee","their","theirs","them","themselves","then","thence","thenceforth","there","thereabout","thereabouts","thereafter","thereby","thered","therefore","therein","thereof","thereon","theres","thereto","thereupon","therll","these","they","theyve","thine","thing","things","think","thinks","third","this","thorough","thoroughly","those","thou","though","three","thrice","through","throughout","thru","thus","thy","thyself","till","time","tm","to","today","together","told","too","took","toward","towards","trans","tried","tries","truly","trying","turn","turned","turning","turns","twelve","twenty","twice","two","under","unless","unlike","unlikely","until","unto","up","upon","upward","upwards","use","used","useful","uses","using","usually","various","ve","very","vi","vii","viii","via","viz","vs","was","wasnt","way","ways","we","well","wells","went","were","werent","weve","what","whatever","whatsoever","when","whence","whenever","whensoever","where","whereabouts","whereafter","whereas","whereat","whereby","wherefore","wherefrom","wherein","whereinto","whereof","whereon","wheresoever","whereto","whereunto","whereupon","wherever","wherewith","whether","whew","which","whichever","whichsoever","while","whilst","whither","who","whoa","whoever","whole","whom","whomever","whomsoever","whose","whosoever","why","will","willing","wilt","wish","with","within","without","wonder","wont","work","worked","working","works","worse","worst","would","wouldnt","wt","xi","xii","xiii","xiv","xv","xvi","xvii","xviii","xix","xx","yd","ye","year","years","yes","yet","yippee","you","youd","youll","young","younger","youngest","your","youre","yours","yourself","yourselves","youve","yup","zero","Lymphatic","province","and/or","district","reported","jan","feb","mar","apr","june","july","aug","sept","oct","nov","dec","wa","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","ha","bu","jk","hi","united states","u.s.","�?�",":)",":-)",";-)","; )",":(",":d","&amp","ya","w/","(expand)","don","whereís","youu","guys","","don't","didn't","i'm"];
 
 const keywordsFlat = disasterKeywords.flat();
 const startDate = Date.parse("2020-04-06 00:00:00");
@@ -35,6 +35,12 @@ const margin = {top: 30, right: 20, bottom: 30, left: 50},
 const fisrt5hrsRange = [1586201491000, 1586219491000];
 
 let wsContainer;
+const typeHours = [5, 10, 20, 30];
+let wsContainerWidth = function (numHourAfter) {
+    return d3.scaleOrdinal()
+        .domain(typeHours)
+        .range([500, 600, 700, 800])(numHourAfter);
+};
 let data;
 let numHourAfter = 5;
 let streamStep = streamStepUnit * hourToMS;
@@ -165,9 +171,11 @@ function getWSdata(rangedData) {
                 }
             }).sort(function (a, b) {//sort the terms by frequency
                 return b.frequency - a.frequency;
-            }).filter(function (d) {
-                return d.text;
-            });//filter out empty words
+            })
+            //     .filter(function (d) {
+            //     return d.text;
+            // })
+            ;//filter out empty words
             // words[topic] = words[topic].slice(0, Math.min(words[topic].length, topword));
         });
         return {
@@ -184,6 +192,11 @@ function drawGraph() {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
 
+    d3.select(main)
+        .append("div")
+        .attr("class", "customSelect")
+        .append("select");
+
     let g = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -192,7 +205,6 @@ function drawGraph() {
         .offset(d3.stackOffsetNone);
 
     const stacks = stack(streamData);
-    console.log(stacks);
     //The scales
     xScale.domain([startDate, endDate]);
     yScale.domain(d3.extent(stacks.flat().flat()));
@@ -213,6 +225,7 @@ function drawGraph() {
         .y0(d => yScale(d[0]))
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
+    initList();
 
     let indexGroup = d3.select(main).append("g");
     let tooltip = indexGroup
@@ -258,15 +271,15 @@ function drawGraph() {
     //     })
     // ;
 
-    let focus = g.append("g").style("display", "none");
-
-    focus.append("line")
-        .attr("id", "focusLineX")
-        .attr("class", "focusLine");
-
-    focus.append("line")
-        .attr("id", "focusLineY")
-        .attr("class", "focusLine");
+    // let focus = g.append("g").style("display", "none");
+    //
+    // focus.append("line")
+    //     .attr("id", "focusLineX")
+    //     .attr("class", "focusLine");
+    //
+    // focus.append("line")
+    //     .attr("id", "focusLineY")
+    //     .attr("class", "focusLine");
 
     g.append("rect")
         .attr('class', 'overlay')
@@ -279,7 +292,7 @@ function drawGraph() {
             indexGroup.style('display', 'none');})
         .on("mousemove", function () {
             let mouseX = d3.mouse(this);
-            mouseX = mouseX[0] + 6;
+            mouseX = mouseX[0] - 8;
 
             let current = Date.parse(xScale.invert(mouseX - 8));
             // tooltip and vertical line
@@ -355,4 +368,17 @@ function getRangedData(data, start, end) {
         return ((start < Date.parse(d.time)) &&
             (Date.parse(d.time) < end))
     });
+}
+function initList() {
+    const comboList = d3.select(".customSelect").select("select");
+    comboList.selectAll("option")
+        .data(typeHours)
+        .enter()
+        .append("option")
+        .property("value", d => d)
+        .text(d => d + " hours");
+
+    comboList.on("change", function () {
+        numHourAfter = this.value;
+    })
 }
