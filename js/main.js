@@ -11,11 +11,12 @@ const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-const fisrt5hrsRange = [1586201491000, 1586219491000];
+const fisrt5hrsRange = [1586201491000, 1586223091000];
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
 let streamData;
+let highestStack;
 let keyList;
 let xScale = d3.scaleTime()
     .range([0, width]);
@@ -32,7 +33,7 @@ let config = {
 };
 let main = "#mainContent";
 let current;
-let numHourAfter = 5;
+let numHourAfter = 6;
 let wsContainer;
 let wsContainerWidth = function (numHourAfter) {
     return d3.scaleLinear()
@@ -60,7 +61,7 @@ function loadData(){
             drawGraph();
 
             wsContainer = d3.select("body").append("svg")
-                .attr("width", 600)
+                .attr("width", wsContainerWidth(numHourAfter))
                 .attr("height", 500);
 
             wordstream(wsContainer, wsData, config);
@@ -187,7 +188,7 @@ function drawGraph() {
         .width(300)
         .ticks(5)
         .step(1)
-        .default(5)
+        .default(6)
         .on('onchange', val => {
             d3.select('p#value-simple').text((val));
             numHourAfter = val;
@@ -214,6 +215,12 @@ function drawGraph() {
         .offset(d3.stackOffsetNone);
 
     const stacks = stack(streamData);
+    highestStack = stacks[stacks.length-1].map(d => {
+        return {
+            y: d[1],
+            time: d.data.time
+        }
+    });
     //The scales
     xScale.domain([startDate, endDate]);
     yScale.domain(d3.extent(stacks.flat().flat()));
@@ -249,28 +256,34 @@ function drawGraph() {
         .append("path")
         .attr("class", "layer")
         .attr("d", areaGen)
-        .attr("fill", (d, i) => d3.schemeCategory10[i]);
+        .attr("fill", (d, i) => {
+            return d3.schemeCategory10[i]
+        });
 
     let vertical = g
         .append("line")
         .attr("id", "vertical")
         .style("stroke", "black")
         .attr("y1", 0)
-        .attr("y2", height + margin.top + margin.bottom);
+        .attr("y2", height + margin.top + margin.bottom)
+        .attr("x1", xScale(fisrt5hrsRange[0]))
+        .attr("x2", xScale(fisrt5hrsRange[0]));
 
     let windowSize = {
-        height: 100,
-        width: 100,
+        height: 287,
+        width: 52,
     };
 
     slidingWindow = g.append("rect")
-        .attr("x", 0)
+        .attr("x", xScale(fisrt5hrsRange[0]))
+        .attr("width", slidingWidth(6))
         .attr("y", height - windowSize.height)
         .attr("width", windowSize.width)
         .attr("height", windowSize.height)
         .attr("fill", "#aaaaaa")
         .attr("fill-opacity", 0.1)
         .attr("stroke", "black");
+    console.log(stacks[stacks.length-1]);
 
     // highlight layers
     // svg.selectAll(".layer")
@@ -350,13 +363,27 @@ function getRangedData(data, start, end) {
     });
 }
 
+function getRangedDataScratch(data, start, end) {
+    return data.filter(d => {
+        return ((start < d.time) &&
+            (d.time < end))
+    });
+}
+
 function update(current) {
     // get data for ws
     let thisNearestHour = nearestHour(current);
     let rangedData = getRangedData(data, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
     let wsData = getWSdata(rangedData);
 
-    slidingWindow.attr("width", slidingWidth(numHourAfter));
+    let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
+
+    let peak = d3.max(streamRangedData, d=>d.y);
+    // console.log(peak);
+    slidingWindow
+        .attr("y", yScale(peak))
+        .attr("height", height - yScale(peak))
+        .attr("width", slidingWidth(numHourAfter));
     wsContainer.selectAll("*").remove();
     wsContainer
         .attr("width", wsContainerWidth(numHourAfter));
