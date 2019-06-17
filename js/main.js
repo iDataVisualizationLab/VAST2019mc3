@@ -25,7 +25,7 @@ const endDate = Date.parse("2020-04-10 11:59:00");
 const hourToMS = 60 * 60 * 1000;
 const streamStepUnit = 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
-const formatTimeReadData = d3.timeFormat("%B %d, %-I %p");
+const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
 const topics = ["message", "location"];
 
 const margin = {top: 30, right: 20, bottom: 30, left: 50},
@@ -39,7 +39,7 @@ const typeHours = [5, 10, 20, 30];
 let wsContainerWidth = function (numHourAfter) {
     return d3.scaleOrdinal()
         .domain(typeHours)
-        .range([500, 600, 700, 800])(numHourAfter);
+        .range([400, 800, 1200, 1500])(numHourAfter);
 };
 let data;
 let numHourAfter = 5;
@@ -60,7 +60,7 @@ let config = {
     curve: d3.curveMonotoneX
 };
 let main = "#mainContent";
-
+let current;
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -285,16 +285,16 @@ function drawGraph() {
         .attr('class', 'overlay')
         .attr('width', width)
         .attr('height', height)
-        .on('mouseover', function() {
-            indexGroup.style('display', null);
-        })
-        .on('mouseout', function() {
-            indexGroup.style('display', 'none');})
+        // .on('mouseover', function() {
+        //     indexGroup.style('display', null);
+        // })
+        // .on('mouseout', function() {
+        //     indexGroup.style('display', 'none');})
         .on("mousemove", function () {
             let mouseX = d3.mouse(this);
-            mouseX = mouseX[0] - 8;
+            mouseX = mouseX[0] + 6;
 
-            let current = Date.parse(xScale.invert(mouseX - 8));
+            current = Date.parse(xScale.invert(mouseX - 8));
             // tooltip and vertical line
             vertical.style("left", (mouseX + margin.left)+ "px");
 
@@ -304,12 +304,7 @@ function drawGraph() {
                 .style("pointer-events", "none");
 
             // get data for ws
-            let thisNearestHour = nearestHour(current);
-            let rangedData = getRangedData(data, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
-            let wsData = getWSdata(rangedData);
-
-            wsContainer.selectAll("*").remove();
-            wordstream(wsContainer, wsData, config);
+            update(current);
 
         });
 
@@ -380,5 +375,20 @@ function initList() {
 
     comboList.on("change", function () {
         numHourAfter = this.value;
+        wsContainer
+            .attr("width", wsContainerWidth(numHourAfter));
+        update(current)
     })
+}
+
+function update(current) {
+    // get data for ws
+    let thisNearestHour = nearestHour(current);
+    let rangedData = getRangedData(data, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
+    let wsData = getWSdata(rangedData);
+
+    wsContainer.selectAll("*").remove();
+    wsContainer
+        .attr("width", wsContainerWidth(numHourAfter));
+    wordstream(wsContainer, wsData, config);
 }
