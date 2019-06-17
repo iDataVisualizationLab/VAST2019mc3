@@ -6,7 +6,7 @@ const streamStepUnit = 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
 const topics = ["message", "location"];
-const topicColor = ["#515151", "#c04473"];
+const topicColor = ["#919191", "#161616"];
 const margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -16,9 +16,9 @@ const fisrt5hrsRange = [1586201491000, 1586219491000];
 let wsContainer;
 const typeHours = [5, 10, 20, 30];
 let wsContainerWidth = function (numHourAfter) {
-    return d3.scaleOrdinal()
-        .domain(typeHours)
-        .range([600, 900, 1500, 2000])(numHourAfter);
+    return d3.scaleLinear()
+        .domain([0,30])
+        .range([600, 2000])(numHourAfter);
 };
 let data;
 let numHourAfter = 5;
@@ -175,6 +175,39 @@ function drawGraph() {
         .append("div")
         .attr("class", "customSelect")
         .append("select");
+
+    d3.select(main)
+        .append("div")
+        .attr("id", "slider-simple");
+
+    let sliderSimple = d3
+        .sliderBottom()
+        .min(0)
+        .max(30)
+        .width(300)
+        // .tickFormat(d3.format('.2%'))
+        .ticks(5)
+        .step(1)
+        .default(5)
+        .on('onchange', val => {
+            d3.select('p#value-simple').text((val));
+            numHourAfter = val;
+            wsContainer
+                .attr("width", wsContainerWidth(numHourAfter));
+            update(current)
+        });
+
+    let gSimple = d3
+        .select('div#slider-simple')
+        .append('svg')
+        .attr('width', 500)
+        .attr('height', 100)
+        .append('g')
+        .attr('transform', 'translate(30,30)');
+
+    gSimple.call(sliderSimple);
+
+    d3.select('p#value-simple').text((sliderSimple.value()));
 
     let g = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");

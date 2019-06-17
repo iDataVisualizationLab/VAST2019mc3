@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9c66168-06db-4020-85db-d4f317041201" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/textSource.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/wordstream.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/wordstream.js" afterDir="false" />
@@ -21,25 +19,25 @@
     <session id="-452494730">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="12" />
-          <entry key="js" value="887" />
+          <entry key="html" value="13" />
+          <entry key="js" value="988" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="12" />
-          <entry key="JavaScript" value="887" />
+          <entry key="HTML" value="13" />
+          <entry key="JavaScript" value="988" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="1" />
+          <entry key="js" value="2" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JavaScript" value="1" />
+          <entry key="JavaScript" value="2" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -57,22 +55,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/main.js">
+        <entry file="file://$PROJECT_DIR$/js/textSource.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-              <folding>
-                <element signature="n#!!block;n#getWSdata#0" />
-              </folding>
+            <state relative-caret-position="-2064">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/textSource.js">
+        <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="328">
+              <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+              <folding>
+                <element signature="n#!!block;n#getStreamData#0" />
+                <element signature="n#!!block;n#getWSdata#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -89,8 +88,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/wordstream.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="917" column="48" selection-start-line="917" selection-start-column="48" selection-end-line="917" selection-end-column="48" />
+            <state relative-caret-position="343">
+              <caret line="627" selection-start-line="627" selection-end-line="627" />
             </state>
           </provider>
         </entry>
@@ -128,8 +127,8 @@
       <find>first</find>
       <find>wordstr</find>
       <find>b</find>
-      <find>categ</find>
       <find>category10</find>
+      <find>categ</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;,</replace>
@@ -159,8 +158,8 @@
         <option value="$PROJECT_DIR$/css/plotData.css" />
         <option value="$PROJECT_DIR$/js/initVariables.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/lib/wordstream.js" />
+        <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
   </component>
@@ -295,7 +294,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="142139000" />
+    <option name="totallyTimeSpent" value="143572000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1114" height="1417" extended-state="0" />
@@ -406,20 +405,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
+    <entry file="file://$PROJECT_DIR$/lib/wordstream.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-          <folding>
-            <element signature="n#!!block;n#getWSdata#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/textSource.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="343">
+          <caret line="627" selection-start-line="627" selection-end-line="627" />
         </state>
       </provider>
     </entry>
@@ -430,10 +419,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wordstream.js">
+    <entry file="file://$PROJECT_DIR$/js/textSource.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="917" column="48" selection-start-line="917" selection-start-column="48" selection-end-line="917" selection-end-column="48" />
+        <state relative-caret-position="-2064">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+          <folding>
+            <element signature="n#!!block;n#getStreamData#0" />
+            <element signature="n#!!block;n#getWSdata#0" />
+          </folding>
         </state>
       </provider>
     </entry>
