@@ -34,7 +34,9 @@ const margin = {top: 30, right: 20, bottom: 30, left: 50},
 
 const fisrt5hrsRange = [1586201491000, 1586219491000];
 
-let hourAfter = 5;
+let wsContainer;
+let data;
+let numHourAfter = 5;
 let streamStep = streamStepUnit * hourToMS;
 let streamData;
 let keyList;
@@ -43,38 +45,34 @@ let xScale = d3.scaleTime()
 
 let yScale = d3.scaleLinear()
     .range([height, 0]);
-
+let config = {
+    topWord: 40,
+    minFont: 10,
+    maxFont: 30,
+    tickFont: 12,
+    legendFont: 12,
+    curve: d3.curveMonotoneX
+};
 let main = "#mainContent";
 
 loadData();
 function loadData(){
-    d3.csv("data/YInt.csv", function (error, data) {
+    d3.csv("data/YInt.csv", function (error, inputData) {
         if (error) throw error;
         else {
+            data = inputData;
             console.log(data);
             streamData = getStreamData(data);
 
             // first 5 hours
-            let first5Data = data.filter(d => {
-                return ((fisrt5hrsRange[0] < Date.parse(d.time)) &&
-                    (Date.parse(d.time) < fisrt5hrsRange[1]))
-            });
-
+            let first5Data = getRangedData(data, fisrt5hrsRange[0], fisrt5hrsRange[1]);
             let wsData = getWSdata(first5Data);
-            console.log(wsData);
             drawGraph();
 
-            let wsContainer = d3.select("body").append("svg")
-                .attr("width", 800)
-                .attr("height", 600);
-            let config = {
-                topWord: 50,
-                minFont: 10,
-                maxFont: 30,
-                tickFont: 12,
-                legendFont: 12,
-                curve: d3.curveMonotoneX
-            };
+            wsContainer = d3.select("body").append("svg")
+                .attr("width", 700)
+                .attr("height", 500);
+
             wordstream(wsContainer, wsData, config);
         }
     });
@@ -88,7 +86,6 @@ function getStreamData(data){
     }
 
     let streamData11 = {};
-
     data.forEach(d => {
         let flag = false;
         for (let i = 0; i < disasterKeywords.length; i++) {
@@ -105,7 +102,6 @@ function getStreamData(data){
 
     // streamData
     keyList = d3.keys(streamData00);
-
     keyList.forEach(d => {
         streamData11[d] = [];
         for (let i = startDate; i < endDate; i += streamStep) {
@@ -118,7 +114,6 @@ function getStreamData(data){
             })
         }
     });
-
     for (let i = 0; i < streamData11[keyList[0]].length; i++) {
         let obj = {};
         obj.time = streamData11[keyList[0]][i].timestamp;
@@ -131,15 +126,13 @@ function getStreamData(data){
 }
 
 function getWSdata(rangedData) {
-    console.log(rangedData);
     let wsData = {};
     rangedData.forEach(d => {
         let date = Date.parse(d.time);
         date = formatTimeReadData(new Date(date));
 
         let wordArray = d.message.toLowerCase()
-            .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"/gi, '')
-            .replace(/\d/g, "")
+            .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"\d/gi, '')
             .split(" ")
             .filter(d => {
                 return stopwords.indexOf(d) < 0;
@@ -165,11 +158,10 @@ function getWSdata(rangedData) {
             //Convert to array of objects
             words[topic] = d3.keys(counts).map(function (d) {
                 return {
-                    sudden: 1,
                     text: d,
                     frequency: counts[d],
                     topic: topic,
-                    id: d.replace(/[^a-zA-Z0-9]/g, '_') + "_" + topic + "_" + (i)
+                    // id: d.replace(/[^a-zA-Z0-9]/g, '_') + "_" + topic + "_" + (i)
                 }
             }).sort(function (a, b) {//sort the terms by frequency
                 return b.frequency - a.frequency;
@@ -286,19 +278,26 @@ function drawGraph() {
         .on('mouseout', function() {
             indexGroup.style('display', 'none');})
         .on("mousemove", function () {
-            let mousex = d3.mouse(this);
-            mousex = mousex[0] + 6;
+            let mouseX = d3.mouse(this);
+            mouseX = mouseX[0] + 6;
 
+            let current = Date.parse(xScale.invert(mouseX - 8));
             // tooltip and vertical line
-            vertical.style("left", (mousex + margin.left)+ "px");
+            vertical.style("left", (mouseX + margin.left)+ "px");
 
             tooltip.html(
-                '<text class = "bold">' + formatTimeLegend(xScale.invert(mousex - 8)) + "</text>")
+                '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX - 8)) + "</text>")
                 .style("left", ((d3.event.pageX) + 10) + "px")
                 .style("pointer-events", "none");
 
             // get data for ws
-            console.log(Date.parse(xScale.invert(mousex - 8)));
+            let thisNearestHour = nearestHour(current);
+            let rangedData = getRangedData(data, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
+            let wsData = getWSdata(rangedData);
+
+            wsContainer.selectAll("*").remove();
+            wordstream(wsContainer, wsData, config);
+
         });
 
     let legend = g
@@ -347,3 +346,13 @@ function drawGraph() {
     // ;
 }
 
+function nearestHour(milliseconds) {
+    return Date.parse(d3.timeHour.round(new Date(milliseconds)))
+}
+
+function getRangedData(data, start, end) {
+    return data.filter(d => {
+        return ((start < Date.parse(d.time)) &&
+            (Date.parse(d.time) < end))
+    });
+}
