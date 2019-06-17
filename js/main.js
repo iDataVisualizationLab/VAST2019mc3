@@ -171,10 +171,10 @@ function drawGraph() {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
 
-    d3.select(main)
-        .append("div")
-        .attr("class", "customSelect")
-        .append("select");
+    // d3.select(main)
+    //     .append("div")
+    //     .attr("class", "customSelect")
+    //     .append("select");
 
     d3.select(main)
         .append("div")
@@ -185,15 +185,12 @@ function drawGraph() {
         .min(0)
         .max(30)
         .width(300)
-        // .tickFormat(d3.format('.2%'))
         .ticks(5)
         .step(1)
         .default(5)
         .on('onchange', val => {
             d3.select('p#value-simple').text((val));
             numHourAfter = val;
-            wsContainer
-                .attr("width", wsContainerWidth(numHourAfter));
             update(current)
         });
 
@@ -237,7 +234,6 @@ function drawGraph() {
         .y0(d => yScale(d[0]))
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
-    initList();
 
     let indexGroup = d3.select(main).append("g");
     let tooltip = indexGroup
