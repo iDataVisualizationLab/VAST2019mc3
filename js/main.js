@@ -46,6 +46,7 @@ let slidingWidth = function(numHourAfter){
         .domain([0,30])
         .range([0, (30/108) * width])(numHourAfter)
 };
+let dashedGroup;
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -176,7 +177,11 @@ function drawGraph() {
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
+    // main svg
+    let g = svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    // slider
     d3.select(main)
         .append("div")
         .attr("id", "slider-simple");
@@ -205,10 +210,7 @@ function drawGraph() {
 
     gSimple.call(sliderSimple);
 
-    d3.select('p#value-simple').text((sliderSimple.value()));
-
-    let g = svg.append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    d3.select('p#value-simple').text(sliderSimple.value());
 
     //Create the stack layout for the data
     const stack = d3.stack().keys(keyList)
@@ -242,6 +244,7 @@ function drawGraph() {
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
 
+    // Running tooltip for date and time
     let tooltip = d3.select(main)
         .append("div")
         .attr("class", "tooltip")
@@ -249,6 +252,7 @@ function drawGraph() {
         .style("font-size", "15px")
         .style("pointer-events", "none");
 
+    // Main stream
     g.append("g")
         .attr("id", "streamG")
         .selectAll(".layer")
@@ -260,6 +264,7 @@ function drawGraph() {
             return d3.schemeCategory10[i]
         });
 
+    // Long vertical index line
     let vertical = g
         .append("line")
         .attr("id", "vertical")
@@ -269,22 +274,11 @@ function drawGraph() {
         .attr("x1", xScale(fisrt5hrsRange[0]))
         .attr("x2", xScale(fisrt5hrsRange[0]));
 
+    // Sliding window
     let windowSize = {
         height: 287,
         width: slidingWidth(numHourAfter),
     };
-
-    let dashedVertical = g
-        .append("line")
-        .attr("id", "dashedVertical")
-        .style("stroke-width", 2)
-        .style("stroke", "black")
-        .style("stroke-dasharray", ("3, 3"))
-        .attr("y1", height)
-        .attr("y2", height + margin.top)
-        .attr("x1", xScale(fisrt5hrsRange[0]) + windowSize.width)
-        .attr("x2", xScale(fisrt5hrsRange[0]) + windowSize.width)
-        .attr("cursor", "ew-resize");
 
     slidingWindow = g.append("rect")
         .attr("x", xScale(fisrt5hrsRange[0]))
@@ -295,7 +289,38 @@ function drawGraph() {
         .attr("fill", "#aaaaaa")
         .attr("fill-opacity", 0.1)
         .attr("stroke", "black");
-    console.log(stacks[stacks.length-1]);
+
+    // Dashed line for window width adjustment
+    dashedGroup = g
+        .append("g")
+        .attr("id", "dashedGroup");
+
+    // actual dash line
+    let dashedGroupWidth = 10;
+    dashedVertical = dashedGroup
+        .append("line")
+        .attr("id", "dashedVertical")
+        .style("stroke-width", 1)
+        .style("stroke", "black")
+        .style("stroke-dasharray", ("4, 2"))
+        .attr("y1", 0)
+        .attr("y2", margin.top)
+        .attr("x1", 0)
+        .attr("x2", 0);
+        // .attr("x1", xScale(fisrt5hrsRange[0]) + windowSize.width)
+        // .attr("x2", xScale(fisrt5hrsRange[0]) + windowSize.width);
+
+    // overlay RECT to select
+    dashedGroup.append("rect")
+        .attr("id", "overlayDashedGroup")
+        .attr("class", "overlay")
+        .attr("width", dashedGroupWidth)
+        .attr("height", margin.top)
+        .attr("x", +dashedVertical.attr("x1") - dashedGroupWidth/2)
+        .attr("cursor", "ew-resize");
+
+    // translate group
+    dashedGroup.attr("transform", "translate(" + (xScale(fisrt5hrsRange[0]) + windowSize.width) + ","+ height + ")");
 
     // highlight layers
     // svg.selectAll(".layer")
@@ -329,9 +354,9 @@ function drawGraph() {
                 .attr("x1", mouseX - 8)
                 .attr("x2", mouseX - 8);
 
-            dashedVertical
-                .attr("x1", +slidingWindow.attr("width") + mouseX - 8 )
-                .attr("x2", +slidingWindow.attr("width") + mouseX - 8 );
+            dashedGroup
+                .attr("transform", "translate(" + (+slidingWindow.attr("width") + mouseX - 8 ) +
+                    ","+ height + ")");
 
             slidingWindow
                 .attr("x", mouseX - 8);
@@ -392,13 +417,17 @@ function update(current) {
     let wsData = getWSdata(rangedData);
 
     let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
-
     let peak = d3.max(streamRangedData, d=>d.y);
-    // console.log(peak);
+
     slidingWindow
         .attr("y", yScale(peak))
         .attr("height", height - yScale(peak))
         .attr("width", slidingWidth(numHourAfter));
+
+    dashedGroup
+        .attr("transform", "translate(" + (+slidingWindow.attr("x") + (+slidingWindow.attr("width"))) +
+            ","+ height + ")");
+
     wsContainer.selectAll("*").remove();
     wsContainer
         .attr("width", wsContainerWidth(numHourAfter));
