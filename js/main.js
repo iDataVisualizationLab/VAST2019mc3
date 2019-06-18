@@ -40,13 +40,16 @@ let wsContainerWidth = function (numHourAfter) {
         .domain([0,30])
         .range([800, 2000])(numHourAfter);
 };
+let slidingGroup;
 let slidingWindow;
 let slidingWidth = function(numHourAfter){
     return d3.scaleLinear()
         .domain([0,30])
         .range([0, (30/108) * width])(numHourAfter)
 };
+const stepDash = slidingWidth(30)/30;
 let dashedGroup;
+let vertical;
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -265,7 +268,7 @@ function drawGraph() {
         });
 
     // Long vertical index line
-    let vertical = g
+    vertical = g
         .append("line")
         .attr("id", "vertical")
         .style("stroke", "black")
@@ -280,15 +283,26 @@ function drawGraph() {
         width: slidingWidth(numHourAfter),
     };
 
-    slidingWindow = g.append("rect")
-        .attr("x", xScale(fisrt5hrsRange[0]))
+    slidingGroup = g.append("g").attr("id", 'slidingGroup');
+    slidingWindow = slidingGroup.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
         .attr("width", slidingWidth(6))
-        .attr("y", height - windowSize.height)
-        .attr("width", windowSize.width)
         .attr("height", windowSize.height)
         .attr("fill", "#aaaaaa")
         .attr("fill-opacity", 0.1)
         .attr("stroke", "black");
+
+    let slidingText = slidingGroup.append("text")
+        .attr("x", +slidingWindow.attr("width") /2)
+        .attr("y", -8)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 12)
+        .text(numHourAfter + " hours");
+
+    slidingGroup.attr("transform", "translate(" + xScale(fisrt5hrsRange[0]) + "," +
+        (height - windowSize.height) + ")");
 
     // Dashed line for window width adjustment
     dashedGroup = g
@@ -297,7 +311,7 @@ function drawGraph() {
 
     // actual dash line
     let dashedGroupWidth = 10;
-    dashedVertical = dashedGroup
+    let dashedVertical = dashedGroup
         .append("line")
         .attr("id", "dashedVertical")
         .style("stroke-width", 1)
@@ -320,7 +334,34 @@ function drawGraph() {
         .attr("cursor", "ew-resize");
 
     // translate group
-    dashedGroup.attr("transform", "translate(" + (xScale(fisrt5hrsRange[0]) + windowSize.width) + ","+ height + ")");
+    dashedGroup.attr("transform", "translate(" + (xScale(fisrt5hrsRange[0]) + windowSize.width) +
+        ","+ height + ")");
+
+    // define drag
+    // function dragstarted() {
+    //     d3.select(this).classed(activeClassName, true);
+    // }
+    // function dragended() {
+    //     d3.select(this).classed(activeClassName, false);
+    // }
+
+    function dragged() {
+        let x = d3.event.x;
+        let startMark = +vertical.attr("x1");
+        // text.text(stepPosition(x));
+        let thisGroup = d3.select(this);
+        let pos = stepPosition(x, startMark);
+        thisGroup.attr("transform", "translate(" + pos[0] + ","+height+")");
+        numHourAfter = pos[1];
+        update(current);
+    }
+
+    let drag = d3.drag()
+        // .on('start', dragstarted)
+        .on('drag', dragged)
+        // .on('end', dragended);
+
+    dashedGroup.call(drag);
 
     // highlight layers
     // svg.selectAll(".layer")
@@ -358,8 +399,8 @@ function drawGraph() {
                 .attr("transform", "translate(" + (+slidingWindow.attr("width") + mouseX - 8 ) +
                     ","+ height + ")");
 
-            slidingWindow
-                .attr("x", mouseX - 8);
+            slidingGroup
+                .attr("transform", "translate(" + (mouseX - 8) + "," + (height - (+slidingWindow.attr("height"))) + ")");
 
             tooltip.html(
                 '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX - 8)) + "</text>")
@@ -393,7 +434,7 @@ function drawGraph() {
 }
 
 function nearestHour(milliseconds) {
-    return Date.parse(d3.timeHour.floor(new Date(milliseconds)))
+    return Date.parse(d3.timeHour.round(new Date(milliseconds)))
 }
 
 function getRangedData(data, start, end) {
@@ -419,17 +460,22 @@ function update(current) {
     let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
     let peak = d3.max(streamRangedData, d=>d.y);
 
+    slidingGroup
+        .attr("transform", "translate(" + (+vertical.attr("x1")) + "," + yScale(peak) + ")")
+        .select("text")
+        .attr("x", +slidingWindow.attr("width") /2)
+        .attr("text-anchor", "middle")
+        .text(numHourAfter + " hours");
     slidingWindow
-        .attr("y", yScale(peak))
         .attr("height", height - yScale(peak))
         .attr("width", slidingWidth(numHourAfter));
-
-    dashedGroup
-        .attr("transform", "translate(" + (+slidingWindow.attr("x") + (+slidingWindow.attr("width"))) +
-            ","+ height + ")");
 
     wsContainer.selectAll("*").remove();
     wsContainer
         .attr("width", wsContainerWidth(numHourAfter));
     wordstream(wsContainer, wsData, config);
+}
+function stepPosition(x, startMark){
+    let value = Math.min(Math.max(Math.floor((x-startMark) / stepDash),1), 30);
+    return [value * stepDash + startMark, value]
 }
