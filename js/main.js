@@ -184,37 +184,6 @@ function drawGraph() {
     let g = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // slider
-    d3.select(main)
-        .append("div")
-        .attr("id", "slider-simple");
-
-    let sliderSimple = d3
-        .sliderBottom()
-        .min(0)
-        .max(30)
-        .width(300)
-        .ticks(5)
-        .step(1)
-        .default(6)
-        .on('onchange', val => {
-            d3.select('p#value-simple').text((val));
-            numHourAfter = val;
-            update(current)
-        });
-
-    let gSimple = d3
-        .select('div#slider-simple')
-        .append('svg')
-        .attr('width', 500)
-        .attr('height', 100)
-        .append('g')
-        .attr('transform', 'translate(30,30)');
-
-    gSimple.call(sliderSimple);
-
-    d3.select('p#value-simple').text(sliderSimple.value());
-
     //Create the stack layout for the data
     const stack = d3.stack().keys(keyList)
         .offset(d3.stackOffsetNone);
@@ -233,13 +202,14 @@ function drawGraph() {
     //The x axis
     const xAxisGroup = g.append("g").attr("transform", "translate(0," + height + ")");
     const xAxis = d3.axisBottom(xScale);
-    xAxisGroup.call(xAxis);
+    let xAxisNodes = xAxisGroup.call(xAxis);
+    styleAxis(xAxisNodes);
 
     //The y Axis
     const yAxisGroup = g.append('g');
     const yAxis = d3.axisLeft(yScale);
-    yAxisGroup.call(yAxis);
-
+    let yAxisNodes = yAxisGroup.call(yAxis);
+    styleAxis(yAxisNodes);
     //The area function used to generate path data for the area.
     const areaGen = d3.area()
         .x(d => xScale(d.data.time))
@@ -253,7 +223,10 @@ function drawGraph() {
         .attr("class", "tooltip")
         .style("top", (height + margin.top/2 + margin.bottom) + "px")
         .style("font-size", "15px")
-        .style("pointer-events", "none");
+        .style("pointer-events", "none")
+        .html(
+        '<text class = "bold">' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
+        .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
 
     // Main stream
     g.append("g")
@@ -310,7 +283,7 @@ function drawGraph() {
         .attr("id", "dashedGroup");
 
     // actual dash line
-    let dashedGroupWidth = 10;
+    let dashedGroupWidth = 20;
     let dashedVertical = dashedGroup
         .append("line")
         .attr("id", "dashedVertical")
@@ -404,12 +377,13 @@ function drawGraph() {
 
             tooltip.html(
                 '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX - 8)) + "</text>")
-                .style("left", (d3.event.pageX + 8) + "px");
+                .style("left", (mouseX + 8 + margin.left) + "px");
 
             // get data for ws
             update(current);
 
         });
+
 
     let legend = g
         .append("g")
@@ -478,4 +452,8 @@ function update(current) {
 function stepPosition(x, startMark){
     let value = Math.min(Math.max(Math.floor((x-startMark) / stepDash),1), 30);
     return [value * stepDash + startMark, value]
+}
+function styleAxis(axisNodes) {
+   axisNodes.selectAll('.tick text')
+       .attr("fill", "#555555");
 }
