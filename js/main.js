@@ -26,7 +26,7 @@ let yScale = d3.scaleLinear()
 let config = {
     topWord: 40,
     minFont: 10,
-    maxFont: 30,
+    maxFont: 25,
     tickFont: 12,
     legendFont: 12,
     curve: d3.curveMonotoneX
@@ -38,7 +38,7 @@ let wsContainer;
 let wsContainerWidth = function (numHourAfter) {
     return d3.scaleLinear()
         .domain([0,30])
-        .range([600, 2000])(numHourAfter);
+        .range([800, 2000])(numHourAfter);
 };
 let slidingWindow;
 let slidingWidth = function(numHourAfter){
@@ -271,8 +271,20 @@ function drawGraph() {
 
     let windowSize = {
         height: 287,
-        width: 52,
+        width: slidingWidth(numHourAfter),
     };
+
+    let dashedVertical = g
+        .append("line")
+        .attr("id", "dashedVertical")
+        .style("stroke-width", 2)
+        .style("stroke", "black")
+        .style("stroke-dasharray", ("3, 3"))
+        .attr("y1", height)
+        .attr("y2", height + margin.top)
+        .attr("x1", xScale(fisrt5hrsRange[0]) + windowSize.width)
+        .attr("x2", xScale(fisrt5hrsRange[0]) + windowSize.width)
+        .attr("cursor", "ew-resize");
 
     slidingWindow = g.append("rect")
         .attr("x", xScale(fisrt5hrsRange[0]))
@@ -312,11 +324,14 @@ function drawGraph() {
             mouseX = mouseX[0] + 8;
 
             current = Date.parse(xScale.invert(mouseX - 8));
-
             // vertical line, sliding window and tooltip
             vertical
                 .attr("x1", mouseX - 8)
                 .attr("x2", mouseX - 8);
+
+            dashedVertical
+                .attr("x1", +slidingWindow.attr("width") + mouseX - 8 )
+                .attr("x2", +slidingWindow.attr("width") + mouseX - 8 );
 
             slidingWindow
                 .attr("x", mouseX - 8);
