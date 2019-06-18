@@ -1,9 +1,5 @@
 /* ----------------- LINE GRAPH ----------------- */
-/*.line {*/
-    /*fill: none;*/
-    /*stroke: #bd6f41;*/
-    /*stroke-width: 2px;*/
-/*}*/
+
 .focusLine {
     fill: none;
     stroke: steelblue;
