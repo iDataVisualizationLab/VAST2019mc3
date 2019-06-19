@@ -13,6 +13,9 @@ const margin = {top: 30, right: 20, bottom: 50, left: 50},
 
 const fisrt5hrsRange = [1586201491000, 1586223091000];
 const dataSelection = ["All", "Events"];
+const bisect = d3.bisector(d => {
+    return d.time
+}).left;
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
@@ -57,7 +60,14 @@ function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
         if (error) throw error;
         else {
-            data = inputData;
+            data = inputData.map(d => {
+                return {
+                    time: Date.parse(d.time),
+                    location: d.location,
+                    account: d.account,
+                    message: d.message
+                }
+            });
             console.log(data);
             streamRawData = getStreamEventData(data, eventKeywords);
             drawGraph();
@@ -88,7 +98,7 @@ function getStreamEventData(data, dataOption){
         for (let i = 0; i < dataOption.length; i++) {
             for (let j = 0; j < dataOption[i].length; j++) {
                 if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[dataOption[i]].push(d);
+                    streamData00[dataOption[i]].push(d.time);
                     wsRawData.push(d);
                     flag = true;
                     break;
@@ -103,12 +113,13 @@ function getStreamEventData(data, dataOption){
     keyList.forEach(d => {
         streamData11[d] = [];
         for (let i = startDate; i < endDate; i += streamStep) {
+            // get index of that start and end
             streamData11[d].push({
                 timestamp: i,
-                count: streamData00[d].filter(d => {
-                    let time = Date.parse(d.time);
-                    return time >= i && time < i + streamStep;
-                })
+                count: streamData00[d].slice(
+                    d3.bisect(streamData00[d], i),
+                    d3.bisect(streamData00[d], i+streamStep))
+                    .length
             })
         }
     });
@@ -116,66 +127,23 @@ function getStreamEventData(data, dataOption){
         let obj = {};
         obj.time = streamData11[keyList[0]][i].timestamp;
         keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count.length;
+            obj[key] = streamData11[key][i].count;
         });
         streamData.push(obj);
     }
     return streamData;
 }
 
-function getStreamAllData(data, dataOption){
+function getStream(data, dataOption) {
     wsRawData = data;
-    let streamData = [];
-    let streamData00 = {};
-    for (let i = 0; i < dataOption.length; i++) {
-        streamData00[dataOption[i]] = [];
-    }
-    // streamData00["other"] = [];
-    let streamData11 = {};
-    data.forEach(d => {
-        let flag = false;
-        for (let i = 0; i < dataOption.length; i++) {
-            for (let j = 0; j < dataOption[i].length; j++) {
-                if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[dataOption[i]].push(d);
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag === true) break;
-        }
-    });
-
-    // streamRawData
-    keyList = d3.keys(streamData00);
-    // stuck from this
-    keyList.forEach(d => {
-        streamData11[d] = [];
-        for (let i = startDate; i < endDate; i += streamStep) {
-            streamData11[d].push({
-                timestamp: i,
-                count: streamData00[d].filter(d => {
-                    let time = Date.parse(d.time);
-                    return time >= i && time < i + streamStep;
-                })
-            })
-        }
-    });
-    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
-        let obj = {};
-        obj.time = streamData11[keyList[0]][i].timestamp;
-        keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count.length;
-        });
-        streamData.push(obj);
-    }
-    return streamData;
 }
+
+
 
 function getWSdata(rangedData) {
     let wsData = {};
     rangedData.forEach(d => {
-        let date = Date.parse(d.time);
+        let date = (d.time);
         date = formatTimeReadData(new Date(date));
 
         let wordArray = d.message.toLowerCase()
@@ -467,8 +435,8 @@ function nearestHour(milliseconds) {
 
 function getRangedData(data, start, end) {
     return data.filter(d => {
-        return ((start < Date.parse(d.time)) &&
-            (Date.parse(d.time) < end))
+        return ((start < (d.time)) &&
+            ((d.time) < end))
     });
 }
 
