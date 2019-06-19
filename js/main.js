@@ -13,6 +13,9 @@ const margin = {top: 30, right: 20, bottom: 50, left: 50},
 
 const fisrt5hrsRange = [1586201491000, 1586223091000];
 const dataSelection = ["All", "Events"];
+const bisect = d3.bisector(d => {
+    return d.time
+}).left;
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
@@ -57,7 +60,14 @@ function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
         if (error) throw error;
         else {
-            data = inputData;
+            data = inputData.map(d => {
+                return {
+                    time: Date.parse(d.time),
+                    location: d.location,
+                    account: d.account,
+                    message: d.message
+                }
+            });
             console.log(data);
             streamRawData = getStreamEventData(data, eventKeywords);
             drawGraph();
@@ -88,7 +98,7 @@ function getStreamEventData(data, dataOption){
         for (let i = 0; i < dataOption.length; i++) {
             for (let j = 0; j < dataOption[i].length; j++) {
                 if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[dataOption[i]].push(d);
+                    streamData00[dataOption[i]].push(d.time);
                     wsRawData.push(d);
                     flag = true;
                     break;
@@ -103,12 +113,13 @@ function getStreamEventData(data, dataOption){
     keyList.forEach(d => {
         streamData11[d] = [];
         for (let i = startDate; i < endDate; i += streamStep) {
+            // get index of that start and end
             streamData11[d].push({
                 timestamp: i,
-                count: streamData00[d].filter(d => {
-                    let time = Date.parse(d.time);
-                    return time >= i && time < i + streamStep;
-                })
+                count: streamData00[d].slice(
+                    d3.bisect(streamData00[d], i),
+                    d3.bisect(streamData00[d], i+streamStep))
+                    .length
             })
         }
     });
@@ -116,7 +127,7 @@ function getStreamEventData(data, dataOption){
         let obj = {};
         obj.time = streamData11[keyList[0]][i].timestamp;
         keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count.length;
+            obj[key] = streamData11[key][i].count;
         });
         streamData.push(obj);
     }
@@ -124,40 +135,44 @@ function getStreamEventData(data, dataOption){
 }
 
 function getStreamAllData(data, dataOption){
-    wsRawData = data;
     let streamData = [];
     let streamData00 = {};
     for (let i = 0; i < dataOption.length; i++) {
         streamData00[dataOption[i]] = [];
     }
-    // streamData00["other"] = [];
+    streamData00["other"] = [];
+
     let streamData11 = {};
     data.forEach(d => {
         let flag = false;
         for (let i = 0; i < dataOption.length; i++) {
             for (let j = 0; j < dataOption[i].length; j++) {
                 if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[dataOption[i]].push(d);
+                    streamData00[dataOption[i]].push(d.time);
+                    wsRawData.push(d);
                     flag = true;
                     break;
                 }
             }
             if (flag === true) break;
         }
+        if (!flag){
+            streamData00["other"].push(d.time);
+        }
     });
 
     // streamRawData
     keyList = d3.keys(streamData00);
-    // stuck from this
     keyList.forEach(d => {
         streamData11[d] = [];
         for (let i = startDate; i < endDate; i += streamStep) {
+            // get index of that start and end
             streamData11[d].push({
                 timestamp: i,
-                count: streamData00[d].filter(d => {
-                    let time = Date.parse(d.time);
-                    return time >= i && time < i + streamStep;
-                })
+                count: streamData00[d].slice(
+                    d3.bisect(streamData00[d], i),
+                    d3.bisect(streamData00[d], i+streamStep))
+                    .length
             })
         }
     });
@@ -165,7 +180,7 @@ function getStreamAllData(data, dataOption){
         let obj = {};
         obj.time = streamData11[keyList[0]][i].timestamp;
         keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count.length;
+            obj[key] = streamData11[key][i].count;
         });
         streamData.push(obj);
     }
@@ -175,7 +190,7 @@ function getStreamAllData(data, dataOption){
 function getWSdata(rangedData) {
     let wsData = {};
     rangedData.forEach(d => {
-        let date = Date.parse(d.time);
+        let date = (d.time);
         date = formatTimeReadData(new Date(date));
 
         let wordArray = d.message.toLowerCase()
@@ -258,7 +273,7 @@ function drawGraph() {
     styleAxis(xAxisNodes);
 
     //The y Axis
-    const yAxisGroup = g.append('g');
+    const yAxisGroup = g.append('g').attr('id','yAxis');
     const yAxis = d3.axisLeft(yScale);
     let yAxisNodes = yAxisGroup.call(yAxis);
     styleAxis(yAxisNodes);
@@ -467,8 +482,8 @@ function nearestHour(milliseconds) {
 
 function getRangedData(data, start, end) {
     return data.filter(d => {
-        return ((start < Date.parse(d.time)) &&
-            (Date.parse(d.time) < end))
+        return ((start < (d.time)) &&
+            ((d.time) < end))
     });
 }
 
@@ -531,12 +546,16 @@ function initDataSelection(dataSelection) {
             if (d === "Events"){
                 streamRawData = getStreamEventData(data, eventKeywords);
                 updateWindow(current);
+                updateStream();
                 console.log(keyList)
             }
             else if (d === "All"){
                 streamRawData = getStreamAllData(data, eventKeywords);
+                wsRawData = data;
                 updateWindow(current);
-                console.log(keyList)
+                updateStream();
+                console.log(keyList);
+                console.log(streamRawData);
             }
         });
 }
@@ -557,16 +576,10 @@ function updateStream() {
     xScale.domain([startDate, endDate]);
     yScale.domain(d3.extent(stacks.flat().flat()));
 
-    //The x axis
-    const xAxisGroup = g.append("g").attr("transform", "translate(0," + height + ")");
-    const xAxis = d3.axisBottom(xScale);
-    let xAxisNodes = xAxisGroup.call(xAxis);
-    styleAxis(xAxisNodes);
-
     //The y Axis
-    const yAxisGroup = g.append('g');
+    const yAxisGroup = d3.select('#yAxis');
     const yAxis = d3.axisLeft(yScale);
-    let yAxisNodes = yAxisGroup.call(yAxis);
+    let yAxisNodes = yAxisGroup.transition().duration(1000).call(yAxis);
     styleAxis(yAxisNodes);
 
     //The area function used to generate path data for the area.
@@ -576,16 +589,42 @@ function updateStream() {
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
 
-    // Main stream
-    g.append("g")
-        .attr("id", "streamG")
-        .selectAll(".layer")
-        .data(stacks).enter()
-        .append("path")
-        .attr("class", "layer")
+    let newchartstack = d3.select("#streamG")
+        .selectAll("path").data(stacks,d=>d.key);
+
+    newchartstack.enter().append('path') .attr("class", "layer")
         .attr("d", areaGen)
         .attr("fill", (d, i) => {
-            return d3.schemeCategory10[i]
+            if (i === 4) {
+                return topicColor[0]
+            }
+            else {
+                return d3.schemeCategory10[i]
+            }
         });
+
+    newchartstack.exit().remove();
+    newchartstack
+        .transition().duration(1000).attr("d", areaGen)
+        .attr("fill", (d, i) => {
+            if (i === 4) {
+                return topicColor[0]
+            }
+            else {
+                return d3.schemeCategory10[i]
+            }
+        });
+
+    // // Main stream
+    // g.append("g")
+    //     .attr("id", "streamG")
+    //     .selectAll(".layer")
+    //     .data(stacks).enter()
+    //     .append("path")
+    //     .attr("class", "layer")
+    //     .attr("d", areaGen)
+    //     .attr("fill", (d, i) => {
+    //         return d3.schemeCategory10[i]
+    //     });
 
 }
