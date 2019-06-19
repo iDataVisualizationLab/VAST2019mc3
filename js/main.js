@@ -130,7 +130,7 @@ function getStreamAllData(data, dataOption){
     for (let i = 0; i < dataOption.length; i++) {
         streamData00[dataOption[i]] = [];
     }
-    streamData00["other"] = [];
+    // streamData00["other"] = [];
     let streamData11 = {};
     data.forEach(d => {
         let flag = false;
@@ -140,9 +140,6 @@ function getStreamAllData(data, dataOption){
                     streamData00[dataOption[i]].push(d);
                     flag = true;
                     break;
-                }
-                else {
-                    streamData00["other"].push(d);
                 }
             }
             if (flag === true) break;
