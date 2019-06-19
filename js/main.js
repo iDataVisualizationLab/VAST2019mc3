@@ -455,12 +455,14 @@ function drawGraph() {
 
     let legend = g
         .append("g")
+        .attr("id", "legendGroup")
         .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
 
     legend.selectAll("circle")
         .data(keyList)
         .enter()
         .append("circle")
+        .attr("class", "legend")
         .attr("r", 5)
         .attr("cx", 10)
         .attr("cy", (d, i) => 65 - 20 * i)
@@ -470,6 +472,7 @@ function drawGraph() {
         .data(keyList)
         .enter()
         .append("text")
+        .attr("class", "legendText")
         .text(d => d)
         .attr("x", 20)
         .attr("y", (d, i) => 70 - 20 * i);
@@ -547,15 +550,12 @@ function initDataSelection(dataSelection) {
                 streamRawData = getStreamEventData(data, eventKeywords);
                 updateWindow(current);
                 updateStream();
-                console.log(keyList)
             }
             else if (d === "All"){
                 streamRawData = getStreamAllData(data, eventKeywords);
                 wsRawData = data;
                 updateWindow(current);
                 updateStream();
-                console.log(keyList);
-                console.log(streamRawData);
             }
         });
 }
@@ -615,16 +615,67 @@ function updateStream() {
             }
         });
 
-    // // Main stream
-    // g.append("g")
-    //     .attr("id", "streamG")
-    //     .selectAll(".layer")
-    //     .data(stacks).enter()
-    //     .append("path")
-    //     .attr("class", "layer")
-    //     .attr("d", areaGen)
-    //     .attr("fill", (d, i) => {
-    //         return d3.schemeCategory10[i]
-    //     });
+    let newLegend = d3.select("#legendGroup").selectAll(".legend").data(keyList);
 
+    newLegend.enter()
+        .append("circle")
+        .attr("class", "legend")
+        .attr("cy", (d, i) => 65 - 20 * i)
+        .attr("cx", 10)
+        .attr("r", 5)
+        .attr("opacity", 0)
+        .attr("fill", (d, i) => {
+            if (i === 4) {
+                return topicColor[0]
+            }
+            else {
+                return d3.schemeCategory10[i]
+            }
+        })
+        .transition().duration(1000)
+        .attr("opacity", 1);
+
+    newLegend
+        .exit()
+        .attr("opacity", 1)
+        .transition().duration(1000)
+        .attr("opacity", 0)
+        .remove();
+
+    newLegend
+        .attr("r", 5)
+        .attr("cx", 10)
+        .attr("cy", (d, i) => 65 - 20 * i)
+        .attr("fill", (d, i) => {
+            if (i === 4) {
+                return topicColor[0]
+            }
+            else {
+                return d3.schemeCategory10[i]
+            }
+        });
+
+    let newLegendText = d3.select("#legendGroup").selectAll(".legendText").data(keyList);
+    newLegendText .enter()
+        .append("text")
+        .attr("class", "legendText")
+        .text(d => d)
+        .attr("x", 20)
+        .attr("y", (d, i) => 70 - 20 * i)
+        .attr("opacity", 0)
+        .transition().duration(1000)
+        .attr("opacity", 1)
+    ;
+
+    newLegendText
+        .exit()
+        .attr("opacity", 1)
+        .transition().duration(1000)
+        .attr("opacity", 0)
+        .remove();
+
+    newLegendText
+        .text(d => d)
+        .attr("x", 20)
+        .attr("y", (d, i) => 70 - 20 * i);
 }
