@@ -82,7 +82,6 @@ function getStreamEventData(data, dataOption){
     for (let i = 0; i < dataOption.length; i++) {
         streamData00[dataOption[i]] = [];
     }
-
     let streamData11 = {};
     data.forEach(d => {
         let flag = false;
@@ -101,6 +100,58 @@ function getStreamEventData(data, dataOption){
 
     // streamRawData
     keyList = d3.keys(streamData00);
+    keyList.forEach(d => {
+        streamData11[d] = [];
+        for (let i = startDate; i < endDate; i += streamStep) {
+            streamData11[d].push({
+                timestamp: i,
+                count: streamData00[d].filter(d => {
+                    let time = Date.parse(d.time);
+                    return time >= i && time < i + streamStep;
+                })
+            })
+        }
+    });
+    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
+        let obj = {};
+        obj.time = streamData11[keyList[0]][i].timestamp;
+        keyList.forEach(key => {
+            obj[key] = streamData11[key][i].count.length;
+        });
+        streamData.push(obj);
+    }
+    return streamData;
+}
+
+function getStreamAllData(data, dataOption){
+    wsRawData = data;
+    let streamData = [];
+    let streamData00 = {};
+    for (let i = 0; i < dataOption.length; i++) {
+        streamData00[dataOption[i]] = [];
+    }
+    streamData00["other"] = [];
+    let streamData11 = {};
+    data.forEach(d => {
+        let flag = false;
+        for (let i = 0; i < dataOption.length; i++) {
+            for (let j = 0; j < dataOption[i].length; j++) {
+                if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
+                    streamData00[dataOption[i]].push(d);
+                    flag = true;
+                    break;
+                }
+                else {
+                    streamData00["other"].push(d);
+                }
+            }
+            if (flag === true) break;
+        }
+    });
+
+    // streamRawData
+    keyList = d3.keys(streamData00);
+    // stuck from this
     keyList.forEach(d => {
         streamData11[d] = [];
         for (let i = startDate; i < endDate; i += streamStep) {
@@ -221,18 +272,7 @@ function drawGraph() {
         .y0(d => yScale(d[0]))
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
-    initDataSelection(dataSelection);
-    // Running tooltip for date and time
-    let tooltip = d3.select(main)
-        .append("div")
-        .attr("class", "tooltip")
-        .style("top", (height + margin.top/2 + margin.bottom) + "px")
-        .style("font-size", "15px")
-        .style("pointer-events", "none")
-        .html(
-        '<text class = "bold">' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
-        .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
-
+    
     // Main stream
     g.append("g")
         .attr("id", "streamG")
@@ -244,6 +284,18 @@ function drawGraph() {
         .attr("fill", (d, i) => {
             return d3.schemeCategory10[i]
         });
+    
+    initDataSelection(dataSelection);
+    // Running tooltip for date and time
+    let tooltip = d3.select(main)
+        .append("div")
+        .attr("class", "tooltip")
+        .style("top", (height + margin.top/2 + margin.bottom) + "px")
+        .style("font-size", "15px")
+        .style("pointer-events", "none")
+        .html(
+        '<text class = "bold">' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
+        .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
 
     // Long vertical index line
     vertical = g
@@ -482,11 +534,61 @@ function initDataSelection(dataSelection) {
             if (d === "Events"){
                 streamRawData = getStreamEventData(data, eventKeywords);
                 updateWindow(current);
+                console.log(keyList)
             }
             else if (d === "All"){
-
+                streamRawData = getStreamAllData(data, eventKeywords);
+                updateWindow(current);
+                console.log(keyList)
             }
         });
 }
 
+function updateStream() {
+    //Create the stack layout for the data
+    const stack = d3.stack().keys(keyList)
+        .offset(d3.stackOffsetNone);
 
+    const stacks = stack(streamRawData);
+    highestStack = stacks[stacks.length-1].map(d => {
+        return {
+            y: d[1],
+            time: d.data.time
+        }
+    });
+    //The scales
+    xScale.domain([startDate, endDate]);
+    yScale.domain(d3.extent(stacks.flat().flat()));
+
+    //The x axis
+    const xAxisGroup = g.append("g").attr("transform", "translate(0," + height + ")");
+    const xAxis = d3.axisBottom(xScale);
+    let xAxisNodes = xAxisGroup.call(xAxis);
+    styleAxis(xAxisNodes);
+
+    //The y Axis
+    const yAxisGroup = g.append('g');
+    const yAxis = d3.axisLeft(yScale);
+    let yAxisNodes = yAxisGroup.call(yAxis);
+    styleAxis(yAxisNodes);
+
+    //The area function used to generate path data for the area.
+    const areaGen = d3.area()
+        .x(d => xScale(d.data.time))
+        .y0(d => yScale(d[0]))
+        .y1(d => yScale(d[1]))
+        .curve(d3.curveMonotoneX);
+
+    // Main stream
+    g.append("g")
+        .attr("id", "streamG")
+        .selectAll(".layer")
+        .data(stacks).enter()
+        .append("path")
+        .attr("class", "layer")
+        .attr("d", areaGen)
+        .attr("fill", (d, i) => {
+            return d3.schemeCategory10[i]
+        });
+
+}
