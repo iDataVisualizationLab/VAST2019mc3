@@ -1,4 +1,4 @@
-const disasterKeywords = [
+const eventKeywords = [
     ["rumble"],
     ["emergency", "urgent"],
     ["earthquake", "seismic", "quake", "quaking"],

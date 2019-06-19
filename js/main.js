@@ -1,4 +1,4 @@
-const keywordsFlat = disasterKeywords.flat();
+const keywordsFlat = eventKeywords.flat();
 const startDate = Date.parse("2020-04-06 00:00:00");
 const endDate = Date.parse("2020-04-10 11:59:00");
 const hourToMS = 60 * 60 * 1000;
@@ -12,10 +12,12 @@ const margin = {top: 30, right: 20, bottom: 50, left: 50},
     height = 500 - margin.top - margin.bottom;
 
 const fisrt5hrsRange = [1586201491000, 1586223091000];
+const dataSelection = ["All", "Events"];
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
-let streamData;
+let streamRawData;
+let wsRawData = [];
 let highestStack;
 let keyList;
 let xScale = d3.scaleTime()
@@ -24,7 +26,7 @@ let xScale = d3.scaleTime()
 let yScale = d3.scaleLinear()
     .range([height, 0]);
 let config = {
-    topWord: 40,
+    topWord: 70,
     minFont: 10,
     maxFont: 25,
     tickFont: 12,
@@ -57,12 +59,12 @@ function loadData(){
         else {
             data = inputData;
             console.log(data);
-            streamData = getStreamData(data);
+            streamRawData = getStreamEventData(data, eventKeywords);
+            drawGraph();
 
             // first 5 hours
-            let first5Data = getRangedData(data, fisrt5hrsRange[0], fisrt5hrsRange[1]);
+            let first5Data = getRangedData(wsRawData, fisrt5hrsRange[0], fisrt5hrsRange[1]);
             let wsData = getWSdata(first5Data);
-            drawGraph();
 
             wsContainer = d3.select("body").append("svg")
                 .attr("width", wsContainerWidth(numHourAfter))
@@ -73,20 +75,21 @@ function loadData(){
     });
 }
 
-function getStreamData(data){
+function getStreamEventData(data, dataOption){
+    wsRawData = [];
     let streamData = [];
     let streamData00 = {};
-    for (let i = 0; i < disasterKeywords.length; i++) {
-        streamData00[disasterKeywords[i]] = [];
+    for (let i = 0; i < dataOption.length; i++) {
+        streamData00[dataOption[i]] = [];
     }
-
     let streamData11 = {};
     data.forEach(d => {
         let flag = false;
-        for (let i = 0; i < disasterKeywords.length; i++) {
-            for (let j = 0; j < disasterKeywords[i].length; j++) {
-                if (d.message.toLowerCase().indexOf(disasterKeywords[i][j]) >= 0) {
-                    streamData00[disasterKeywords[i]].push(d);
+        for (let i = 0; i < dataOption.length; i++) {
+            for (let j = 0; j < dataOption[i].length; j++) {
+                if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
+                    streamData00[dataOption[i]].push(d);
+                    wsRawData.push(d);
                     flag = true;
                     break;
                 }
@@ -95,8 +98,60 @@ function getStreamData(data){
         }
     });
 
-    // streamData
+    // streamRawData
     keyList = d3.keys(streamData00);
+    keyList.forEach(d => {
+        streamData11[d] = [];
+        for (let i = startDate; i < endDate; i += streamStep) {
+            streamData11[d].push({
+                timestamp: i,
+                count: streamData00[d].filter(d => {
+                    let time = Date.parse(d.time);
+                    return time >= i && time < i + streamStep;
+                })
+            })
+        }
+    });
+    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
+        let obj = {};
+        obj.time = streamData11[keyList[0]][i].timestamp;
+        keyList.forEach(key => {
+            obj[key] = streamData11[key][i].count.length;
+        });
+        streamData.push(obj);
+    }
+    return streamData;
+}
+
+function getStreamAllData(data, dataOption){
+    wsRawData = data;
+    let streamData = [];
+    let streamData00 = {};
+    for (let i = 0; i < dataOption.length; i++) {
+        streamData00[dataOption[i]] = [];
+    }
+    streamData00["other"] = [];
+    let streamData11 = {};
+    data.forEach(d => {
+        let flag = false;
+        for (let i = 0; i < dataOption.length; i++) {
+            for (let j = 0; j < dataOption[i].length; j++) {
+                if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
+                    streamData00[dataOption[i]].push(d);
+                    flag = true;
+                    break;
+                }
+                else {
+                    streamData00["other"].push(d);
+                }
+            }
+            if (flag === true) break;
+        }
+    });
+
+    // streamRawData
+    keyList = d3.keys(streamData00);
+    // stuck from this
     keyList.forEach(d => {
         streamData11[d] = [];
         for (let i = startDate; i < endDate; i += streamStep) {
@@ -188,7 +243,7 @@ function drawGraph() {
     const stack = d3.stack().keys(keyList)
         .offset(d3.stackOffsetNone);
 
-    const stacks = stack(streamData);
+    const stacks = stack(streamRawData);
     highestStack = stacks[stacks.length-1].map(d => {
         return {
             y: d[1],
@@ -210,24 +265,14 @@ function drawGraph() {
     const yAxis = d3.axisLeft(yScale);
     let yAxisNodes = yAxisGroup.call(yAxis);
     styleAxis(yAxisNodes);
+
     //The area function used to generate path data for the area.
     const areaGen = d3.area()
         .x(d => xScale(d.data.time))
         .y0(d => yScale(d[0]))
         .y1(d => yScale(d[1]))
         .curve(d3.curveMonotoneX);
-
-    // Running tooltip for date and time
-    let tooltip = d3.select(main)
-        .append("div")
-        .attr("class", "tooltip")
-        .style("top", (height + margin.top/2 + margin.bottom) + "px")
-        .style("font-size", "15px")
-        .style("pointer-events", "none")
-        .html(
-        '<text class = "bold">' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
-        .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
-
+    
     // Main stream
     g.append("g")
         .attr("id", "streamG")
@@ -239,6 +284,18 @@ function drawGraph() {
         .attr("fill", (d, i) => {
             return d3.schemeCategory10[i]
         });
+    
+    initDataSelection(dataSelection);
+    // Running tooltip for date and time
+    let tooltip = d3.select(main)
+        .append("div")
+        .attr("class", "tooltip")
+        .style("top", (height + margin.top/2 + margin.bottom) + "px")
+        .style("font-size", "15px")
+        .style("pointer-events", "none")
+        .html(
+        '<text class = "bold">' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
+        .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
 
     // Long vertical index line
     vertical = g
@@ -294,8 +351,6 @@ function drawGraph() {
         .attr("y2", margin.top)
         .attr("x1", 0)
         .attr("x2", 0);
-        // .attr("x1", xScale(fisrt5hrsRange[0]) + windowSize.width)
-        // .attr("x2", xScale(fisrt5hrsRange[0]) + windowSize.width);
 
     // overlay RECT to select
     dashedGroup.append("rect")
@@ -326,7 +381,7 @@ function drawGraph() {
         let pos = stepPosition(x, startMark);
         thisGroup.attr("transform", "translate(" + pos[0] + ","+height+")");
         numHourAfter = pos[1];
-        update(current);
+        updateWindow(current);
     }
 
     let drag = d3.drag()
@@ -381,7 +436,7 @@ function drawGraph() {
                 .style("left", (mouseX + 16 + margin.left) + "px");
 
             // get data for ws
-            update(current);
+            updateWindow(current);
 
         });
 
@@ -406,6 +461,7 @@ function drawGraph() {
         .text(d => d)
         .attr("x", 20)
         .attr("y", (d, i) => 70 - 20 * i);
+
 }
 
 function nearestHour(milliseconds) {
@@ -426,10 +482,10 @@ function getRangedDataScratch(data, start, end) {
     });
 }
 
-function update(current) {
+function updateWindow(current) {
     // get data for ws
     let thisNearestHour = nearestHour(current);
-    let rangedData = getRangedData(data, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
+    let rangedData = getRangedData(wsRawData, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
     let wsData = getWSdata(rangedData);
 
     let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
@@ -451,6 +507,7 @@ function update(current) {
         .attr("width", wsContainerWidth(numHourAfter));
     wordstream(wsContainer, wsData, config);
 }
+
 function stepPosition(x, startMark){
     let value = Math.min(Math.max(Math.floor((x-startMark) / stepDash),1), 30);
     return [value * stepDash + startMark, value]
@@ -458,4 +515,80 @@ function stepPosition(x, startMark){
 function styleAxis(axisNodes) {
    axisNodes.selectAll('.tick text')
        .attr("fill", "#555555");
+}
+function initDataSelection(dataSelection) {
+    var form = d3.select(main).append("form");
+
+    form.selectAll("label")
+        .data(dataSelection)
+        .enter()
+        .append("label")
+        .text(function(d) {return d;})
+        .insert("input")
+        .attr("type", "radio")
+        .attr("class", "shape")
+        .attr("name", "mode")
+        .attr("value", function(d, i) {return i;})
+        .property("checked", function(d, i) {return i===1;})
+        .on("change", function (d) {
+            if (d === "Events"){
+                streamRawData = getStreamEventData(data, eventKeywords);
+                updateWindow(current);
+                console.log(keyList)
+            }
+            else if (d === "All"){
+                streamRawData = getStreamAllData(data, eventKeywords);
+                updateWindow(current);
+                console.log(keyList)
+            }
+        });
+}
+
+function updateStream() {
+    //Create the stack layout for the data
+    const stack = d3.stack().keys(keyList)
+        .offset(d3.stackOffsetNone);
+
+    const stacks = stack(streamRawData);
+    highestStack = stacks[stacks.length-1].map(d => {
+        return {
+            y: d[1],
+            time: d.data.time
+        }
+    });
+    //The scales
+    xScale.domain([startDate, endDate]);
+    yScale.domain(d3.extent(stacks.flat().flat()));
+
+    //The x axis
+    const xAxisGroup = g.append("g").attr("transform", "translate(0," + height + ")");
+    const xAxis = d3.axisBottom(xScale);
+    let xAxisNodes = xAxisGroup.call(xAxis);
+    styleAxis(xAxisNodes);
+
+    //The y Axis
+    const yAxisGroup = g.append('g');
+    const yAxis = d3.axisLeft(yScale);
+    let yAxisNodes = yAxisGroup.call(yAxis);
+    styleAxis(yAxisNodes);
+
+    //The area function used to generate path data for the area.
+    const areaGen = d3.area()
+        .x(d => xScale(d.data.time))
+        .y0(d => yScale(d[0]))
+        .y1(d => yScale(d[1]))
+        .curve(d3.curveMonotoneX);
+
+    // Main stream
+    g.append("g")
+        .attr("id", "streamG")
+        .selectAll(".layer")
+        .data(stacks).enter()
+        .append("path")
+        .attr("class", "layer")
+        .attr("d", areaGen)
+        .attr("fill", (d, i) => {
+            return d3.schemeCategory10[i]
+        });
+
 }
