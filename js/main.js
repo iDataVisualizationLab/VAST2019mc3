@@ -359,25 +359,26 @@ function drawGraph() {
         .attr('width', width)
         .attr('height', height)
         .on("mousemove", function () {
-            let mouseX = d3.mouse(this);
-            mouseX = mouseX[0] + 8;
+            let mouseX = d3.mouse(this)[0];
+            current = Date.parse(xScale.invert(mouseX));
+            current = Math.min(Math.max(current, startDate), endDate);
 
-            current = Date.parse(xScale.invert(mouseX - 8));
+            mouseX =  Math.min(Math.max(mouseX, 0), width);
             // vertical line, sliding window and tooltip
             vertical
-                .attr("x1", mouseX - 8)
-                .attr("x2", mouseX - 8);
+                .attr("x1", mouseX)
+                .attr("x2", mouseX);
 
             dashedGroup
-                .attr("transform", "translate(" + (+slidingWindow.attr("width") + mouseX - 8 ) +
+                .attr("transform", "translate(" + (+slidingWindow.attr("width") + mouseX ) +
                     ","+ height + ")");
 
             slidingGroup
-                .attr("transform", "translate(" + (mouseX - 8) + "," + (height - (+slidingWindow.attr("height"))) + ")");
+                .attr("transform", "translate(" + (mouseX) + "," + (height - (+slidingWindow.attr("height"))) + ")");
 
             tooltip.html(
-                '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX - 8)) + "</text>")
-                .style("left", (mouseX + 8 + margin.left) + "px");
+                '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX)) + "</text>")
+                .style("left", (mouseX + 16 + margin.left) + "px");
 
             // get data for ws
             update(current);
@@ -433,13 +434,14 @@ function update(current) {
 
     let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
     let peak = d3.max(streamRangedData, d=>d.y);
-
+    peak = peak !== undefined ? peak : 0;
     slidingGroup
         .attr("transform", "translate(" + (+vertical.attr("x1")) + "," + yScale(peak) + ")")
         .select("text")
         .attr("x", +slidingWindow.attr("width") /2)
         .attr("text-anchor", "middle")
-        .text(numHourAfter + " hours");
+        .text(numHourAfter + (numHourAfter > 1 ? " hours" : " hour"));
+
     slidingWindow
         .attr("height", height - yScale(peak))
         .attr("width", slidingWidth(numHourAfter));
