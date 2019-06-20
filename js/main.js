@@ -1,4 +1,3 @@
-const keywordsFlat = eventKeywords.flat();
 const startDate = Date.parse("2020-04-06 00:00:00");
 const endDate = Date.parse("2020-04-10 11:59:00");
 const hourToMS = 60 * 60 * 1000;
@@ -6,7 +5,7 @@ const streamStepUnit = 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
 const topics = ["message", "location"];
-const topicColor = ["#919191", "#161616"];
+const topicColor = ["#919191", "#874d1c"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -72,15 +71,13 @@ function loadData(){
             streamRawData = getStreamEventData(data, eventKeywords);
             drawGraph();
 
-            // first 5 hours
-            let first5Data = getRangedData(wsRawData, fisrt5hrsRange[0], fisrt5hrsRange[1]);
-            let wsData = getWSdata(first5Data);
-
             wsContainer = d3.select("body").append("svg")
                 .attr("width", wsContainerWidth(numHourAfter))
                 .attr("height", 500);
 
-            wordstream(wsContainer, wsData, config);
+            current = fisrt5hrsRange[0];
+            updateWindow(current);
+
         }
     });
 }
@@ -593,6 +590,8 @@ function updateStream() {
         .selectAll("path").data(stacks,d=>d.key);
 
     newchartstack.enter().append('path') .attr("class", "layer")
+        .attr("opacity", 0)
+        .transition().duration(1000)
         .attr("d", areaGen)
         .attr("fill", (d, i) => {
             if (i === 4) {
@@ -601,9 +600,16 @@ function updateStream() {
             else {
                 return d3.schemeCategory10[i]
             }
-        });
+        })
 
-    newchartstack.exit().remove();
+        .attr("opacity", 1);
+
+    newchartstack.exit()
+        .attr("opacity", 1)
+        .transition().duration(1000)
+        .attr("opacity", 0)
+        .remove();
+
     newchartstack
         .transition().duration(1000).attr("d", areaGen)
         .attr("fill", (d, i) => {
