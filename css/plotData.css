@@ -1,10 +1,5 @@
 /* ----------------- LINE GRAPH ----------------- */
 
-.focusLine {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: 0.5px;
-}
 .overlay {
     fill: none;
     stroke: none;
