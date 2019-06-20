@@ -1,7 +1,7 @@
 const eventKeywords = [
     ["rumble"],
     ["emergency", "urgent"],
-    ["earthquake", "seismic", "quake", "quaking"],
+    ["earthquake", "earthquakes", "seismic", "quake", "quaking"],
     ["shake", "shaking", "wobble", "wobbling", "quiver", "quivering"],
 ];
 
