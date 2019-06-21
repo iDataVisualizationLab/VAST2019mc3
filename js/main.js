@@ -3,6 +3,7 @@ const endDate = Date.parse("2020-04-10 11:59:00");
 const hourToMS = 60 * 60 * 1000;
 const streamStepUnit = 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
+// const formatTimeReadData = d3.timeFormat("%Y %B %d %-I%p");
 const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
 const topics = ["message", "location"];
 const topicColor = ["#919191", "#440000"];
@@ -11,7 +12,7 @@ const margin = {top: 30, right: 20, bottom: 50, left: 50},
     height = 500 - margin.top - margin.bottom;
 
 const fisrt5hrsRange = [1586201491000, 1586223091000];
-const dataSelection = ["All", "Events"];
+const dataSelection = ["all", "event", "resource"];
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
@@ -19,7 +20,6 @@ const bisect = d3.bisector(d => {
 let data;
 let streamStep = streamStepUnit * hourToMS;
 let streamRawData;
-let wsRawData = [];
 let highestStack;
 let keyList;
 let xScale = d3.scaleTime()
@@ -54,6 +54,7 @@ let slidingWidth = function(numHourAfter){
 const stepDash = slidingWidth(30)/30;
 let dashedGroup;
 let vertical;
+let option = "event";
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -68,13 +69,15 @@ function loadData(){
                 }
             });
             console.log(data);
-            streamRawData = getStreamEventData(data, eventKeywords);
+            streamRawData = getStreamData(data, eventKeyword, eventList);
             drawGraph();
 
             wsContainer = d3.select("body").append("svg")
                 .attr("width", wsContainerWidth(numHourAfter))
                 .attr("height", 500);
-
+            wsTooltip = d3.select("body").append("div")
+                .attr("class", "wsTooltip")
+                .style("opacity", 0);
             current = fisrt5hrsRange[0];
             updateWindow(current);
 
@@ -82,12 +85,12 @@ function loadData(){
     });
 }
 
-function getStreamEventData(data, dataOption){
+function getStreamData(data, dataOption, optionList){
     wsRawData = [];
     let streamData = [];
     let streamData00 = {};
     for (let i = 0; i < dataOption.length; i++) {
-        streamData00[dataOption[i]] = [];
+        streamData00[optionList[i]] = [];
     }
     let streamData11 = {};
     data.forEach(d => {
@@ -95,7 +98,7 @@ function getStreamEventData(data, dataOption){
         for (let i = 0; i < dataOption.length; i++) {
             for (let j = 0; j < dataOption[i].length; j++) {
                 if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[dataOption[i]].push(d.time);
+                    streamData00[optionList[i]].push(d.time);
                     wsRawData.push(d);
                     flag = true;
                     break;
@@ -186,15 +189,17 @@ function getStreamAllData(data, dataOption){
 
 function getWSdata(rangedData) {
     let wsData = {};
+    let timeObj = {};
     rangedData.forEach(d => {
-        let date = (d.time);
-        date = formatTimeReadData(new Date(date));
+        let thisHour = nearestHour(d.time);
+        timeObj[thisHour] = true;
+        let date = formatTimeReadData(new Date(d.time));
 
         let wordArray = d.message.toLowerCase()
             .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"\d/gi, '')
             .split(" ")
-            .filter(d => {
-                return stopwords.indexOf(d) < 0;
+            .filter(e => {
+                return stopwords.indexOf(e) < 0;
             });
 
         if (!wsData[date]) wsData[date] = {};
@@ -232,6 +237,7 @@ function getWSdata(rangedData) {
             // words[topic] = words[topic].slice(0, Math.min(words[topic].length, topword));
         });
         return {
+            time: d3.keys(timeObj)[i],
             date: date,
             words: words
         }
@@ -293,7 +299,6 @@ function drawGraph() {
         .attr("fill", (d, i) => {
             return d3.schemeCategory10[i]
         });
-    
     initDataSelection(dataSelection);
     // Running tooltip for date and time
     let tooltip = d3.select(main)
@@ -474,10 +479,11 @@ function drawGraph() {
         .attr("x", 20)
         .attr("y", (d, i) => 70 - 20 * i);
 
+
 }
 
 function nearestHour(milliseconds) {
-    return Date.parse(d3.timeHour.round(new Date(milliseconds)))
+    return Date.parse(d3.timeHour.floor(new Date(milliseconds)))
 }
 
 function getRangedData(data, start, end) {
@@ -543,13 +549,19 @@ function initDataSelection(dataSelection) {
         .attr("value", function(d, i) {return i;})
         .property("checked", function(d, i) {return i===1;})
         .on("change", function (d) {
-            if (d === "Events"){
-                streamRawData = getStreamEventData(data, eventKeywords);
+            option = d;
+            if (d === "event"){
+                streamRawData = getStreamData(data, eventKeyword, eventList);
                 updateWindow(current);
                 updateStream();
             }
-            else if (d === "All"){
-                streamRawData = getStreamAllData(data, eventKeywords);
+            else if (d === "resource"){
+                streamRawData = getStreamData(data, resourceKeyword, resourceList);
+                updateWindow(current);
+                updateStream();
+            }
+            else {
+                streamRawData = getStreamAllData(data, eventKeyword);
                 wsRawData = data;
                 updateWindow(current);
                 updateStream();
@@ -684,4 +696,29 @@ function updateStream() {
         .text(d => d)
         .attr("x", 20)
         .attr("y", (d, i) => 70 - 20 * i);
+}
+function tooltipInfo(d, wsRawData){
+    if (d.topic === "location"){
+        let limited = wsRawData
+            .slice(
+                bisect(wsRawData, +d.time),
+                bisect(wsRawData, +d.time + hourToMS));
+        let output = limited
+            .filter(e => e.location === d.text);
+        console.log(output);
+        return output;
+    }
+    else {
+        // message
+        let limited = wsRawData
+            .slice(
+                bisect(wsRawData, +d.time),
+                bisect(wsRawData, +d.time + hourToMS));
+        let output = limited
+            .filter(e => {
+            return e.message.toLowerCase().indexOf(d.text) >= 0;
+        });
+        console.log(output);
+        return output;
+    }
 }

@@ -138,8 +138,7 @@ Categories:
   off the grid", "powerless", "shut off POWER", "taken POWER", "transformer exploding", "transformer explosion", "w/o POWER", "wait
    POWER return", "without POWER", "candle"
 
-3. Early recovery (rescue/save lives/health/well-being): "shelter", "snuggled up safely inside", "stay home", "stay inside", "
-stay safe", "staysafe", "evacuate", "evacuated", "evacuating", "evacuation", "evacuee", "head away from", "leave home", "leaving city", "police ask leave", "seeking refuge", "sleep outside", "stay with friends", "hotel", "housing", "shelter", "ambulance", "emergency response", "escape", "escaped", "escaping", "first aid", "rescue", "rescued", "rescuing"
+3. Early recovery (rescue/save lives/health/well-being):  "evacuate", "evacuated", "evacuating", "evacuation", "evacuee", "head away from", "leave home", "leaving city", "police ask leave", "seeking refuge", "sleep outside", "stay with friends", "hotel", "housing", "shelter", "ambulance", "emergency response", "escape", "escaped", "escaping", "first aid", "rescue", "rescued", "rescuing"
 
 4. Food: 
 "feed victims", "food trucks", "free lunch", "free meals", "get meals", "refugee meal", "nutri", "nutrition"
@@ -151,7 +150,8 @@ Utilities: Heat, gas, power, electric, electricity, candle, candles, charge powe
 Emergency recovery: emergency, evacuate, evacuated, evacuating, evacuation, evacuee, head away from, leave home, leaving city, police ask leave, seeking refuge, sleep outside, stay with friends, protection, response map, ambulance, emergency response, escape, escaped, escaping, first aid, rescue, rescued, rescuing, dead, death, death toll, drowned, kill, help, help and serve, help neighbor, help out, help victims, help with, offer goods, sandyhelp, sandyvolunteer, teaforhumanity,
 volunteer, volunteering
 
-Wellbeing: Food, nutrition, stay safe, stay home, shelter, housing, stay inside, hotel, housing, shelter
+Wellbeing: Food, nutrition, stay safe, stay home, shelter, housing, stay inside, hotel, housing, shelter, "shelter", "snuggled up safely inside", "stay home", "stay inside", "stay safe", "staysafe",
 
 Transportation: Logistic, road, Transportation, MTA, traffic, jam, congestion, metro, subway, sub, trains, train, transit, bus line, megabus, strand people, ferry suspend, road, roadway, street, bridge, drive, avenue, airport, airplane, flight,
 
+Expand list: All words cut down to 1 chunk, this list includes plural to color
