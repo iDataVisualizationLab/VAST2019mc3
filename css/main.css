@@ -1,0 +1,24 @@
+/* ----------------- LINE GRAPH ----------------- */
+
+.overlay {
+    fill: none;
+    stroke: none;
+    pointer-events: all;
+}
+.tooltip {
+    position: absolute;
+}
+
+div.wsTooltip {
+    position: absolute;
+    text-align: center;
+    width: 300px;
+    height: auto;
+    padding: 6px;
+    font: 13px sans-serif;
+    background: #e4e4e4;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 100;
+}
