@@ -123,6 +123,9 @@ ___
 Categories
 https://www.humanitarianresponse.info/en/coordination/clusters/global-cluster-coordinators-group-0
 
+https://www.humanitarianresponse.info/en/about-clusters/what-is-the-cluster-approach
+
+https://www.humanitarianresponse.info/sites/www.humanitarianresponse.info/files/documents/files/IASC%20Guidance%20Note%20on%20using%20the%20Cluster%20Approach%20to%20Strengthen%20Humanitarian%20Response%20%28November%202006%29.pdf
 
 Categories:
 
@@ -142,4 +145,13 @@ stay safe", "staysafe", "evacuate", "evacuated", "evacuating", "evacuation", "ev
 "feed victims", "food trucks", "free lunch", "free meals", "get meals", "refugee meal", "nutri", "nutrition"
 
 Because it's binned -> info in the whole hour is compressed into one tick.
+
+Utilities: Heat, gas, power, electric, electricity, candle, candles, charge power, flashlight, flashlights, generator, generators, in case of power outage, emergency generator, no ac, no heat, no heater, gas long line, no gas, wait for gas, no water, wait water return, water shortage, without water
+
+Emergency recovery: emergency, evacuate, evacuated, evacuating, evacuation, evacuee, head away from, leave home, leaving city, police ask leave, seeking refuge, sleep outside, stay with friends, protection, response map, ambulance, emergency response, escape, escaped, escaping, first aid, rescue, rescued, rescuing, dead, death, death toll, drowned, kill, help, help and serve, help neighbor, help out, help victims, help with, offer goods, sandyhelp, sandyvolunteer, teaforhumanity,
+volunteer, volunteering
+
+Wellbeing: Food, nutrition, stay safe, stay home, shelter, housing, stay inside, hotel, housing, shelter
+
+Transportation: Logistic, road, Transportation, MTA, traffic, jam, congestion, metro, subway, sub, trains, train, transit, bus line, megabus, strand people, ferry suspend, road, roadway, street, bridge, drive, avenue, airport, airplane, flight,
 
