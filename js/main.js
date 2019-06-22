@@ -560,7 +560,6 @@ function initDataSelection(dataSelection) {
                 streamRawData = getStreamData(data, resourceKeyword, resourceList);
                 updateStream();
                 updateWindow(current);
-
             }
             else {
                 streamRawData = getStreamAllData(data, eventKeyword, eventList);
@@ -716,7 +715,6 @@ function tooltipInfo(d, wsRawData){
                 bisect(wsRawData, +d.time + hourToMS));
         let output = limited
             .filter(e => e.location === d.text);
-        console.log(output);
         return output;
     }
     else {
@@ -729,7 +727,6 @@ function tooltipInfo(d, wsRawData){
             .filter(e => {
             return e.message.toLowerCase().indexOf(d.text) >= 0;
         });
-        console.log(output);
         return output;
     }
 }

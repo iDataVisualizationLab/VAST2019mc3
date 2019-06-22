@@ -128,30 +128,11 @@ https://www.humanitarianresponse.info/en/about-clusters/what-is-the-cluster-appr
 https://www.humanitarianresponse.info/sites/www.humanitarianresponse.info/files/documents/files/IASC%20Guidance%20Note%20on%20using%20the%20Cluster%20Approach%20to%20Strengthen%20Humanitarian%20Response%20%28November%202006%29.pdf
 
 Categories:
-
-1. Transportation (logistic): "road", "roadway", "street", "bridge", "drive", "avenue", "bus line reopen/open", "megabus reopen/open", "metro", "subway", "sub", "trains", "train", "transit"
-
-2. Utilities: "power", "water", "gas", "electricity", "emergency power", "emergency generator", "black out", 
-"blackout", "blackoutnyc",
- con ed", "con edison", "coned", "dark", "darker", "downed electrical wires", "POWER down", "POWER not expected", "POWER off", "POWER 
- out", "POWER outage", "goodbye POWER", "knock out POWER", "lose POWER", "losing POWER", "lost POWER", "njpower", "no POWER", "noPOWER",
-  off the grid", "powerless", "shut off POWER", "taken POWER", "transformer exploding", "transformer explosion", "w/o POWER", "wait
-   POWER return", "without POWER", "candle"
-
-3. Early recovery (rescue/save lives/health/well-being):  "evacuate", "evacuated", "evacuating", "evacuation", "evacuee", "head away from", "leave home", "leaving city", "police ask leave", "seeking refuge", "sleep outside", "stay with friends", "hotel", "housing", "shelter", "ambulance", "emergency response", "escape", "escaped", "escaping", "first aid", "rescue", "rescued", "rescuing"
-
-4. Food: 
-"feed victims", "food trucks", "free lunch", "free meals", "get meals", "refugee meal", "nutri", "nutrition"
-
-Because it's binned -> info in the whole hour is compressed into one tick.
-
-Utilities: Heat, gas, power, electric, electricity, candle, candles, charge power, flashlight, flashlights, generator, generators, in case of power outage, emergency generator, no ac, no heat, no heater, gas long line, no gas, wait for gas, no water, wait water return, water shortage, without water
-
-Emergency recovery: emergency, evacuate, evacuated, evacuating, evacuation, evacuee, head away from, leave home, leaving city, police ask leave, seeking refuge, sleep outside, stay with friends, protection, response map, ambulance, emergency response, escape, escaped, escaping, first aid, rescue, rescued, rescuing, dead, death, death toll, drowned, kill, help, help and serve, help neighbor, help out, help victims, help with, offer goods, sandyhelp, sandyvolunteer, teaforhumanity,
-volunteer, volunteering
-
-Wellbeing: Food, nutrition, stay safe, stay home, shelter, housing, stay inside, hotel, housing, shelter, "shelter", "snuggled up safely inside", "stay home", "stay inside", "stay safe", "staysafe",
-
-Transportation: Logistic, road, Transportation, MTA, traffic, jam, congestion, metro, subway, sub, trains, train, transit, bus line, megabus, strand people, ferry suspend, road, roadway, street, bridge, drive, avenue, airport, airplane, flight,
-
 Expand list: All words cut down to 1 chunk, this list includes plural to color
+
+---
+reference:
+
+- Water and sewer: https://www.usgs.gov/special-topic/water-science-school/science/dictionary-water-terms?qt
+-science_center_objects=0#qt-science_center_objects
+

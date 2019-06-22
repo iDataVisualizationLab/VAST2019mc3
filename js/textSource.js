@@ -6,12 +6,7 @@ const eventKeyword = [
     ["earthquake", "seismic", "quake", "quaking"],
     ["shake", "shaking", "wobble", "wobbling", "quiver", "quivering"],
 ];
-const eventKeywordExpand = [
-    ["rumble"],
-    ["emergency", "urgent"],
-    ["earthquake", "earthquakes", "seismic", "quake", "quaking"],
-    ["shake", "shaking", "wobble", "wobbling", "quiver", "quivering"],
-];
+
 const eventList = ["rumble", "emergency", "earthquake, quake, seismic", "shake, wobble, quiver"];
 // -------------------------------------
 const resourceKeyword = [
@@ -26,16 +21,6 @@ const resourceKeyword = [
     ["food", "nutrition", "stay safe", "stay home", "shelter", "housing", "stay inside", "hotel", "snuggled up safely inside", "staysafe", "feed victims", "food trucks", "free lunch", "free meals", "get meals", "refugee meal", "nutri"]
 ];
 
-const resourceKeywordExpand = [
-    ["airplane", "airplanes", "airport", "airports", "avenue", "avenues", "bridge", "bridges", "buses", "bus", "congestion", "drive", "ferry", "flight", "flights", "jam", "logistic", "megabus", "metro", "mta", "road", "roadway", "strand", "street", "streets", "sub", "subway", "traffic", "train", "trains", "transit", "transportation"],
-
-    ["emergency", "urgent", "evacuate", "evacuated", "evacuating", "evacuation", "evacuee", "protection", "response" +
-    " map", "ambulance", "first response", "escape", "escaped", "escaping", "first aid", "rescue", "rescued", "rescuing", "dead", "death", "drowned", "kill", "help", "volunteer", "volunteering", "explosion", "exploding", "explode", "victim", "victims"],
-
-    ["heat", "gas", "power", "electric", "electricity", "candle", "candles", "charge power", "flashlight", "flashlights", "generator", "generators", "in case of power outage", "emergency generator", "no ac", "no heat", "no heater", "gas long line", "no gas", "wait for gas", "no water", "wait water return", "water shortage", "without water", "water", "emergency power", "black out", "blackout", "con ed", "con edison", "coned", "dark", "darker", "downed electrical wires", "transformer exploding", "transformer explosion"],
-
-    ["food", "nutrition", "stay safe", "stay home", "shelter", "housing", "inside", "hotel", "staysafe", "feed victims", "free lunch", "free meals", "get meals", "refugee meal", "nutri"]
-];
 const resourceList = ["Transportation", "Emergency Recovery", "Utilities", "Human Wellbeing"];
 
 const stopwords = [
