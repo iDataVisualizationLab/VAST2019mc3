@@ -134,11 +134,11 @@ function getStreamData(data, dataOption, optionList){
     return streamData;
 }
 
-function getStreamAllData(data, dataOption){
+function getStreamAllData(data, dataOption, optionList){
     let streamData = [];
     let streamData00 = {};
     for (let i = 0; i < dataOption.length; i++) {
-        streamData00[dataOption[i]] = [];
+        streamData00[optionList[i]] = [];
     }
     streamData00["other"] = [];
 
@@ -148,7 +148,7 @@ function getStreamAllData(data, dataOption){
         for (let i = 0; i < dataOption.length; i++) {
             for (let j = 0; j < dataOption[i].length; j++) {
                 if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[dataOption[i]].push(d.time);
+                    streamData00[optionList[i]].push(d.time);
                     wsRawData.push(d);
                     flag = true;
                     break;
@@ -186,6 +186,7 @@ function getStreamAllData(data, dataOption){
     }
     return streamData;
 }
+
 
 function getWSdata(rangedData) {
     let wsData = {};
@@ -552,19 +553,21 @@ function initDataSelection(dataSelection) {
             option = d;
             if (d === "event"){
                 streamRawData = getStreamData(data, eventKeyword, eventList);
-                updateWindow(current);
                 updateStream();
+                updateWindow(current);
             }
             else if (d === "resource"){
                 streamRawData = getStreamData(data, resourceKeyword, resourceList);
-                updateWindow(current);
                 updateStream();
+                updateWindow(current);
+
             }
             else {
-                streamRawData = getStreamAllData(data, eventKeyword);
+                streamRawData = getStreamAllData(data, eventKeyword, eventList);
                 wsRawData = data;
-                updateWindow(current);
                 updateStream();
+                updateWindow(current);
+
             }
         });
 }
@@ -601,9 +604,15 @@ function updateStream() {
     let newchartstack = d3.select("#streamG")
         .selectAll("path").data(stacks,d=>d.key);
 
-    newchartstack.enter().append('path') .attr("class", "layer")
+    let enterItem = newchartstack.enter()._groups[0].filter(d => d !== null).length;
+    let exitItem = newchartstack.exit()._groups[0].filter(d => d !== null).length;
+
+    newchartstack.enter()
+        .append('path') .attr("class", "layer")
         .attr("opacity", 0)
-        .transition().duration(1000)
+        .transition()
+        .delay(enterItem === 1 ? 1000 : 0)
+        .duration(1000)
         .attr("d", areaGen)
         .attr("fill", (d, i) => {
             if (i === 4) {
@@ -623,7 +632,9 @@ function updateStream() {
         .remove();
 
     newchartstack
-        .transition().duration(1000).attr("d", areaGen)
+        .transition()
+        .delay(exitItem === 1 ? 1000 : 0)
+        .duration(1000).attr("d", areaGen)
         .attr("fill", (d, i) => {
             if (i === 4) {
                 return topicColor[0]
