@@ -3,6 +3,7 @@ let wsTooltip;
 const eventKeyword = [
     // ["rumble"],
     ["tsunami", "flood"],
+    ["landslides", "liquefaction"],
     ["aftershock"],
     ["emergency", "urgent"],
     ["earthquake", "seismic", "quake", "quaking"],
@@ -12,6 +13,7 @@ const eventKeyword = [
 const eventList = [
     // "rumble",
     "tsunami, flood",
+    "landslides",
     "aftershock",
     "emergency",
     "earthquake, quake, seismic",
