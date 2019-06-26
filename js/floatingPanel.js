@@ -49,7 +49,7 @@ function drawPanel(){
         .attr("class", "floatingBoxContent");
 
     let svgPanel = panelContent.append("svg")
-        .attr("width", 200)
+        .attr("width", 380)
         .attr("height", 300);
 
     let legend = svgPanel
@@ -142,7 +142,12 @@ function drawPanel(){
         .enter()
         .append("text")
         .attr("class", "legendText")
-        .text(d => capitalize(d.id))
+        .text(d => {
+            if (d.content){
+                return capitalize(d.id)+ ": " + d.content.slice(0,3).map(e => " "+e) + "...";
+            }
+            else return capitalize(d.id)
+        })
         .attr("font-size", 15)
         .attr("x", d => d.subTopic ? 30 : 10)
         .attr("y", (d, i) => 5 + 20 * i);
