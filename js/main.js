@@ -571,6 +571,7 @@ function initDataSelection(dataSelection) {
 
             }
         });
+
 }
 
 function updateStream() {
