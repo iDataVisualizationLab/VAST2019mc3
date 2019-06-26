@@ -713,9 +713,8 @@ function tooltipInfo(d, wsRawData){
             .slice(
                 bisect(wsRawData, +d.time),
                 bisect(wsRawData, +d.time + hourToMS));
-        let output = limited
+        return limited
             .filter(e => e.location === d.text);
-        return output;
     }
     else {
         // message
@@ -723,10 +722,9 @@ function tooltipInfo(d, wsRawData){
             .slice(
                 bisect(wsRawData, +d.time),
                 bisect(wsRawData, +d.time + hourToMS));
-        let output = limited
+        return limited
             .filter(e => {
             return e.message.toLowerCase().indexOf(d.text) >= 0;
         });
-        return output;
     }
 }

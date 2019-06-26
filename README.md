@@ -138,6 +138,8 @@ reference:
 
 https://www.csu.org/CSUDocuments/naturalgasandelectricvocablist.pdf
 
+http://www.geo.mtu.edu/UPSeis/hazards.html
+
 "sewer_and_water": ["discharged", "discharge", "drain", "drainage", "flood", "hygiene", "irrigation", "pipes", "pump", "river", "sanitary", "sewage", "sewer", "stream", "underground", "wash", "waste", "water"]
 
 "power/energy": ["valve", "heat", "gas", "power", "electric", "candle", "flashlight", "generator", "black out", "blackout", "dark", "radiation", "radio rays", "energy", "nuclear", "fuel", "battery", "radiant"]
