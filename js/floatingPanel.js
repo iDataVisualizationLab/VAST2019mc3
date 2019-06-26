@@ -70,8 +70,8 @@ function drawPanel(){
         .attr("cy", (d, i) =>20 * i)
         .attr("fill", d => d.color)
         .on("click", (d,i,a) => {
-            // d3.selectAll(".buttonlg").attr("opacity", 0.1);
-            // d3.select(this).attr("opacity", 1);
+            d3.selectAll(".buttonlg").attr("opacity", 0.1);
+            d3.select("#button" + d.id).attr("opacity", 1);
             dataOption = taxonomy.filter(record => record.id === d.id);
             streamRawData = getStreamData(data, dataOption);
             updateStream();
@@ -127,9 +127,13 @@ function drawPanel(){
                 .attr("stroke", "black")
                 .attr("stroke-width", 1)
                 .on("click", (d) => {
-                    // d3.selectAll(".buttonlg").attr("opacity", 0.1);
-                    // d3.select("#group" + main.id)
-                    //     .attr("opacity", 1);
+                    d3.selectAll(".buttonlg").attr("opacity", 0.1);
+                    d3.select("#group" + main.id)
+                        .attr("opacity", 1);
+                    thisData.forEach(rec => {
+                        d3.select("#button" + rec.id)
+                            .attr("opacity", 1);
+                    });
                     dataOption = taxonomy.filter(d => d.parent === main.id);
                     streamRawData = getStreamData(data, dataOption);
                     updateStream();
