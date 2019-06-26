@@ -33,23 +33,23 @@ const resourceList = ["sewer_water", "power_energy", "roads_bridges", "medical",
 // -------------------------------------
 const colorScale = {
     event: {
-        earthquake: "#33a02c",
-        groundDamage: "#b15928",
-        flooding: "#86b5e6",
-        aftershock: "#fdbf6f",
+        earthquake: "#4daf4a",
+        groundDamage: "#a65628",
+        flooding: "#6a3d9a",
+        aftershock: "#ffff99",
     },
     resource: {
         water: "#1f78b4",
         power: "#ff7f00",
-        road: "#fcff5b",
+        road: "#f781bf",
         medical: "#e41a1c",
-        building: "#6a3d9a",
+        building: "#a6cee3",
     },
     other: {
         rumble: "#f0027f",
         others: "#919191",
     }
-}
+};
 
 
 const stopwords = [

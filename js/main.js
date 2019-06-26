@@ -480,6 +480,8 @@ function drawGraph() {
         .attr("x", 20)
         .attr("y", (d, i) => 70 - 20 * i);
 
+    let selectionPanel = g.append()
+
 
 }
 
