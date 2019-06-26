@@ -55,6 +55,7 @@ const stepDash = slidingWidth(30)/30;
 let dashedGroup;
 let vertical;
 let option = "event";
+let dataOption = [];
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -69,8 +70,10 @@ function loadData(){
                 }
             });
             console.log(data);
-            streamRawData = getStreamData(data, eventKeyword, eventList);
+            dataOption = taxonomy.filter(d => d.parent === "event");
+            streamRawData = getStreamData(data, dataOption);
             drawGraph();
+            drawPanel();
 
             wsContainer = d3.select("body").append("svg")
                 .attr("width", wsContainerWidth(numHourAfter))
@@ -85,20 +88,20 @@ function loadData(){
     });
 }
 
-function getStreamData(data, dataOption, optionList){
+function getStreamData(data, dataOption){
     wsRawData = [];
     let streamData = [];
     let streamData00 = {};
     for (let i = 0; i < dataOption.length; i++) {
-        streamData00[optionList[i]] = [];
+        streamData00[dataOption[i].id] = [];
     }
     let streamData11 = {};
     data.forEach(d => {
         let flag = false;
         for (let i = 0; i < dataOption.length; i++) {
-            for (let j = 0; j < dataOption[i].length; j++) {
-                if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[optionList[i]].push(d.time);
+            for (let j = 0; j < dataOption[i].content.length; j++) {
+                if (d.message.toLowerCase().indexOf(dataOption[i].content[j]) >= 0) {
+                    streamData00[dataOption[i].id].push(d.time);
                     wsRawData.push(d);
                     flag = true;
                     break;
@@ -251,6 +254,7 @@ function drawGraph() {
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
+
     // main svg
     let g = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -298,9 +302,9 @@ function drawGraph() {
         .attr("class", "layer")
         .attr("d", areaGen)
         .attr("fill", (d, i) => {
-            return d3.schemeCategory10[i]
+            return taxonomy.find(d => d.id === keyList[i]).color;
         });
-    initDataSelection(dataSelection);
+    // initDataSelection(dataSelection);
     // Running tooltip for date and time
     let tooltip = d3.select(main)
         .append("div")
@@ -320,7 +324,8 @@ function drawGraph() {
         .attr("y1", 0)
         .attr("y2", height + margin.top + margin.bottom)
         .attr("x1", xScale(fisrt5hrsRange[0]))
-        .attr("x2", xScale(fisrt5hrsRange[0]));
+        .attr("x2", xScale(fisrt5hrsRange[0]))
+        .raise();
 
     // Sliding window
     let windowSize = {
@@ -346,8 +351,10 @@ function drawGraph() {
         .attr("font-size", 12)
         .text(numHourAfter + " hours");
 
-    slidingGroup.attr("transform", "translate(" + xScale(fisrt5hrsRange[0]) + "," +
-        (height - windowSize.height) + ")");
+    slidingGroup
+        .attr("transform", "translate(" + xScale(fisrt5hrsRange[0]) + "," +
+        (height - windowSize.height) + ")")
+        .raise();
 
     // Dashed line for window width adjustment
     dashedGroup = g
@@ -455,34 +462,6 @@ function drawGraph() {
 
         });
 
-
-    let legend = g
-        .append("g")
-        .attr("id", "legendGroup")
-        .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
-
-    legend.selectAll("circle")
-        .data(keyList)
-        .enter()
-        .append("circle")
-        .attr("class", "legend")
-        .attr("r", 5)
-        .attr("cx", 10)
-        .attr("cy", (d, i) => 65 - 20 * i)
-        .attr("fill", (d, i) => d3.schemeCategory10[i]);
-
-    legend.selectAll("text")
-        .data(keyList)
-        .enter()
-        .append("text")
-        .attr("class", "legendText")
-        .text(d => d)
-        .attr("x", 20)
-        .attr("y", (d, i) => 70 - 20 * i);
-
-    let selectionPanel = g.append()
-
-
 }
 
 function nearestHour(milliseconds) {
@@ -537,42 +516,42 @@ function styleAxis(axisNodes) {
    axisNodes.selectAll('.tick text')
        .attr("fill", "#555555");
 }
-function initDataSelection(dataSelection) {
-    var form = d3.select(main).append("form");
-
-    form.selectAll("label")
-        .data(dataSelection)
-        .enter()
-        .append("label")
-        .text(function(d) {return d;})
-        .insert("input")
-        .attr("type", "radio")
-        .attr("class", "shape")
-        .attr("name", "mode")
-        .attr("value", function(d, i) {return i;})
-        .property("checked", function(d, i) {return i===1;})
-        .on("change", function (d) {
-            option = d;
-            if (d === "event"){
-                streamRawData = getStreamData(data, eventKeyword, eventList);
-                updateStream();
-                updateWindow(current);
-            }
-            else if (d === "resource"){
-                streamRawData = getStreamData(data, resourceKeyword, resourceList);
-                updateStream();
-                updateWindow(current);
-            }
-            else {
-                streamRawData = getStreamAllData(data, eventKeyword, eventList);
-                wsRawData = data;
-                updateStream();
-                updateWindow(current);
-
-            }
-        });
-
-}
+// function initDataSelection(dataSelection) {
+//     var form = d3.select(main).append("form");
+//
+//     form.selectAll("label")
+//         .data(dataSelection)
+//         .enter()
+//         .append("label")
+//         .text(function(d) {return d;})
+//         .insert("input")
+//         .attr("type", "radio")
+//         .attr("class", "shape")
+//         .attr("name", "mode")
+//         .attr("value", function(d, i) {return i;})
+//         .property("checked", function(d, i) {return i===1;})
+//         .on("change", function (d) {
+//             option = d;
+//             if (d === "event"){
+//                 streamRawData = getStreamData(data, eventKeyword, eventList);
+//                 updateStream();
+//                 updateWindow(current);
+//             }
+//             else if (d === "resource"){
+//                 streamRawData = getStreamData(data, resourceKeyword, resourceList);
+//                 updateStream();
+//                 updateWindow(current);
+//             }
+//             else {
+//                 streamRawData = getStreamAllData(data, eventKeyword, eventList);
+//                 wsRawData = data;
+//                 updateStream();
+//                 updateWindow(current);
+//
+//             }
+//         });
+//
+// }
 
 function updateStream() {
     //Create the stack layout for the data
@@ -617,14 +596,8 @@ function updateStream() {
         .duration(1000)
         .attr("d", areaGen)
         .attr("fill", (d, i) => {
-            if (i === 4) {
-                return topicColor[0]
-            }
-            else {
-                return d3.schemeCategory10[i]
-            }
+            return taxonomy.find(d => d.id === keyList[i]).color;
         })
-
         .attr("opacity", 1);
 
     newchartstack.exit()
@@ -638,77 +611,8 @@ function updateStream() {
         .delay(exitItem === 1 ? 1000 : 0)
         .duration(1000).attr("d", areaGen)
         .attr("fill", (d, i) => {
-            if (i === 4) {
-                return topicColor[0]
-            }
-            else {
-                return d3.schemeCategory10[i]
-            }
+            return taxonomy.find(d => d.id === keyList[i]).color;
         });
-
-    let newLegend = d3.select("#legendGroup").selectAll(".legend").data(keyList);
-
-    newLegend.enter()
-        .append("circle")
-        .attr("class", "legend")
-        .attr("cy", (d, i) => 65 - 20 * i)
-        .attr("cx", 10)
-        .attr("r", 5)
-        .attr("opacity", 0)
-        .attr("fill", (d, i) => {
-            if (i === 4) {
-                return topicColor[0]
-            }
-            else {
-                return d3.schemeCategory10[i]
-            }
-        })
-        .transition().duration(1000)
-        .attr("opacity", 1);
-
-    newLegend
-        .exit()
-        .attr("opacity", 1)
-        .transition().duration(1000)
-        .attr("opacity", 0)
-        .remove();
-
-    newLegend
-        .attr("r", 5)
-        .attr("cx", 10)
-        .attr("cy", (d, i) => 65 - 20 * i)
-        .attr("fill", (d, i) => {
-            if (i === 4) {
-                return topicColor[0]
-            }
-            else {
-                return d3.schemeCategory10[i]
-            }
-        });
-
-    let newLegendText = d3.select("#legendGroup").selectAll(".legendText").data(keyList);
-    newLegendText .enter()
-        .append("text")
-        .attr("class", "legendText")
-        .text(d => d)
-        .attr("x", 20)
-        .attr("y", (d, i) => 70 - 20 * i)
-        .attr("opacity", 0)
-        .transition().duration(1000)
-        .attr("opacity", 1)
-    ;
-
-    newLegendText
-        .exit()
-        .attr("opacity", 1)
-        .transition().duration(1000)
-        .attr("opacity", 0)
-        .remove();
-
-    newLegendText
-        .text(d => d)
-        .attr("x", 20)
-        .attr("y", (d, i) => 70 - 20 * i);
 }
 function tooltipInfo(d, wsRawData){
     if (d.topic === "location"){

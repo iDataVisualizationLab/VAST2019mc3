@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9c66168-06db-4020-85db-d4f317041201" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/css/floatingPanel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/floatingPanel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/floatingPanel.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/floatingPanel.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/floatingPanel.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/floatingPanel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/textSource.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/wordstream.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/wordstream.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,15 +21,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DockManager">
-    <window id="1">
+    <window id="2">
       <content type="file-editors">
         <state>
           <leaf>
             <file pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/index.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="144">
-                    <caret line="6" column="11" lean-forward="true" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+                  <state relative-caret-position="72">
+                    <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
                   </state>
                 </provider>
               </entry>
@@ -46,33 +49,33 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="css" value="2" />
-          <entry key="html" value="3" />
-          <entry key="js" value="4" />
+          <entry key="css" value="3" />
+          <entry key="html" value="5" />
+          <entry key="js" value="5" />
           <entry key="md" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="2" />
-          <entry key="HTML" value="3" />
-          <entry key="JavaScript" value="4" />
+          <entry key="CSS" value="3" />
+          <entry key="HTML" value="5" />
+          <entry key="JavaScript" value="5" />
           <entry key="Markdown" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="12" />
-          <entry key="html" value="24" />
-          <entry key="js" value="593" />
+          <entry key="css" value="95" />
+          <entry key="html" value="26" />
+          <entry key="js" value="2652" />
           <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="12" />
-          <entry key="HTML" value="24" />
-          <entry key="JavaScript" value="593" />
+          <entry key="CSS" value="95" />
+          <entry key="HTML" value="26" />
+          <entry key="JavaScript" value="2652" />
           <entry key="Markdown" value="2" />
         </counts>
       </usages-collector>
@@ -81,10 +84,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/textSource.js">
+        <entry file="file://$PROJECT_DIR$/js/input.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="17" column="40" lean-forward="true" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+            <state relative-caret-position="350">
+              <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
               <folding>
                 <element signature="e#2154#9442#0" />
               </folding>
@@ -92,11 +95,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/floatingPanel.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="28" column="48" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="48" />
+            <state relative-caret-position="96">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -104,17 +116,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/floatingPanel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="35" column="41" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
+            <state relative-caret-position="566">
+              <caret line="129" column="17" lean-forward="true" selection-start-line="129" selection-start-column="17" selection-end-line="131" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="555">
+              <caret line="554" lean-forward="true" selection-start-line="554" selection-end-line="554" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/main.js">
+        <entry file="file://$PROJECT_DIR$/lib/wordstream.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="899">
-              <caret line="572" column="11" selection-start-line="572" selection-start-column="11" selection-end-line="572" selection-end-column="11" />
+            <state relative-caret-position="260">
+              <caret line="663" column="31" lean-forward="true" selection-start-line="663" selection-start-column="31" selection-end-line="663" selection-end-column="31" />
+              <folding>
+                <element signature="e#118#27570#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -132,10 +156,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>108</find>
-      <find>floor</find>
-      <find>pointer</find>
-      <find>call</find>
       <find>width</find>
       <find>time</find>
       <find>Date.parse</find>
@@ -144,7 +164,6 @@
       <find>wordstream</find>
       <find>circle</find>
       <find>scheme</find>
-      <find>stream</find>
       <find>buildFrequencyScale</find>
       <find>streamH</find>
       <find>0.1</find>
@@ -160,7 +179,12 @@
       <find>html</find>
       <find>liquefaction</find>
       <find>rest</find>
+      <find>selectionPanel</find>
+      <find>line</find>
       <find>lege</find>
+      <find>p</find>
+      <find>pie</find>
+      <find>stream</find>
       <find>cursor</find>
     </findStrings>
     <replaceStrings>
@@ -190,16 +214,18 @@
         <option value="$PROJECT_DIR$/js/initVariables.js" />
         <option value="$PROJECT_DIR$/css/plotData.css" />
         <option value="$PROJECT_DIR$/js/init.js" />
-        <option value="$PROJECT_DIR$/css/main.css" />
         <option value="$PROJECT_DIR$/mc1/mc1data.html" />
-        <option value="$PROJECT_DIR$/lib/wordstream.js" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/js/textSource.js" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/js/floatingBox.js" />
+        <option value="$PROJECT_DIR$/js/textSource.js" />
+        <option value="$PROJECT_DIR$/css/main.css" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/floatingPanel.js" />
+        <option value="$PROJECT_DIR$/js/stats.js" />
+        <option value="$PROJECT_DIR$/js/input.js" />
+        <option value="$PROJECT_DIR$/lib/wordstream.js" />
         <option value="$PROJECT_DIR$/css/floatingPanel.css" />
+        <option value="$PROJECT_DIR$/js/floatingPanel.js" />
+        <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
   </component>
@@ -210,9 +236,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="3" />
     <option name="y" value="23" />
     <option name="width" value="986" />
-    <option name="height" value="1417" />
+    <option name="height" value="1176" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -273,7 +300,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="-&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/huyennguyen/Huyen/GitHub/VAST2019mc3/css/main.css&#10;-&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -345,24 +372,24 @@
       <workItem from="1561232389591" duration="2384000" />
       <workItem from="1561237399863" duration="5630000" />
       <workItem from="1561501622680" duration="739000" />
-      <workItem from="1561505400252" duration="6361000" />
+      <workItem from="1561505400252" duration="22783000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="229313000" />
+    <option name="totallyTimeSpent" value="245735000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="986" height="1417" extended-state="0" />
+    <frame x="3" y="23" width="986" height="1176" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18756476" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12642486" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925898" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.14973262" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3286517" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -424,9 +451,7 @@
     <entry file="file://$PROJECT_DIR$/lib/wordstream.min.js" />
     <entry file="file://$PROJECT_DIR$/data/stopListForBlogs.txt" />
     <entry file="file://$PROJECT_DIR$/lib/d3.v4.min.js" />
-    <entry file="file://$PROJECT_DIR$/css/main.css" />
     <entry file="file://$PROJECT_DIR$/mc1/mc1data.html" />
-    <entry file="file://$PROJECT_DIR$/lib/wordstream.js" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -440,41 +465,58 @@
     <entry file="file://$PROJECT_DIR$/js/init.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
+    <entry file="file://$PROJECT_DIR$/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="899">
-          <caret line="572" column="11" selection-start-line="572" selection-start-column="11" selection-end-line="572" selection-end-column="11" />
+        <state relative-caret-position="216">
+          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/floatingPanel.js">
+    <entry file="file://$PROJECT_DIR$/js/input.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="35" column="41" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/textSource.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="17" column="40" lean-forward="true" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+        <state relative-caret-position="350">
+          <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
           <folding>
             <element signature="e#2154#9442#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/lib/wordstream.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" column="11" lean-forward="true" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+        <state relative-caret-position="260">
+          <caret line="663" column="31" lean-forward="true" selection-start-line="663" selection-start-column="31" selection-end-line="663" selection-end-column="31" />
+          <folding>
+            <element signature="e#118#27570#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/floatingPanel.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="28" column="48" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="48" />
+        <state relative-caret-position="96">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/floatingPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="566">
+          <caret line="129" column="17" lean-forward="true" selection-start-line="129" selection-start-column="17" selection-end-line="131" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="554" lean-forward="true" selection-start-line="554" selection-end-line="554" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
         </state>
       </provider>
     </entry>
