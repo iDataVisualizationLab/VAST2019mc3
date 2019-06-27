@@ -70,7 +70,7 @@ function loadData(){
                 }
             });
             console.log(data);
-            dataOption = taxonomy.filter(d => d.parent === "event");
+            dataOption = taxonomy.filter(d => d.parent === "resource");
             streamRawData = getStreamData(data, dataOption);
             drawGraph();
             drawPanel();
@@ -516,42 +516,6 @@ function styleAxis(axisNodes) {
    axisNodes.selectAll('.tick text')
        .attr("fill", "#555555");
 }
-// function initDataSelection(dataSelection) {
-//     var form = d3.select(main).append("form");
-//
-//     form.selectAll("label")
-//         .data(dataSelection)
-//         .enter()
-//         .append("label")
-//         .text(function(d) {return d;})
-//         .insert("input")
-//         .attr("type", "radio")
-//         .attr("class", "shape")
-//         .attr("name", "mode")
-//         .attr("value", function(d, i) {return i;})
-//         .property("checked", function(d, i) {return i===1;})
-//         .on("change", function (d) {
-//             option = d;
-//             if (d === "event"){
-//                 streamRawData = getStreamData(data, eventKeyword, eventList);
-//                 updateStream();
-//                 updateWindow(current);
-//             }
-//             else if (d === "resource"){
-//                 streamRawData = getStreamData(data, resourceKeyword, resourceList);
-//                 updateStream();
-//                 updateWindow(current);
-//             }
-//             else {
-//                 streamRawData = getStreamAllData(data, eventKeyword, eventList);
-//                 wsRawData = data;
-//                 updateStream();
-//                 updateWindow(current);
-//
-//             }
-//         });
-//
-// }
 
 function updateStream() {
     //Create the stack layout for the data

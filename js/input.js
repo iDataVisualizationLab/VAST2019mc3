@@ -59,27 +59,38 @@ const taxonomy = [
     {id: "event", subTopic: false},
 
     {id: "earthquake", subTopic: true, color: "#4daf4a", parent: "event",
-        content:  ["earthquake", "seismic", "quake", "quaking", "shake", "shaking", "wobble", "wobbling", "quiver", "epicenter" ]},
+        content:  [
+            "earthquake", "seismic", "quake", "quaking", "shake", "shaking", "wobble", "wobbling", "quiver", "epicenter" ]},
     {id: "groundDamage", subTopic: true, color: "#a65628", parent: "event",
-        content: ["landslides", "liquefaction", "rupture", "liquifactjheion"]},
+        content: [
+            "landslides", "liquefaction", "rupture", "liquifactjheion"]},
     {id: "flooding", subTopic: true, color: "#6a3d9a", parent: "event",
-        content: ["tsunami", "flood"]},
+        content: [
+            "tsunami", "flood"]},
+
     {id: "aftershock", subTopic: true, color: "#dfe300", parent: "event",
         content: ["aftershock"]},
 
     {id: "resource", subTopic: false},
     {id: "water", subTopic: true, color: "#1f78b4", parent: "resource",
-        content: ["discharged", "discharge", "drain", "drainage", "flood", "hygiene", "irrigation", "pipes", "pump", "river", "sanitary", "sewage", "sewer", "stream", "underground", "wash", "waste", "water"]},
+        content: [
+            "discharged", "discharge", "drain", "drainage", "flood", "hygiene", "irrigation", "pipes", "pump", "river", "sanitary", "sewage", "sewer", "stream", "underground", "wash", "waste", "water"]},
 
     {id: "power", subTopic: true, color: "#ff7f00", parent: "resource",
-        content: ["battery", "black out", "blackout", "candle", "dark", "electric", "energy", "flashlight", "fuel", "gas", "generator", "heat", "nuclear", "power", "radiant", "radiation", "radio rays", "valve"]},
+        content: [
+            "battery", "black out", "blackout", "candle", "dark", "electric", "energy", "flashlight", "fuel", "gas", "generator", "heat", "nuclear", "power", "radiant", "radiation", "radio rays", "valve"]},
 
     {id: "road", subTopic: true, color: "#f781bf", parent: "resource",
-        content: ["airport", "avenue", "bridge", "bus", "congestion", "drive", "flight", "highway", "jam", "lane", "logistic", "metro", "mta", "road", "route", "street", "subway", "traffic", "train", "transit", "transportation"]},
+        content: [
+            "airport", "avenue", "bridge", "bus", "congestion", "drive", "flight", "highway", "jam", "lane", "logistic", "metro", "mta", "road", "route", "street", "subway", "traffic", "train", "transit", "transportation"]},
 
-    {id: "medical", subTopic: true, color: "#e41a1c", parent: "resource", content:  ["ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "explode", "exploding", "explosion", "fatal", "fatalities", "first aid", "food", "fracture", "help", "hurt", "illness", "infection", "injure", "kill", "lump", "medical", "numb", "pain", "protection", "rash", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "volunteer", "volunteering", "wound"]},
+    {id: "medical", subTopic: true, color: "#e41a1c", parent: "resource",
+        content:  [
+        "ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "explode", "exploding", "explosion", "fatal", "fatalities", "first aid", "food", "fracture", "help", "hurt", "illness", "infection", "injure", "kill", "lump", "medical", "numb", "pain", "protection", "rash", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "volunteer", "volunteering", "wound"]},
 
-    {id: "building", subTopic: true, color: "#a6cee3", parent: "resource", content: ["apartment", "architecture", "building", "cabin", "church", "clinic", "collapse", "commercial", "construction", "construction", "coop", "hall", "hall", "house", "housing", "lease", "maintenance", "mall", "mansion", "market", "motel", "museum", "rent", "rental", "residential", "restaurant", "shelter", "space", "stable", "stair", "store", "synagogue", "villa"]},
+    {id: "building", subTopic: true, color: "#a6cee3", parent: "resource",
+        content: [
+            "apartment", "architecture", "building", "cabin", "church", "clinic", "collapse", "commercial", "construction", "construction", "coop", "hall", "hall", "house", "housing", "lease", "maintenance", "mall", "mansion", "market", "motel", "museum", "rent", "rental", "residential", "restaurant", "shelter", "space", "stable", "stair", "store", "synagogue", "villa"]},
 
     {id: "other", subTopic: false},
     {id: "rumble", subTopic: true, color: "#f0027f", parent: "other"},

@@ -65,23 +65,30 @@
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
     cursor: pointer;
-    stroke: #cccccc;
-    /*stroke-width: 2;*/
+    stroke: #444444;
+    stroke-width: 1.5;
 }
 
-.simpleButton.unselected{
-    stroke: #cccccc;
-    opacity: 0.2
+.unselected{
+    /*stroke: #cccccc;*/
+    opacity: 0.3
 }
-.simpleButton.selected{
+.selected{
     stroke: #444444;
     opacity: 1
 }
 .simpleButton.hover{
-    opacity: 1
-}
-.simpleButton:hover {
-    stroke: rgba(129, 129, 129, 0.57);
-    stroke-width: 3px;
+    stroke: rgba(173, 163, 141, 0.45);
+    stroke-width: 4px;
     opacity: 0.9;
+    r: 6
+}
+.newButton{
+    transition: all 0.3s ease 0s;
+}
+.newButton.hover{
+    stroke: rgba(173, 163, 141, 0.45);
+    stroke-width: 4px;
+    opacity: 0.9;
+    r: 7
 }
