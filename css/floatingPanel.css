@@ -80,7 +80,7 @@
 .simpleButton.hover{
     stroke: rgba(173, 163, 141, 0.45);
     stroke-width: 4px;
-    opacity: 0.9;
+    opacity: 1;
     r: 6
 }
 .newButton{
@@ -91,4 +91,7 @@
     stroke-width: 4px;
     opacity: 0.9;
     r: 7
+}
+.complexButton.hover{
+    opacity: 0.9;
 }

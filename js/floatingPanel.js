@@ -110,7 +110,7 @@ function drawPanel(){
             let thisData = taxonomy.filter(d => d.parent === main.id);
             let pieGroup = legend
                 .append("g")
-                .attr("class", "legendButton")
+                .attr("class", "complexButton legendButton")
                 .attr("id", "group" + main.id)
                 .attr("transform", d => {
                     return "translate(0," + 20 * (+taxonomy.findIndex(d => d.id === main.id)) + ")"}) ;
@@ -162,9 +162,13 @@ function drawPanel(){
                 .on("mouseover", function(){
                     d3.select("#circle" + main.id)
                         .classed("hover", true);
+                    d3.select("#group" + main.id)
+                        .classed("hover", true);
                 })
                 .on("mouseout", function (){
                     d3.select("#circle" + main.id)
+                        .classed("hover", false);
+                    d3.select("#group" + main.id)
                         .classed("hover", false);
                 });
         });
@@ -177,7 +181,7 @@ function drawPanel(){
         .style("cursor", "text")
         .text(d => {
             if (d.content){
-                return capitalize(d.id)+ ": " + d.content.slice(0,3).map(e => " "+e) + "...";
+                return capitalize(d.id)+ ": " + d.content.slice(0,3).map(e => " "+e) + (d.content.length>3?"...":"");
             }
             else return capitalize(d.id)
         })
