@@ -64,22 +64,31 @@ function drawPanel(){
         .enter()
         .append("circle")
         .attr("id", d => "button" + d.id)
-        .attr("class", "legend buttonlg")
+        .attr("class", "simpleButton legendBtn")
         .attr("r", 5)
         .attr("cx", d => d.subTopic ? 20 : 0)
         .attr("cy", (d, i) =>20 * i)
         .attr("fill", d => d.color)
-        .on("click", (d,i,a) => {
-            d3.selectAll(".buttonlg").attr("opacity", 0.1);
-            d3.select("#button" + d.id).attr("opacity", 1);
+        .on("click", (d) => {
+            d3.selectAll(".legendBtn")
+                .attr("class", "simpleButton legendBtn unselected");
+
+            d3.select("#button" + d.id)
+                .classed("selected", true);
+
             dataOption = taxonomy.filter(record => record.id === d.id);
             streamRawData = getStreamData(data, dataOption);
             updateStream();
             updateWindow(current);
+        })
+        .on("mouseover", function () {
+            d3.select(this).classed("hover", true);
+        })
+        .on("mouseout", function () {
+            d3.select(this).classed("hover", false);
         });
 
-    legend.select("#buttonevent")
-        .remove();
+    legend.select("#buttonevent").remove();
     legend.select("#buttonresource").remove();
     legend.select("#buttonother").remove();
 
@@ -96,7 +105,7 @@ function drawPanel(){
             let thisData = taxonomy.filter(d => d.parent === main.id);
             let pieGroup = legend
                 .append("g")
-                .attr("class", "buttonlg")
+                .attr("class", "legendBtn")
                 .attr("id", "group" + main.id)
                 .attr("transform", d => {
                     return "translate(0," + 20 * (+taxonomy.findIndex(d => d.id === main.id)) + ")"
@@ -127,7 +136,7 @@ function drawPanel(){
                 .attr("stroke", "black")
                 .attr("stroke-width", 1)
                 .on("click", (d) => {
-                    d3.selectAll(".buttonlg").attr("opacity", 0.1);
+                    d3.selectAll(".legendBtn").attr("opacity", 0.1);
                     d3.select("#group" + main.id)
                         .attr("opacity", 1);
                     thisData.forEach(rec => {
@@ -146,6 +155,7 @@ function drawPanel(){
         .enter()
         .append("text")
         .attr("class", "legendText")
+        .style("cursor", "text")
         .text(d => {
             if (d.content){
                 return capitalize(d.id)+ ": " + d.content.slice(0,3).map(e => " "+e) + "...";

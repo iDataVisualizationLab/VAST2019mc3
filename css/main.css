@@ -1,4 +1,4 @@
-/* ----------------- LINE GRAPH ----------------- */
+/* ----------------- MAIN STREAM GRAPH ----------------- */
 
 .overlay {
     fill: none;
@@ -23,3 +23,4 @@ div.wsTooltip {
     pointer-events: none;
     z-index: 100;
 }
+
