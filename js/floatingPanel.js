@@ -12,7 +12,7 @@ function boxDragged() {
     d3.event.sourceEvent.stopPropagation();
     let obj = d3.select(this);
     let xCoord = d3.event.x - xOffset;
-    let yCoord = d3.event.y - yOffset;
+    let yCoord = d3.event.y - yOffset - 70;
     obj.style("left", xCoord + "px");
     obj.style("top", yCoord + "px");
 
@@ -136,7 +136,7 @@ function drawPanel(){
                 .attr("cx", 0)
                 .attr("cy", 0)
                 .attr("fill", "transparent")
-                .attr("stroke", "black")
+                .attr("stroke", "#444444")
                 .attr("stroke-width", 1.5)
                 .on("click", function (d) {
                     // all

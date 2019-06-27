@@ -1,5 +1,5 @@
 .floatingBox {
-    position: fixed;
+    position: absolute;
     padding: 5px;
     box-sizing: content-box;
     /*box-shadow: 3px 3px 3px #44444452;*/
@@ -53,7 +53,7 @@
     box-sizing: content-box;
     padding: 20px;
 }
-/* simpleButton and legend */
+/* buttons and legend */
 .simpleButton {
     width: 140px;
     height: 45px;

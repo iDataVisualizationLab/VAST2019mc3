@@ -313,7 +313,7 @@ function drawGraph() {
         .style("font-size", "15px")
         .style("pointer-events", "none")
         .html(
-        '<text class = "bold">' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
+        '<text>' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
         .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
 
     // Long vertical index line
