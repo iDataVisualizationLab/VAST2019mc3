@@ -142,7 +142,7 @@ function getStreamOtherData(data){
     }
 
     let allKeywords = [];
-    allKeywords = taxonomy.filter(d => d.content)
+    allKeywords = allKeywords || taxonomy.filter(d => d.content)
         .map(d => allKeywords.concat(d.content)).flat();
 
     data.map(d => {
@@ -176,56 +176,7 @@ function getStreamOtherData(data){
     return processStreamData(streamData00);
 }
 function getStreamAllData(data, dataOption, optionList){
-    let streamData = [];
-    let streamData00 = {};
-    for (let i = 0; i < dataOption.length; i++) {
-        streamData00[optionList[i]] = [];
-    }
-    streamData00["other"] = [];
 
-    let streamData11 = {};
-    data.forEach(d => {
-        let flag = false;
-        for (let i = 0; i < dataOption.length; i++) {
-            for (let j = 0; j < dataOption[i].length; j++) {
-                if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[optionList[i]].push(d.time);
-                    wsRawData.push(d);
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag === true) break;
-        }
-        if (!flag){
-            streamData00["other"].push(d.time);
-        }
-    });
-
-    // streamRawData
-    keyList = d3.keys(streamData00);
-    keyList.forEach(d => {
-        streamData11[d] = [];
-        for (let i = startDate; i < endDate; i += streamStep) {
-            // get index of that start and end
-            streamData11[d].push({
-                timestamp: i,
-                count: streamData00[d].slice(
-                    d3.bisect(streamData00[d], i),
-                    d3.bisect(streamData00[d], i+streamStep))
-                    .length
-            })
-        }
-    });
-    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
-        let obj = {};
-        obj.time = streamData11[keyList[0]][i].timestamp;
-        keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count;
-        });
-        streamData.push(obj);
-    }
-    return streamData;
 }
 
 function getWSdata(rangedData) {

@@ -169,6 +169,16 @@ function drawPanel(){
                         dataOption = taxonomy.filter(d => d.parent === main.id);
                         streamRawData = getStreamOtherData(data);
                     }
+                    else if (main.id === allID){
+                        // all
+                        d3.selectAll(".legendButton")
+                            .classed("selected", true)
+                            .classed("unselected", false);
+
+
+                        dataOption = taxonomy.filter(d => d.content);
+                        streamRawData = getStreamOtherData(data);
+                    }
                     else {
                         dataOption = taxonomy.filter(d => d.parent === main.id);
                         streamRawData = getStreamData(data, dataOption);

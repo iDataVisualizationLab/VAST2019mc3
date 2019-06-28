@@ -1,10 +1,11 @@
 let wsRawData = [];
 let wsTooltip;
+const allID = "all";
 const otherPostID = "otherPosts";
 const otherID = "other";
 const rainbow = ["#52bbcd", "#3675b1", "#4f9e38", "FFFEA6", "#f18527", "#c7372c", "#d67cbf", "#8d69ba", "#aaaaaa"]
 const taxonomy = [
-    {id: "all", subTopic: false},
+    {id: allID, subTopic: false},
     {id: "event", subTopic: false},
 
     {id: "earthquake", subTopic: true, color: "#4daf4a", parent: "event",
