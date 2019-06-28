@@ -41,7 +41,7 @@ const taxonomy = [
     {id: "building", subTopic: true, color: "#a6cee3", parent: "resource",
         content: [
             "apartment", "architecture", "building", "cabin", "church", "clinic", "collapse", "commercial", "construction", "construction", "coop", "hall", "hall", "house", "housing", "lease", "maintenance", "mall", "mansion", "market", "motel", "museum", "rent", "rental", "residential", "restaurant", "shelter", "space", "stable", "stair", "store", "synagogue", "villa"]},
-    
+
     {id: otherID, subTopic: false},
     {id: "rumble", subTopic: true, color: "#f0027f",parent: "other", content:["rumble"]},
     {id: otherPostID, subTopic: true, color: "#919191", parent: "other", content:[]},
