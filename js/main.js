@@ -437,7 +437,7 @@ function drawGraph() {
                 .attr("transform", "translate(" + (mouseX) + "," + (height - (+slidingWindow.attr("height"))) + ")");
 
             tooltip.html(
-                '<text class = "bold">' + Date.parse(xScale.invert(mouseX)) + "</text>")
+                '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX)) + "</text>")
                 .style("left", (mouseX + 16 + margin.left) + "px");
 
             // get data for ws
