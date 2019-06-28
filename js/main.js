@@ -70,7 +70,7 @@ function loadData(){
                 }
             });
             console.log(data);
-            dataOption = taxonomy.filter(d => d.parent === "event");
+            dataOption = taxonomy.filter(d => d.parent === "resource");
             streamRawData = getStreamData(data, dataOption);
             drawGraph();
             drawPanel();
@@ -313,7 +313,7 @@ function drawGraph() {
         .style("font-size", "15px")
         .style("pointer-events", "none")
         .html(
-        '<text class = "bold">' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
+        '<text>' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
         .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
 
     // Long vertical index line
@@ -516,42 +516,6 @@ function styleAxis(axisNodes) {
    axisNodes.selectAll('.tick text')
        .attr("fill", "#555555");
 }
-// function initDataSelection(dataSelection) {
-//     var form = d3.select(main).append("form");
-//
-//     form.selectAll("label")
-//         .data(dataSelection)
-//         .enter()
-//         .append("label")
-//         .text(function(d) {return d;})
-//         .insert("input")
-//         .attr("type", "radio")
-//         .attr("class", "shape")
-//         .attr("name", "mode")
-//         .attr("value", function(d, i) {return i;})
-//         .property("checked", function(d, i) {return i===1;})
-//         .on("change", function (d) {
-//             option = d;
-//             if (d === "event"){
-//                 streamRawData = getStreamData(data, eventKeyword, eventList);
-//                 updateStream();
-//                 updateWindow(current);
-//             }
-//             else if (d === "resource"){
-//                 streamRawData = getStreamData(data, resourceKeyword, resourceList);
-//                 updateStream();
-//                 updateWindow(current);
-//             }
-//             else {
-//                 streamRawData = getStreamAllData(data, eventKeyword, eventList);
-//                 wsRawData = data;
-//                 updateStream();
-//                 updateWindow(current);
-//
-//             }
-//         });
-//
-// }
 
 function updateStream() {
     //Create the stack layout for the data
@@ -585,14 +549,16 @@ function updateStream() {
     let newchartstack = d3.select("#streamG")
         .selectAll("path").data(stacks,d=>d.key);
 
-    let enterItem = newchartstack.enter()._groups[0].filter(d => d !== null).length;
-    let exitItem = newchartstack.exit()._groups[0].filter(d => d !== null).length;
+    let enterArr = newchartstack.enter()._groups[0];
+    let enterItem = (enterArr.includes(undefined) && enterArr.length > 1);
+    let exitArr = newchartstack.exit()._groups[0];
+    let exitItem = (exitArr.includes(undefined) && exitArr.length > 1);
 
     newchartstack.enter()
         .append('path') .attr("class", "layer")
         .attr("opacity", 0)
         .transition()
-        .delay(enterItem === 1 ? 1000 : 0)
+        .delay(enterItem ? 1000 : 0)
         .duration(1000)
         .attr("d", areaGen)
         .attr("fill", (d, i) => {
@@ -608,7 +574,7 @@ function updateStream() {
 
     newchartstack
         .transition()
-        .delay(exitItem === 1 ? 1000 : 0)
+        .delay(exitItem ? 1000 : 0)
         .duration(1000).attr("d", areaGen)
         .attr("fill", (d, i) => {
             return taxonomy.find(d => d.id === keyList[i]).color;

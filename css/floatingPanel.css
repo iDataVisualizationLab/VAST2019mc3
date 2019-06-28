@@ -1,5 +1,5 @@
 .floatingBox {
-    position: fixed;
+    position: absolute;
     padding: 5px;
     box-sizing: content-box;
     /*box-shadow: 3px 3px 3px #44444452;*/
@@ -12,7 +12,7 @@
     transform-origin: 100% 100% 0;
     -webkit-transform-origin: 100% 100% 0;
     -ms-transform-origin: 100% 100% 0;
-    /*z-index: 10;*/
+    z-index: 297;
 }
 .floatingBoxHeader{
     height: 20px;
@@ -25,6 +25,9 @@
     width: 100%;
     cursor: grabbing;
     border-bottom: 0.5px solid rgba(0, 0, 0, 1);
+}
+.floatingBoxContent{
+    cursor: pointer;
 }
 .containerArrow {
     /*width: 100px;*/
@@ -50,74 +53,45 @@
     box-sizing: content-box;
     padding: 20px;
 }
-.tab {
-    display: block;
-    position: fixed;
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    font-family: Arial;
-    line-height: 15px;
-    opacity: 1;
-    width: auto !important;
-    height:auto !important;
-    z-index: 999995;
+/* buttons and legend */
+.simpleButton {
+    width: 140px;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
     cursor: pointer;
-    text-decoration: none;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg) scale(1.02);
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    transition: none;
-    -moz-transition: none;
-    -webkit-transition: none;
-    -o-transition: none;
-    -webkit-box-shadow:none;
-    -moz-box-shadow:none;
-    -ms-box-shadow:none;
-    -o-box-shadow:none;
-    box-shadow:none;
+    stroke: #444444;
+    stroke-width: 1.5;
 }
 
-.tab .screen_reader {
-    position: absolute;
-    clip: rect(1px 1px 1px 1px);
-    clip: rect(1px,1px,1px,1px);
-    padding: 0;
-    border: 0;
-    height: 1px;
-    width: 1px;
-    overflow: hidden
+.unselected{
+    /*stroke: #cccccc;*/
+    opacity: 0.3
 }
-
-.tab.tab_right {
-    right: -8px;
-    padding: 5px 14px 14px 14px;
-    border-bottom: 0;
-    background-image: -webkit-linear-gradient(left, #ffffff, #eeeeee);
-    border-radius: 9px 9px 0 0;
-    -moz-border-radius: 9px 9px 0 0;
-    -webkit-border-radius: 9px 9px 0 0;
-    transform-origin: 100% 100% 0;
-    -webkit-transform-origin: 100% 100% 0;
-    -ms-transform-origin: 100% 100% 0
+.selected{
+    stroke: #444444;
+    opacity: 1
 }
-
-.tab.tab_right:hover,.tab.tab_right:focus,.tab.tab_right:active {
-    -ms-transform: rotate(-90deg) scale(1.02) translateY(-5px);
-    -webkit-transform: rotate(-90deg) translateY(-5px);
-    -moz-transform: rotate(-90deg) translateY(-5px)
+.simpleButton.hover{
+    stroke: rgba(173, 163, 141, 0.45);
+    stroke-width: 4px;
+    opacity: 1;
+    r: 6
 }
-
-.tab img {
-    width: 9px;
-    height: 9px;
-    margin-right: 7px;
-    margin-bottom: 1px;
-    color: transparent;
-    border: 0
+.newButton{
+    transition: all 0.3s ease 0s;
 }
-
+.newButton.hover{
+    stroke: rgba(173, 163, 141, 0.45);
+    stroke-width: 4px;
+    opacity: 0.9;
+    r: 7
+}
+.complexButton.hover{
+    opacity: 0.9;
+}

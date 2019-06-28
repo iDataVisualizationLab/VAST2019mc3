@@ -12,7 +12,7 @@ function boxDragged() {
     d3.event.sourceEvent.stopPropagation();
     let obj = d3.select(this);
     let xCoord = d3.event.x - xOffset;
-    let yCoord = d3.event.y - yOffset;
+    let yCoord = d3.event.y - yOffset - 70;
     obj.style("left", xCoord + "px");
     obj.style("top", yCoord + "px");
 
@@ -23,11 +23,20 @@ function boxDragEnded() {
 }
 
 function drawPanel(){
+    // float box in general
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("id", "configurationContainer")
-        .attr("class", "floatingBox");
+        .attr("class", "floatingBox")
+        .style("left", (margin.left + 10) + "px")
+        .style("top", 10 + "px");
 
+    d3.selectAll(".floatingBox").call(d3.drag()
+        .on("start", boxDragStarted)
+        .on("drag", boxDragged)
+        .on("end", boxDragEnded));
+
+    // top move/drag icon
     selectionPanel.append("div")
         .attr("id", "configurationContainerHeader")
         .attr("class", "floatingBoxHeader")
@@ -35,15 +44,6 @@ function drawPanel(){
             "<div class='firstArrow'>&#x2194;</div>" +
             "<div class='secondArrow'>&#x2195;</div>" +
             "</div>");
-
-    d3.selectAll(".floatingBox").call(d3.drag()
-        .on("start", boxDragStarted)
-        .on("drag", boxDragged)
-        .on("end", boxDragEnded));
-
-    d3.select("#configurationContainer")
-        .style("left", (margin.left + 10) + "px")
-        .style("top", 10 + "px");
 
     let panelContent = selectionPanel.append("div")
         .attr("class", "floatingBoxContent");
@@ -59,32 +59,46 @@ function drawPanel(){
         .attr("id", "legendGroup")
         .attr("transform", "translate(" + (margin.left/2) + "," + (margin.top/2) + ")");
 
+    // simple button 
     legend.selectAll("circle")
         .data(taxonomy)
         .enter()
         .append("circle")
         .attr("id", d => "button" + d.id)
-        .attr("class", "legend buttonlg")
+        .attr("class", "simpleButton legendButton")
         .attr("r", 5)
         .attr("cx", d => d.subTopic ? 20 : 0)
         .attr("cy", (d, i) =>20 * i)
         .attr("fill", d => d.color)
-        .on("click", (d,i,a) => {
-            // d3.selectAll(".buttonlg").attr("opacity", 0.1);
-            // d3.select(this).attr("opacity", 1);
+        .on("click", function(d){
+            // all
+            d3.selectAll(".legendButton")
+                .classed("unselected", true)
+                .classed("selected", false);
+
+            // this
+            d3.select(this)
+                .classed("unselected", false)
+                .classed("selected", true);
+
             dataOption = taxonomy.filter(record => record.id === d.id);
             streamRawData = getStreamData(data, dataOption);
             updateStream();
             updateWindow(current);
+        })
+        .on("mouseover", function () {
+            d3.select(this).classed("hover", true);
+        })
+        .on("mouseout", function () {
+            d3.select(this).classed("hover", false);
         });
 
-    legend.select("#buttonevent")
-        .remove();
+    legend.select("#buttonevent").remove();
     legend.select("#buttonresource").remove();
     legend.select("#buttonother").remove();
 
     const arc = d3.arc()
-        .outerRadius(5)
+        .outerRadius(6.5)
         .innerRadius(0);
 
     const pie = d3.pie()
@@ -96,45 +110,67 @@ function drawPanel(){
             let thisData = taxonomy.filter(d => d.parent === main.id);
             let pieGroup = legend
                 .append("g")
-                .attr("class", "buttonlg")
+                .attr("class", "complexButton legendButton")
                 .attr("id", "group" + main.id)
                 .attr("transform", d => {
-                    return "translate(0," + 20 * (+taxonomy.findIndex(d => d.id === main.id)) + ")"
-                }) ;
+                    return "translate(0," + 20 * (+taxonomy.findIndex(d => d.id === main.id)) + ")"}) ;
 
             let newPie = pieGroup
                 .selectAll(".arc")
                 .data(pie(thisData))
                 .enter().append("g")
-                .attr("class", "arc")
-                ;
+                .attr("class", "arc");
 
             newPie.append("path")
                 .attr("d", arc)
-                .style("stroke", "black")
-                .attr("stroke-width", 0.1)
+                .style("stroke", "#444444")
+                // .attr("stroke-width", 0.1)
                 .style("fill", function(d,i) {
                     return thisData[i].color; });
 
-            legend
+            pieGroup
                 .append("circle")
                 .attr("id", "circle" + main.id)
                 .attr("class", "newButton")
-                .attr("r", 5.5)
+                .attr("r", 6)
                 .attr("cx", 0)
-                .attr("cy", 20 * (+taxonomy.findIndex(d => d.id === main.id)))
+                .attr("cy", 0)
                 .attr("fill", "transparent")
-                .attr("stroke", "black")
-                .attr("stroke-width", 1)
-                .on("click", (d) => {
-                    // d3.selectAll(".buttonlg").attr("opacity", 0.1);
-                    // d3.select("#group" + main.id)
-                    //     .attr("opacity", 1);
+                .attr("stroke", "#444444")
+                .attr("stroke-width", 1.5)
+                .on("click", function (d) {
+                    // all
+                    d3.selectAll(".legendButton")
+                        .classed("unselected", true)
+                        .classed("selected", false);
+
+                    // this group
+                    d3.select("#group" + main.id)
+                        .classed("unselected", false)
+                        .classed("selected", true);
+
+                    // subTopic
+                    thisData.forEach(rec => {
+                        d3.select("#button" + rec.id)
+                            .attr("class", "simpleButton legendButton selected");
+                    });
                     dataOption = taxonomy.filter(d => d.parent === main.id);
                     streamRawData = getStreamData(data, dataOption);
                     updateStream();
                     updateWindow(current);
                 })
+                .on("mouseover", function(){
+                    d3.select("#circle" + main.id)
+                        .classed("hover", true);
+                    d3.select("#group" + main.id)
+                        .classed("hover", true);
+                })
+                .on("mouseout", function (){
+                    d3.select("#circle" + main.id)
+                        .classed("hover", false);
+                    d3.select("#group" + main.id)
+                        .classed("hover", false);
+                });
         });
 
     legend.selectAll("text")
@@ -142,9 +178,10 @@ function drawPanel(){
         .enter()
         .append("text")
         .attr("class", "legendText")
+        .style("cursor", "text")
         .text(d => {
             if (d.content){
-                return capitalize(d.id)+ ": " + d.content.slice(0,3).map(e => " "+e) + "...";
+                return capitalize(d.id)+ ": " + d.content.slice(0,3).map(e => " "+e) + (d.content.length>3?"...":"");
             }
             else return capitalize(d.id)
         })
