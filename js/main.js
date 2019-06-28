@@ -549,14 +549,17 @@ function updateStream() {
     let newchartstack = d3.select("#streamG")
         .selectAll("path").data(stacks,d=>d.key);
 
-    let enterItem = newchartstack.enter()._groups[0].filter(d => d !== null).length;
-    let exitItem = newchartstack.exit()._groups[0].filter(d => d !== null).length;
+    console.log(newchartstack.enter()._groups[0]);
+    let enterArr = newchartstack.enter()._groups[0];
+    enterItem = (enterArr.includes(undefined) && enterArr.length > 1);
+    let exitArr = newchartstack.exit()._groups[0];
+    exitItem = (exitArr.includes(undefined) && exitArr.length > 1);
 
     newchartstack.enter()
         .append('path') .attr("class", "layer")
         .attr("opacity", 0)
         .transition()
-        .delay(enterItem === 1 ? 1000 : 0)
+        .delay(enterItem ? 1000 : 0)
         .duration(1000)
         .attr("d", areaGen)
         .attr("fill", (d, i) => {
@@ -572,7 +575,7 @@ function updateStream() {
 
     newchartstack
         .transition()
-        .delay(exitItem === 1 ? 1000 : 0)
+        .delay(exitItem ? 1000 : 0)
         .duration(1000).attr("d", areaGen)
         .attr("fill", (d, i) => {
             return taxonomy.find(d => d.id === keyList[i]).color;
