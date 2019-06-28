@@ -57,9 +57,9 @@ function drawPanel(){
 
     legend
         .attr("id", "legendGroup")
-        .attr("transform", "translate(" + (margin.left/2) + "," + (margin.top/2) + ")");
+        .attr("transform", "translate(" + (margin.left/2) + "," + (margin.top/2-3) + ")");
 
-    // simple button 
+    // simple node
     legend.selectAll("circle")
         .data(taxonomy)
         .enter()
@@ -105,16 +105,20 @@ function drawPanel(){
         .sort(null)
         .value(1);
 
+    // complex node
     taxonomy.filter(d => !d.subTopic)
         .forEach(main => {
             let thisData = taxonomy.filter(d => d.parent === main.id);
+            thisData = thisData.length?thisData
+                :d3.schemeCategory10.map(d => {return {color: d}});
             let pieGroup = legend
                 .append("g")
                 .attr("class", "complexButton legendButton")
                 .attr("id", "group" + main.id)
-                .attr("transform", d => {
+                .attr("transform", () => {
                     return "translate(0," + 20 * (+taxonomy.findIndex(d => d.id === main.id)) + ")"}) ;
 
+            console.log(thisData);
             let newPie = pieGroup
                 .selectAll(".arc")
                 .data(pie(thisData))
@@ -123,8 +127,8 @@ function drawPanel(){
 
             newPie.append("path")
                 .attr("d", arc)
-                .style("stroke", "#444444")
-                // .attr("stroke-width", 0.1)
+                // .style("stroke", "#444444")
+                .attr("stroke-width", 0)
                 .style("fill", function(d,i) {
                     return thisData[i].color; });
 
@@ -138,7 +142,7 @@ function drawPanel(){
                 .attr("fill", "transparent")
                 .attr("stroke", "#444444")
                 .attr("stroke-width", 1.5)
-                .on("click", function (d) {
+                .on("click", function () {
                     // all
                     d3.selectAll(".legendButton")
                         .classed("unselected", true)
