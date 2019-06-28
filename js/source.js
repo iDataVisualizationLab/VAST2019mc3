@@ -1,7 +1,8 @@
 let wsRawData = [];
 let wsTooltip;
 const otherPostID = "otherPosts";
-const otherID = "other"
+const otherID = "other";
+const rainbow = ["#52bbcd", "#3675b1", "#4f9e38", "FFFEA6", "#f18527", "#c7372c", "#d67cbf", "#8d69ba", "#aaaaaa"]
 const taxonomy = [
     {id: "all", subTopic: false},
     {id: "event", subTopic: false},
@@ -83,23 +84,23 @@ const stopwords = [
 // const resourceList = ["sewer_water", "power_energy", "roads_bridges", "medical", "buildings"];
 //
 // // -------------------------------------
-// const colorScale = {
-//     event: {
-//         earthquake: "#4daf4a",
-//         groundDamage: "#a65628",
-//         flooding: "#6a3d9a",
-//         aftershock: "#ffff99",
-//     },
-//     resource: {
-//         water: "#1f78b4",
-//         power: "#ff7f00",
-//         road: "#f781bf",
-//         medical: "#e41a1c",
-//         building: "#a6cee3",
-//     },
-//     other: {
-//         rumble: "#f0027f",
-//         others: "#919191",
-//     }
-// };
+const colorScale = {
+    event: {
+        earthquake: "#52bbcd",
+        groundDamage: "#3675b1",
+        flooding: "#4f9e38",
+        aftershock: "#bdbd3a",
+    },
+    resource: {
+        water: "#f18527",
+        power: "#c7372c",
+        road: "#d67cbf",
+        medical: "#8d69ba",
+        building: "#a6cee3",
+    },
+    other: {
+        rumble: "#f0027f",
+        others: "#919191",
+    }
+};
 

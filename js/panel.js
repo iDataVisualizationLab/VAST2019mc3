@@ -118,7 +118,7 @@ function drawPanel(){
         .forEach(main => {
             let thisData = taxonomy.filter(d => d.parent === main.id);
             thisData = thisData.length?thisData
-                :d3.schemeCategory10.map(d => {return {color: d}});
+                :rainbow.map(d => {return {color: d}});
             let pieGroup = legend
                 .append("g")
                 .attr("class", "complexButton legendButton")
@@ -142,7 +142,7 @@ function drawPanel(){
                 .append("circle")
                 .attr("id", "circle" + main.id)
                 .attr("class", "newButton")
-                .attr("r", 6)
+                .attr("r", 6.5)
                 .attr("cx", 0)
                 .attr("cy", 0)
                 .attr("fill", "transparent")
