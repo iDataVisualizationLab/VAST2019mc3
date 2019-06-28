@@ -10,12 +10,12 @@ const topicColor = ["#919191", "#440000"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
-
-const fisrt5hrsRange = [1586201491000, 1586223091000];
+const initTimestamp = 1586382444000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
-const initOption = "event"
+const initOption = "event";
+
 let data;
 let streamStep = streamStepUnit * hourToMS;
 let streamRawData;
@@ -53,7 +53,6 @@ let slidingWidth = function(numHourAfter){
 const stepDash = slidingWidth(30)/30;
 let dashedGroup;
 let vertical;
-let option = "event";
 let dataOption = [];
 loadData();
 function loadData(){
@@ -80,7 +79,7 @@ function loadData(){
             wsTooltip = d3.select("body").append("div")
                 .attr("class", "wsTooltip")
                 .style("opacity", 0);
-            current = fisrt5hrsRange[0];
+            current = initTimestamp;
             updateWindow(current);
 
         }
@@ -297,8 +296,8 @@ function drawGraph() {
         .style("font-size", "15px")
         .style("pointer-events", "none")
         .html(
-        '<text>' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
-        .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
+        '<text>' + formatTimeLegend(initTimestamp) + "</text>")
+        .style("left", (margin.left + xScale(initTimestamp) + 16) + "px");
 
     // Long vertical index line
     vertical = g
@@ -307,8 +306,8 @@ function drawGraph() {
         .style("stroke", "black")
         .attr("y1", 0)
         .attr("y2", height + margin.top + margin.bottom)
-        .attr("x1", xScale(fisrt5hrsRange[0]))
-        .attr("x2", xScale(fisrt5hrsRange[0]))
+        .attr("x1", xScale(initTimestamp))
+        .attr("x2", xScale(initTimestamp))
         .raise();
 
     // Sliding window
@@ -336,7 +335,7 @@ function drawGraph() {
         .text(numHourAfter + " hours");
 
     slidingGroup
-        .attr("transform", "translate(" + xScale(fisrt5hrsRange[0]) + "," +
+        .attr("transform", "translate(" + xScale(initTimestamp) + "," +
         (height - windowSize.height) + ")")
         .raise();
 
@@ -368,7 +367,7 @@ function drawGraph() {
         .attr("cursor", "ew-resize");
 
     // translate group
-    dashedGroup.attr("transform", "translate(" + (xScale(fisrt5hrsRange[0]) + windowSize.width) +
+    dashedGroup.attr("transform", "translate(" + (xScale(initTimestamp) + windowSize.width) +
         ","+ height + ")");
 
     // define drag
@@ -438,7 +437,7 @@ function drawGraph() {
                 .attr("transform", "translate(" + (mouseX) + "," + (height - (+slidingWindow.attr("height"))) + ")");
 
             tooltip.html(
-                '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX)) + "</text>")
+                '<text class = "bold">' + Date.parse(xScale.invert(mouseX)) + "</text>")
                 .style("left", (mouseX + 16 + margin.left) + "px");
 
             // get data for ws
