@@ -93,7 +93,7 @@ const taxonomy = [
             "apartment", "architecture", "building", "cabin", "church", "clinic", "collapse", "commercial", "construction", "construction", "coop", "hall", "hall", "house", "housing", "lease", "maintenance", "mall", "mansion", "market", "motel", "museum", "rent", "rental", "residential", "restaurant", "shelter", "space", "stable", "stair", "store", "synagogue", "villa"]},
 
     {id: "other", subTopic: false},
-    {id: "rumble", subTopic: true, color: "#f0027f", content:["rumble"]},
+    {id: "rumble", subTopic: true, color: "#f0027f",parent: "other", content:["rumble"]},
     {id: "otherWords", subTopic: true, color: "#919191", parent: "other"},
 ];
 const stopwords = [
