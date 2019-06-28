@@ -81,10 +81,18 @@ function drawPanel(){
                 .classed("unselected", false)
                 .classed("selected", true);
 
-            dataOption = taxonomy.filter(record => record.id === d.id);
-            streamRawData = getStreamData(data, dataOption);
-            updateStream();
-            updateWindow(current);
+            if (d.id === otherPostID){
+                dataOption = [taxonomy.find(record => record.id === otherPostID)];
+                streamRawData = getStreamOtherPostData(data);
+                updateStream();
+                updateWindow(current);
+            }
+            else {
+                dataOption = taxonomy.filter(record => record.id === d.id);
+                streamRawData = getStreamData(data, dataOption);
+                updateStream();
+                updateWindow(current);
+            }
         })
         .on("mouseover", function () {
             d3.select(this).classed("hover", true);
@@ -117,8 +125,6 @@ function drawPanel(){
                 .attr("id", "group" + main.id)
                 .attr("transform", () => {
                     return "translate(0," + 20 * (+taxonomy.findIndex(d => d.id === main.id)) + ")"}) ;
-
-            console.log(thisData);
             let newPie = pieGroup
                 .selectAll(".arc")
                 .data(pie(thisData))
@@ -158,8 +164,15 @@ function drawPanel(){
                         d3.select("#button" + rec.id)
                             .attr("class", "simpleButton legendButton selected");
                     });
-                    dataOption = taxonomy.filter(d => d.parent === main.id);
-                    streamRawData = getStreamData(data, dataOption);
+
+                    if (main.id === otherID){
+                        dataOption = taxonomy.filter(d => d.parent === main.id);
+                        streamRawData = getStreamOtherData(data);
+                    }
+                    else {
+                        dataOption = taxonomy.filter(d => d.parent === main.id);
+                        streamRawData = getStreamData(data, dataOption);
+                    }
                     updateStream();
                     updateWindow(current);
                 })
@@ -185,7 +198,10 @@ function drawPanel(){
         .style("cursor", "text")
         .text(d => {
             if (d.content){
-                return capitalize(d.id)+ ": " + d.content.slice(0,3).map(e => " "+e) + (d.content.length>3?"...":"");
+                return capitalize(d.id) +
+                    (d.content.length? ": " : "") +
+                    d.content.slice(0,3).map(e => " "+e) +
+                    (d.content.length>3?"...":"");
             }
             else return capitalize(d.id)
         })

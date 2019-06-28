@@ -90,12 +90,10 @@ function loadData(){
 
 function getStreamData(data, dataOption){
     wsRawData = [];
-    let streamData = [];
     let streamData00 = {};
     for (let i = 0; i < dataOption.length; i++) {
         streamData00[dataOption[i].id] = [];
     }
-    let streamData11 = {};
     data.forEach(d => {
         let flag = false;
         for (let i = 0; i < dataOption.length; i++) {
@@ -110,33 +108,73 @@ function getStreamData(data, dataOption){
             if (flag === true) break;
         }
     });
+    return processStreamData(streamData00)
+}
+function getStreamOtherPostData(data){
+    wsRawData = [];
+    let streamData00 = {};
+    streamData00[otherPostID] = [];
 
-    // streamRawData
-    keyList = d3.keys(streamData00);
-    keyList.forEach(d => {
-        streamData11[d] = [];
-        for (let i = startDate; i < endDate; i += streamStep) {
-            // get index of that start and end
-            streamData11[d].push({
-                timestamp: i,
-                count: streamData00[d].slice(
-                    d3.bisect(streamData00[d], i),
-                    d3.bisect(streamData00[d], i+streamStep))
-                    .length
-            })
+    let allKeywords = [];
+    allKeywords = taxonomy.filter(d => d.content)
+        .map(d => allKeywords.concat(d.content)).flat();
+
+    data.map(d => {
+        let flag = true;
+        for (let i = 0; i < allKeywords.length; i++){
+            if (d.message.toLowerCase().indexOf(allKeywords[i]) >= 0){
+                flag = false;
+                break;
+            }
+        }
+        if (flag){
+            streamData00[otherPostID].push(d.time);
+            wsRawData.push(d);
         }
     });
-    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
-        let obj = {};
-        obj.time = streamData11[keyList[0]][i].timestamp;
-        keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count;
-        });
-        streamData.push(obj);
-    }
-    return streamData;
+    return processStreamData(streamData00);
 }
+function getStreamOtherData(data){
+    wsRawData = [];
+    let streamData00 = {};
+    for (let i = 0; i < dataOption.length; i++) {
+        streamData00[dataOption[i].id] = [];
+    }
 
+    let allKeywords = [];
+    allKeywords = taxonomy.filter(d => d.content)
+        .map(d => allKeywords.concat(d.content)).flat();
+
+    data.map(d => {
+        // check with other keywords
+        let flag = false;
+        for (let i = 0; i < dataOption.length-1; i++) {
+            for (let j = 0; j < dataOption[i].content.length; j++) {
+                if (d.message.toLowerCase().indexOf(dataOption[i].content[j]) >= 0) {
+                    streamData00[dataOption[i].id].push(d.time);
+                    wsRawData.push(d);
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) break;
+        }
+
+        // the rest
+        let flagOther = true;
+        for (let i = 0; i < allKeywords.length; i++){
+            if (d.message.toLowerCase().indexOf(allKeywords[i]) >= 0){
+                flagOther = false;
+                break;
+            }
+        }
+        if (flagOther){
+            streamData00[otherPostID].push(d.time);
+            wsRawData.push(d);
+        }
+    });
+    return processStreamData(streamData00);
+}
 function getStreamAllData(data, dataOption, optionList){
     let streamData = [];
     let streamData00 = {};
@@ -189,7 +227,6 @@ function getStreamAllData(data, dataOption, optionList){
     }
     return streamData;
 }
-
 
 function getWSdata(rangedData) {
     let wsData = {};
@@ -580,6 +617,7 @@ function updateStream() {
             return taxonomy.find(d => d.id === keyList[i]).color;
         });
 }
+
 function tooltipInfo(d, wsRawData){
     if (d.topic === "location"){
         let limited = wsRawData
@@ -600,4 +638,33 @@ function tooltipInfo(d, wsRawData){
             return e.message.toLowerCase().indexOf(d.text) >= 0;
         });
     }
+}
+
+function processStreamData(streamData00){
+    let streamData = [];
+    let streamData11 = {};
+    // streamRawData
+    keyList = d3.keys(streamData00);
+    keyList.forEach(d => {
+        streamData11[d] = [];
+        for (let i = startDate; i < endDate; i += streamStep) {
+            // get index of that start and end
+            streamData11[d].push({
+                timestamp: i,
+                count: streamData00[d].slice(
+                    d3.bisect(streamData00[d], i),
+                    d3.bisect(streamData00[d], i+streamStep))
+                    .length
+            })
+        }
+    });
+    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
+        let obj = {};
+        obj.time = streamData11[keyList[0]][i].timestamp;
+        keyList.forEach(key => {
+            obj[key] = streamData11[key][i].count;
+        });
+        streamData.push(obj);
+    }
+    return streamData;
 }
