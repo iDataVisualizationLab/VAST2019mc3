@@ -124,7 +124,7 @@ function drawPanel(){
             newPie.append("path")
                 .attr("d", arc)
                 .style("stroke", "#444444")
-                .attr("stroke-width", 0.1)
+                // .attr("stroke-width", 0.1)
                 .style("fill", function(d,i) {
                     return thisData[i].color; });
 

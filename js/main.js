@@ -549,11 +549,10 @@ function updateStream() {
     let newchartstack = d3.select("#streamG")
         .selectAll("path").data(stacks,d=>d.key);
 
-    console.log(newchartstack.enter()._groups[0]);
     let enterArr = newchartstack.enter()._groups[0];
-    enterItem = (enterArr.includes(undefined) && enterArr.length > 1);
+    let enterItem = (enterArr.includes(undefined) && enterArr.length > 1);
     let exitArr = newchartstack.exit()._groups[0];
-    exitItem = (exitArr.includes(undefined) && exitArr.length > 1);
+    let exitItem = (exitArr.includes(undefined) && exitArr.length > 1);
 
     newchartstack.enter()
         .append('path') .attr("class", "layer")
