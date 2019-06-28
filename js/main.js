@@ -14,7 +14,7 @@ const initTimestamp = 1586382444000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
-const initOption = "event";
+const initOption = "resource";
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
