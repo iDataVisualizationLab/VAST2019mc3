@@ -66,6 +66,12 @@ function drawPanel(){
         .append("circle")
         .attr("id", d => "button" + d.id)
         .attr("class", "simpleButton legendButton")
+        .classed("selected", d => {
+            return dataOption.find(rec => rec.id === d.id);
+        })
+        .classed("unselected", d => {
+            return !dataOption.find(rec => rec.id === d.id);
+        })
         .attr("r", 5)
         .attr("cx", d => d.subTopic ? 20 : 0)
         .attr("cy", (d, i) =>20 * i)
@@ -123,6 +129,12 @@ function drawPanel(){
                 .append("g")
                 .attr("class", "complexButton legendButton")
                 .attr("id", "group" + main.id)
+                .classed("selected", () => {
+                    return (main.id === initOption);
+                })
+                .classed("unselected", d => {
+                    return !(main.id === initOption);
+                })
                 .attr("transform", () => {
                     return "translate(0," + 20 * (+taxonomy.findIndex(d => d.id === main.id)) + ")"}) ;
             let newPie = pieGroup
@@ -167,17 +179,21 @@ function drawPanel(){
 
                     if (main.id === otherID){
                         dataOption = taxonomy.filter(d => d.parent === main.id);
-                        streamRawData = getStreamOtherData(data);
+                        streamRawData = getStreamMultipleData(data);
                     }
                     else if (main.id === allID){
                         // all
-                        d3.selectAll(".legendButton")
+                        d3.selectAll(".simpleButton")
                             .classed("selected", true)
                             .classed("unselected", false);
-
-
+                        d3.selectAll(".complexButton")
+                            .classed("unselected", true)
+                            .classed("selected", false);
+                        d3.select("#group" + main.id)
+                            .classed("unselected", false)
+                            .classed("selected", true);
                         dataOption = taxonomy.filter(d => d.content);
-                        streamRawData = getStreamOtherData(data);
+                        streamRawData = getStreamMultipleData(data);
                     }
                     else {
                         dataOption = taxonomy.filter(d => d.parent === main.id);

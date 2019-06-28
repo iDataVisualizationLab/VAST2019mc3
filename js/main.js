@@ -12,11 +12,10 @@ const margin = {top: 30, right: 20, bottom: 50, left: 50},
     height = 500 - margin.top - margin.bottom;
 
 const fisrt5hrsRange = [1586201491000, 1586223091000];
-const dataSelection = ["all", "event", "resource"];
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
-
+const initOption = "event"
 let data;
 let streamStep = streamStepUnit * hourToMS;
 let streamRawData;
@@ -70,7 +69,7 @@ function loadData(){
                 }
             });
             console.log(data);
-            dataOption = taxonomy.filter(d => d.parent === "resource");
+            dataOption = taxonomy.filter(d => d.parent === initOption);
             streamRawData = getStreamData(data, dataOption);
             drawGraph();
             drawPanel();
@@ -134,7 +133,7 @@ function getStreamOtherPostData(data){
     });
     return processStreamData(streamData00);
 }
-function getStreamOtherData(data){
+function getStreamMultipleData(data){
     wsRawData = [];
     let streamData00 = {};
     for (let i = 0; i < dataOption.length; i++) {
@@ -142,7 +141,7 @@ function getStreamOtherData(data){
     }
 
     let allKeywords = [];
-    allKeywords = allKeywords || taxonomy.filter(d => d.content)
+    allKeywords = taxonomy.filter(d => d.content)
         .map(d => allKeywords.concat(d.content)).flat();
 
     data.map(d => {
@@ -174,9 +173,6 @@ function getStreamOtherData(data){
         }
     });
     return processStreamData(streamData00);
-}
-function getStreamAllData(data, dataOption, optionList){
-
 }
 
 function getWSdata(rangedData) {
@@ -500,6 +496,7 @@ function stepPosition(x, startMark){
     let value = Math.min(Math.max(Math.floor((x-startMark) / stepDash),1), 30);
     return [value * stepDash + startMark, value]
 }
+
 function styleAxis(axisNodes) {
    axisNodes.selectAll('.tick text')
        .attr("fill", "#555555");
