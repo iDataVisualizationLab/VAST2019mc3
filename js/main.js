@@ -10,12 +10,11 @@ const topicColor = ["#919191", "#440000"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
-
-const fisrt5hrsRange = [1586201491000, 1586223091000];
-const dataSelection = ["all", "event", "resource"];
+const initTimestamp = 1586382444000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
+const initOption = "event";
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
@@ -54,7 +53,6 @@ let slidingWidth = function(numHourAfter){
 const stepDash = slidingWidth(30)/30;
 let dashedGroup;
 let vertical;
-let option = "event";
 let dataOption = [];
 loadData();
 function loadData(){
@@ -70,7 +68,7 @@ function loadData(){
                 }
             });
             console.log(data);
-            dataOption = taxonomy.filter(d => d.parent === "resource");
+            dataOption = taxonomy.filter(d => d.parent === initOption);
             streamRawData = getStreamData(data, dataOption);
             drawGraph();
             drawPanel();
@@ -81,7 +79,7 @@ function loadData(){
             wsTooltip = d3.select("body").append("div")
                 .attr("class", "wsTooltip")
                 .style("opacity", 0);
-            current = fisrt5hrsRange[0];
+            current = initTimestamp;
             updateWindow(current);
 
         }
@@ -90,12 +88,10 @@ function loadData(){
 
 function getStreamData(data, dataOption){
     wsRawData = [];
-    let streamData = [];
     let streamData00 = {};
     for (let i = 0; i < dataOption.length; i++) {
         streamData00[dataOption[i].id] = [];
     }
-    let streamData11 = {};
     data.forEach(d => {
         let flag = false;
         for (let i = 0; i < dataOption.length; i++) {
@@ -110,86 +106,73 @@ function getStreamData(data, dataOption){
             if (flag === true) break;
         }
     });
+    return processStreamData(streamData00)
+}
+function getStreamOtherPostData(data){
+    wsRawData = [];
+    let streamData00 = {};
+    streamData00[otherPostID] = [];
 
-    // streamRawData
-    keyList = d3.keys(streamData00);
-    keyList.forEach(d => {
-        streamData11[d] = [];
-        for (let i = startDate; i < endDate; i += streamStep) {
-            // get index of that start and end
-            streamData11[d].push({
-                timestamp: i,
-                count: streamData00[d].slice(
-                    d3.bisect(streamData00[d], i),
-                    d3.bisect(streamData00[d], i+streamStep))
-                    .length
-            })
+    let allKeywords = [];
+    allKeywords = taxonomy.filter(d => d.content)
+        .map(d => allKeywords.concat(d.content)).flat();
+
+    data.map(d => {
+        let flag = true;
+        for (let i = 0; i < allKeywords.length; i++){
+            if (d.message.toLowerCase().indexOf(allKeywords[i]) >= 0){
+                flag = false;
+                break;
+            }
+        }
+        if (flag){
+            streamData00[otherPostID].push(d.time);
+            wsRawData.push(d);
         }
     });
-    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
-        let obj = {};
-        obj.time = streamData11[keyList[0]][i].timestamp;
-        keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count;
-        });
-        streamData.push(obj);
-    }
-    return streamData;
+    return processStreamData(streamData00);
 }
-
-function getStreamAllData(data, dataOption, optionList){
-    let streamData = [];
+function getStreamMultipleData(data){
+    wsRawData = [];
     let streamData00 = {};
     for (let i = 0; i < dataOption.length; i++) {
-        streamData00[optionList[i]] = [];
+        streamData00[dataOption[i].id] = [];
     }
-    streamData00["other"] = [];
 
-    let streamData11 = {};
-    data.forEach(d => {
+    let allKeywords = [];
+    allKeywords = taxonomy.filter(d => d.content)
+        .map(d => allKeywords.concat(d.content)).flat();
+
+    data.map(d => {
+        // check with other keywords
         let flag = false;
-        for (let i = 0; i < dataOption.length; i++) {
-            for (let j = 0; j < dataOption[i].length; j++) {
-                if (d.message.toLowerCase().indexOf(dataOption[i][j]) >= 0) {
-                    streamData00[optionList[i]].push(d.time);
+        for (let i = 0; i < dataOption.length-1; i++) {
+            for (let j = 0; j < dataOption[i].content.length; j++) {
+                if (d.message.toLowerCase().indexOf(dataOption[i].content[j]) >= 0) {
+                    streamData00[dataOption[i].id].push(d.time);
                     wsRawData.push(d);
                     flag = true;
                     break;
                 }
             }
-            if (flag === true) break;
+            if (flag) break;
         }
-        if (!flag){
-            streamData00["other"].push(d.time);
-        }
-    });
 
-    // streamRawData
-    keyList = d3.keys(streamData00);
-    keyList.forEach(d => {
-        streamData11[d] = [];
-        for (let i = startDate; i < endDate; i += streamStep) {
-            // get index of that start and end
-            streamData11[d].push({
-                timestamp: i,
-                count: streamData00[d].slice(
-                    d3.bisect(streamData00[d], i),
-                    d3.bisect(streamData00[d], i+streamStep))
-                    .length
-            })
+        // the rest
+        let flagOther = true;
+        for (let i = 0; i < allKeywords.length; i++){
+            if (d.message.toLowerCase().indexOf(allKeywords[i]) >= 0){
+                flagOther = false;
+                break;
+            }
+        }
+        if (flagOther){
+            streamData00[otherPostID].push(d.time);
+            wsRawData.push(d);
         }
     });
-    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
-        let obj = {};
-        obj.time = streamData11[keyList[0]][i].timestamp;
-        keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count;
-        });
-        streamData.push(obj);
-    }
-    return streamData;
+    return processStreamData(streamData00);
 }
-
 
 function getWSdata(rangedData) {
     let wsData = {};
@@ -313,8 +296,8 @@ function drawGraph() {
         .style("font-size", "15px")
         .style("pointer-events", "none")
         .html(
-        '<text>' + formatTimeLegend(fisrt5hrsRange[0]) + "</text>")
-        .style("left", (margin.left + xScale(fisrt5hrsRange[0]) + 16) + "px");
+        '<text>' + formatTimeLegend(initTimestamp) + "</text>")
+        .style("left", (margin.left + xScale(initTimestamp) + 16) + "px");
 
     // Long vertical index line
     vertical = g
@@ -323,8 +306,8 @@ function drawGraph() {
         .style("stroke", "black")
         .attr("y1", 0)
         .attr("y2", height + margin.top + margin.bottom)
-        .attr("x1", xScale(fisrt5hrsRange[0]))
-        .attr("x2", xScale(fisrt5hrsRange[0]))
+        .attr("x1", xScale(initTimestamp))
+        .attr("x2", xScale(initTimestamp))
         .raise();
 
     // Sliding window
@@ -352,7 +335,7 @@ function drawGraph() {
         .text(numHourAfter + " hours");
 
     slidingGroup
-        .attr("transform", "translate(" + xScale(fisrt5hrsRange[0]) + "," +
+        .attr("transform", "translate(" + xScale(initTimestamp) + "," +
         (height - windowSize.height) + ")")
         .raise();
 
@@ -384,7 +367,7 @@ function drawGraph() {
         .attr("cursor", "ew-resize");
 
     // translate group
-    dashedGroup.attr("transform", "translate(" + (xScale(fisrt5hrsRange[0]) + windowSize.width) +
+    dashedGroup.attr("transform", "translate(" + (xScale(initTimestamp) + windowSize.width) +
         ","+ height + ")");
 
     // define drag
@@ -454,7 +437,7 @@ function drawGraph() {
                 .attr("transform", "translate(" + (mouseX) + "," + (height - (+slidingWindow.attr("height"))) + ")");
 
             tooltip.html(
-                '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX)) + "</text>")
+                '<text class = "bold">' + Date.parse(xScale.invert(mouseX)) + "</text>")
                 .style("left", (mouseX + 16 + margin.left) + "px");
 
             // get data for ws
@@ -512,6 +495,7 @@ function stepPosition(x, startMark){
     let value = Math.min(Math.max(Math.floor((x-startMark) / stepDash),1), 30);
     return [value * stepDash + startMark, value]
 }
+
 function styleAxis(axisNodes) {
    axisNodes.selectAll('.tick text')
        .attr("fill", "#555555");
@@ -580,6 +564,7 @@ function updateStream() {
             return taxonomy.find(d => d.id === keyList[i]).color;
         });
 }
+
 function tooltipInfo(d, wsRawData){
     if (d.topic === "location"){
         let limited = wsRawData
@@ -600,4 +585,33 @@ function tooltipInfo(d, wsRawData){
             return e.message.toLowerCase().indexOf(d.text) >= 0;
         });
     }
+}
+
+function processStreamData(streamData00){
+    let streamData = [];
+    let streamData11 = {};
+    // streamRawData
+    keyList = d3.keys(streamData00);
+    keyList.forEach(d => {
+        streamData11[d] = [];
+        for (let i = startDate; i < endDate; i += streamStep) {
+            // get index of that start and end
+            streamData11[d].push({
+                timestamp: i,
+                count: streamData00[d].slice(
+                    d3.bisect(streamData00[d], i),
+                    d3.bisect(streamData00[d], i+streamStep))
+                    .length
+            })
+        }
+    });
+    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
+        let obj = {};
+        obj.time = streamData11[keyList[0]][i].timestamp;
+        keyList.forEach(key => {
+            obj[key] = streamData11[key][i].count;
+        });
+        streamData.push(obj);
+    }
+    return streamData;
 }
