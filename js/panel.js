@@ -11,8 +11,8 @@ function boxDragStarted() {
 function boxDragged() {
     d3.event.sourceEvent.stopPropagation();
     let obj = d3.select(this);
-    let xCoord = d3.event.x - xOffset;
-    let yCoord = d3.event.y - yOffset - 70;
+    let xCoord = d3.event.x - xOffset - 8;
+    let yCoord = d3.event.y - yOffset - 78;
     obj.style("left", xCoord + "px");
     obj.style("top", yCoord + "px");
 
