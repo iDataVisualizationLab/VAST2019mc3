@@ -4,22 +4,8 @@
     stroke: none;
     pointer-events: all;
 }
-.tooltip {
+.slidingTooltip {
     position: absolute;
-    z-index: 100;
-}
-
-div.wsTooltip {
-    position: absolute;
-    text-align: center;
-    width: 300px;
-    height: auto;
-    padding: 6px;
-    font: 13px sans-serif;
-    background: #e4e4e4;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
     z-index: 100;
 }
 
@@ -41,7 +27,7 @@ body {
     box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
     top:0;
     left:0;
-    z-index: 999;
+    z-index: 200;
 }
 .header a {
     font-weight: bold;
@@ -54,3 +40,60 @@ body {
     line-height: 15px;
     border-radius: 4px;
 }
+
+/* --------------------- TABLE TOOLTIP --------------------*/
+.wsTooltip {
+    position: absolute;
+    text-align: center;
+    width: auto;
+    max-width: 600px;
+    height: auto;
+    font: 13px sans-serif;
+    pointer-events: none;
+    z-index: 300;
+    overflow: auto;
+    border-radius: 12px;
+    border: 2px solid #676767;
+}
+.tableTooltip{
+    table-layout: fixed;
+    width: 100%;
+    word-wrap: break-word;
+}
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-style: hidden;
+    width:100%;
+    /*max-width: 100%;*/
+}
+.tableTooltip th, td {
+    text-align: left;
+    padding: 8px;
+}
+.tableTooltip th {
+    background-color: #76afaa;
+    color: white;
+}
+
+tr:nth-child(odd){background-color: #efefef
+}
+tr:nth-child(even){background-color: #dadada
+}
+.column-time {
+    width: 15%;
+}
+.column-location {
+    width: 15%;
+}
+.column-account {
+    width: 15%;
+}
+.column-message {
+    width: 55%;
+}
+tr:first-child th:first-child { border-top-left-radius: 10px; }
+tr:first-child th:last-child { border-top-right-radius: 10px; }
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
