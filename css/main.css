@@ -46,9 +46,9 @@ body {
     position: absolute;
     text-align: center;
     width: auto;
-    max-width: 600px;
+    max-width: 700px;
     height: auto;
-    font: 13px sans-serif;
+    font: 12px sans-serif;
     pointer-events: none;
     z-index: 300;
     overflow: auto;
@@ -67,9 +67,13 @@ table {
     width:100%;
     /*max-width: 100%;*/
 }
-.tableTooltip th, td {
+.tableTooltip th {
     text-align: left;
-    padding: 8px;
+    padding: 6px;
+}
+.tableTooltip td {
+    text-align: left;
+    padding: 3px 6px;
 }
 .tableTooltip th {
     background-color: #76afaa;
@@ -81,16 +85,16 @@ tr:nth-child(odd){background-color: #efefef
 tr:nth-child(even){background-color: #dadada
 }
 .column-time {
-    width: 15%;
+    width: 110px;
 }
 .column-location {
     width: 15%;
 }
 .column-account {
-    width: 15%;
+    width: 100px;
 }
 .column-message {
-    width: 55%;
+    width: 60%;
 }
 tr:first-child th:first-child { border-top-left-radius: 10px; }
 tr:first-child th:last-child { border-top-right-radius: 10px; }
