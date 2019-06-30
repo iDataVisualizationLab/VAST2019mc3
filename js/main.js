@@ -15,6 +15,7 @@ const bisect = d3.bisector(d => {
     return d.time
 }).left;
 const initOption = "event";
+const columns = ["time", "location", "account", "message"];
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
@@ -54,6 +55,7 @@ const stepDash = slidingWidth(30)/30;
 let dashedGroup;
 let vertical;
 let dataOption = [];
+let wsData;
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -76,7 +78,8 @@ function loadData(){
             wsContainer = d3.select("body").append("svg")
                 .attr("width", wsContainerWidth(numHourAfter))
                 .attr("height", 500);
-            wsTooltip = d3.select("body").append("div")
+
+            wsTooltipDiv = d3.select("body").append("div")
                 .attr("class", "wsTooltip")
                 .style("opacity", 0);
             current = initTimestamp;
@@ -182,12 +185,7 @@ function getWSdata(rangedData) {
         timeObj[thisHour] = true;
         let date = formatTimeReadData(new Date(d.time));
 
-        let wordArray = d.message.toLowerCase()
-            .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"\d/gi, '')
-            .split(" ")
-            .filter(e => {
-                return stopwords.indexOf(e) < 0;
-            });
+        let wordArray = splitText(d.message);
 
         if (!wsData[date]) wsData[date] = {};
 
@@ -212,16 +210,12 @@ function getWSdata(rangedData) {
                     text: d,
                     frequency: counts[d],
                     topic: topic,
-                    // id: d.replace(/[^a-zA-Z0-9]/g, '_') + "_" + topic + "_" + (i)
+                    id: removeChar(d) + d3.keys(timeObj)[i]
                 }
             }).sort(function (a, b) {//sort the terms by frequency
                 return b.frequency - a.frequency;
             })
-            //     .filter(function (d) {
-            //     return d.text;
-            // })
-            ;//filter out empty words
-            // words[topic] = words[topic].slice(0, Math.min(words[topic].length, topword));
+            ;
         });
         return {
             time: d3.keys(timeObj)[i],
@@ -291,7 +285,7 @@ function drawGraph() {
     // Running tooltip for date and time
     let tooltip = d3.select(main)
         .append("div")
-        .attr("class", "tooltip")
+        .attr("class", "slidingTooltip")
         .style("top", (height + margin.top/2 + margin.bottom) + "px")
         .style("font-size", "15px")
         .style("pointer-events", "none")
@@ -465,11 +459,20 @@ function getRangedDataScratch(data, start, end) {
     });
 }
 
+function splitText(text){
+    return text.toLowerCase()
+        .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"\d/gi, '')
+        .split(" ")
+        .filter(e => {
+            return stopwords.indexOf(e) < 0;
+        });
+}
+
 function updateWindow(current) {
     // get data for ws
     let thisNearestHour = nearestHour(current);
     let rangedData = getRangedData(wsRawData, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
-    let wsData = getWSdata(rangedData);
+    wsData = getWSdata(rangedData);
 
     let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
     let peak = d3.max(streamRangedData, d=>d.y);
@@ -498,6 +501,8 @@ function stepPosition(x, startMark){
 
 function styleAxis(axisNodes) {
    axisNodes.selectAll('.tick text')
+       // .attr("x", 0)
+       // .style("text-anchor", "start")
        .attr("fill", "#555555");
 }
 
@@ -565,28 +570,6 @@ function updateStream() {
         });
 }
 
-function tooltipInfo(d, wsRawData){
-    if (d.topic === "location"){
-        let limited = wsRawData
-            .slice(
-                bisect(wsRawData, +d.time),
-                bisect(wsRawData, +d.time + hourToMS));
-        return limited
-            .filter(e => e.location === d.text);
-    }
-    else {
-        // message
-        let limited = wsRawData
-            .slice(
-                bisect(wsRawData, +d.time),
-                bisect(wsRawData, +d.time + hourToMS));
-        return limited
-            .filter(e => {
-            return e.message.toLowerCase().indexOf(d.text) >= 0;
-        });
-    }
-}
-
 function processStreamData(streamData00){
     let streamData = [];
     let streamData11 = {};
@@ -614,4 +597,10 @@ function processStreamData(streamData00){
         streamData.push(obj);
     }
     return streamData;
+}
+
+function removeChar(text){
+    return "_" + text.toLowerCase()
+        .replace(" ", "")
+        .replace(/\W/gi, '');
 }

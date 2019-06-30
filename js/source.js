@@ -1,5 +1,5 @@
 let wsRawData = [];
-let wsTooltip;
+let wsTooltipDiv;
 const allID = "all";
 const otherPostID = "otherPosts";
 const otherID = "other";
