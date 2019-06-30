@@ -54,5 +54,38 @@ function createTableTooltip(wsTooltipDiv, info){
         .enter()
         .append("td")
         .text(d => d.column === "time"? formatTimeLegend(d.value):d.value);
+}
 
+function highlight(info, wsData, timestep) {
+    let messageInfo, wordDisplayed,
+        locationInfo, locationDisplayed;
+
+    // get text from info
+    let wordObj = {}, locationObj = {};
+    let allKeywords = [], allLocation = [];
+
+    info.forEach(d => {
+        allKeywords = allKeywords.concat(splitText(d.message));
+        allLocation = allLocation.concat(d.location);
+    });
+
+    allKeywords.forEach(d => wordObj[d] = true);
+    allLocation.forEach(d => locationObj[d] = true);
+
+    messageInfo = d3.keys(wordObj);
+    locationInfo = d3.keys(locationObj);
+
+    // get text from what has been displayed
+    let thisColumn = wsData.find(d => d.time == timestep);
+
+    topics.forEach(topic => {
+        thisColumn.words[topic]
+            .filter(d => {
+            return ((d.placed) && (eval(topic + "Info").indexOf(d.text) >= 0))
+        })
+            .forEach(d => {
+                d3.select("#" + removeChar(d.text) + timestep)
+                    .classed("highlightText", true);
+            })
+    })
 }

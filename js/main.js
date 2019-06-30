@@ -185,12 +185,7 @@ function getWSdata(rangedData) {
         timeObj[thisHour] = true;
         let date = formatTimeReadData(new Date(d.time));
 
-        let wordArray = d.message.toLowerCase()
-            .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"\d/gi, '')
-            .split(" ")
-            .filter(e => {
-                return stopwords.indexOf(e) < 0;
-            });
+        let wordArray = splitText(d.message);
 
         if (!wsData[date]) wsData[date] = {};
 
@@ -215,7 +210,7 @@ function getWSdata(rangedData) {
                     text: d,
                     frequency: counts[d],
                     topic: topic,
-                    // id: d.replace(/[^a-zA-Z0-9]/g, '_') + "_" + topic + "_" + (i)
+                    id: removeChar(d) + d3.keys(timeObj)[i]
                 }
             }).sort(function (a, b) {//sort the terms by frequency
                 return b.frequency - a.frequency;
@@ -464,6 +459,15 @@ function getRangedDataScratch(data, start, end) {
     });
 }
 
+function splitText(text){
+    return text.toLowerCase()
+        .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"\d/gi, '')
+        .split(" ")
+        .filter(e => {
+            return stopwords.indexOf(e) < 0;
+        });
+}
+
 function updateWindow(current) {
     // get data for ws
     let thisNearestHour = nearestHour(current);
@@ -595,3 +599,8 @@ function processStreamData(streamData00){
     return streamData;
 }
 
+function removeChar(text){
+    return "_" + text.toLowerCase()
+        .replace(" ", "")
+        .replace(/\W/gi, '');
+}
