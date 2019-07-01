@@ -9,46 +9,47 @@ const taxonomy = [
     {id: allID, subTopic: false},
     {id: "event", subTopic: false},
 
-    {id: "earthquake", subTopic: true, color: "#4daf4a", parent: "event",
+    {id: "earthquake", subTopic: true, color: "#d62728", parent: "event",
         content:  [
             "earthquake", "seismic", "quake", "quaking", "shake", "shaking", "wobble", "wobbling", "quiver", "epicenter" ]},
 
-    {id: "groundDamage", subTopic: true, color: "#a65628", parent: "event",
+    {id: "groundDamage", subTopic: true, color: "#2ca02c", parent: "event",
         content: ["mudslide",
             "landslides", "liquefaction", "rupture", "liquifactjheion"]},
 
-    {id: "flooding", subTopic: true, color: "#6a3d9a", parent: "event",
+    {id: "flooding", subTopic: true, color: "#1f77b4", parent: "event",
         content: [
             "tsunami", "flood"]},
 
-    {id: "aftershock", subTopic: true, color: "#dfe300", parent: "event",
+    {id: "aftershock", subTopic: true, color: "#ffe709", parent: "event",
         content: ["aftershock"]},
 
-    {id: "fire", subTopic: true, color: "#f18527", parent: "event",
+    {id: "fire", subTopic: true, color: "#ff7f0e", parent: "event",
         content: ["fire"]},
 
+    // --------------------------------------
+
     {id: "resource", subTopic: false},
-    {id: "water", subTopic: true, color: "#1f78b4", parent: "resource",
+    {id: "water", subTopic: true, color: "#17becf", parent: "resource",
         content: [
             "sewage", "water", "discharge", "drain", "irrigation", "pipe", "sewer", "reservoir"]},
+    {id: "energy", subTopic: true, color: "#c4c523", parent: "resource",
+        content: [
+            "blackout", "candle", "electric", "energy", "flashlight", "fuel", "gas", "generator", "nuclear", "power", "radiant", "radiation", "radio rays", "valve"]},
+    {id: "medical", subTopic: true, color: "#f02e99", parent: "resource",
+        content:  [
+            "ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "explode", "exploding", "explosion", "fatal", "first aid", "fracture", "help", "hurt", "illness", "infection", "injure", "kill", "lump", "medic", "medical", "medicine", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
+    {id: "shelter", subTopic: true, color: "#279a82", parent: "resource",
+        content: [
+            "shelter", "housing", "building", "collapse", "construction", "house"]},
 
-    {id: "energy", subTopic: true, color: "#ff7f00", parent: "resource",
-        content: ["blackout", "candle", "electric", "energy", "flashlight", "fuel", "gas", "generator", "nuclear", "power", "radiant", "radiation", "radio rays", "valve"]},
-
-    {id: "transportation", subTopic: true, color: "#f781bf", parent: "resource",
-        content: ["bridge", "congestion", "avalanche", "highway", "lane", "logistic", "metro", "jammed", "route", "street", "traffic", "transportation"]},
-
-    {id: "medical", subTopic: true, color: "#e41a1c", parent: "resource",
-        content:  ["ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "explode", "exploding", "explosion", "fatal", "fatalities", "first aid", "fracture", "help", "hurt", "illness", "infection", "injure", "kill", "lump", "medic", "medical", "medicine", "protection", "rash", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
-
-    {id: "shelter", subTopic: true, color: "#a6cee3", parent: "resource",
-        content: ["shelter", "housing", "building", "collapse", "construction", "house"]},
-
-    {id: "food", subTopic: true, color: "#b46d8c", parent: "resource",
+    {id: "food", subTopic: true, color: "#9467bd", parent: "resource",
         content: ["food"]},
-
+    {id: "transportation", subTopic: true, color: "#8c564b", parent: "resource",
+        content: [
+            "bridge", "congestion", "avalanche", "highway", "lane", "logistic", "metro", "jammed", "route", "street", "traffic", "transportation"]},
     {id: otherID, subTopic: false},
-    {id: "rumble", subTopic: true, color: "#f0027f",parent: "other", content:["rumble"]},
+    {id: "rumble", subTopic: true, color: "#375d87",parent: "other", content:["rumble"]},
     {id: otherPostID, subTopic: true, color: "#919191", parent: "other", content:[]},
 
 ];

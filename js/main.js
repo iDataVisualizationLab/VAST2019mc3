@@ -14,7 +14,7 @@ const initTimestamp = 1586364211000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
-const initOption = "event";
+const initOption = "resource";
 const columns = ["time", "location", "account", "message"];
 
 let data;
