@@ -28,7 +28,7 @@ function drawPanel(){
         .append("div")
         .attr("id", "configurationContainer")
         .attr("class", "floatingBox")
-        .style("left", (margin.left + 10) + "px")
+        .style("left", (margin.left + 2) + "px")
         .style("top", 10 + "px");
 
     d3.selectAll(".floatingBox").call(d3.drag()
