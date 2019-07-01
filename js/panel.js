@@ -50,7 +50,7 @@ function drawPanel(){
 
     let svgPanel = panelContent.append("svg")
         .attr("width", 380)
-        .attr("height", 300);
+        .attr("height", 350);
 
     let legend = svgPanel
         .append("g");
