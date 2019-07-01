@@ -6,7 +6,7 @@ const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 // const formatTimeReadData = d3.timeFormat("%Y %B %d %-I%p");
 const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
 const topics = ["message", "location"];
-const topicColor = ["#919191", "#440000"];
+const topicColor = ["#919191", "#660000"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -14,7 +14,7 @@ const initTimestamp = 1586364211000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
-const initOption = "event";
+const initOption = "resource";
 const columns = ["time", "location", "account", "message"];
 
 let data;
