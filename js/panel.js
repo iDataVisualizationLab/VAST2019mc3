@@ -90,15 +90,14 @@ function drawPanel(){
             if (d.id === otherPostID){
                 dataOption = [taxonomy.find(record => record.id === otherPostID)];
                 streamRawData = getStreamOtherPostData(data);
-                updateStream();
-                updateWindow(current);
             }
             else {
                 dataOption = taxonomy.filter(record => record.id === d.id);
                 streamRawData = getStreamData(data, dataOption);
-                updateStream();
-                updateWindow(current);
             }
+            console.log(dataOption);
+            updateStream();
+            updateWindow(current);
         })
         .on("mouseover", function () {
             d3.select(this).classed("hover", true);
@@ -199,6 +198,7 @@ function drawPanel(){
                         dataOption = taxonomy.filter(d => d.parent === main.id);
                         streamRawData = getStreamData(data, dataOption);
                     }
+                    console.log(dataOption);
                     updateStream();
                     updateWindow(current);
                 })
