@@ -53,7 +53,7 @@ function createTableTooltip(wsTooltipDiv, info){
         })
         .enter()
         .append("td")
-        .text(d => d.column === "time"? formatTimeLegend(d.value):d.value);
+        .text(d => d.column === "time"? formatTimeDetailBox(d.value):d.value);
 }
 
 function highlight(info, wsData, timestep) {

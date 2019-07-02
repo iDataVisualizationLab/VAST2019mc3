@@ -5,6 +5,7 @@ const streamStepUnit = 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 // const formatTimeReadData = d3.timeFormat("%Y %B %d %-I%p");
 const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
+const formatTimeDetailBox = d3.timeFormat("%B %d, %-I:%M %p");
 const topics = ["message", "location"];
 const topicColor = ["#919191", "#770000"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
