@@ -28,7 +28,7 @@ function drawPanel(){
         .append("div")
         .attr("id", "configurationContainer")
         .attr("class", "floatingBox")
-        .style("left", (margin.left + 2) + "px")
+        .style("left", (margin.left + 1) + "px")
         .style("top", 10 + "px");
 
     d3.selectAll(".floatingBox").call(d3.drag()
@@ -50,7 +50,7 @@ function drawPanel(){
 
     let svgPanel = panelContent.append("svg")
         .attr("width", 380)
-        .attr("height", 350);
+        .attr("height", 340);
 
     let legend = svgPanel
         .append("g");

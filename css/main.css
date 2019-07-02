@@ -121,7 +121,7 @@ tr:last-child td:last-child { border-bottom-right-radius: 10px; }
     text-align: center;
 }
 
-#loading-image {
+#loadingImage {
     transition: all 0.8s;
     position: absolute;
     top: 100px;

@@ -3,19 +3,17 @@ const endDate = Date.parse("2020-04-10 11:59:00");
 const hourToMS = 60 * 60 * 1000;
 const streamStepUnit = 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
-// const formatTimeReadData = d3.timeFormat("%Y %B %d %-I%p");
-const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
+const formatTimeWS = d3.timeFormat("%-m/%-d %-I%p");
 const formatTimeDetailBox = d3.timeFormat("%B %d, %-I:%M %p");
 const topics = ["message", "location"];
 const topicColor = ["#919191", "#770000"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
-const initTimestamp = 1586364211000;
+const initTimestamp = 1586344602000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
-const initOption = "resource";
 const columns = ["time", "location", "account", "message"];
 const firstStrike = [1586200114000, 1586204242000];
 const secondStrike = [1586350794000, 1586356642000];
@@ -187,7 +185,7 @@ function getWSdata(rangedData) {
     rangedData.forEach(d => {
         let thisHour = nearestHour(d.time);
         timeObj[thisHour] = true;
-        let date = formatTimeReadData(new Date(d.time));
+        let date = formatTimeWS(new Date(d.time));
 
         let wordArray = splitText(d.message);
 

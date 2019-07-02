@@ -1,9 +1,14 @@
 let wsRawData = [];
 let wsTooltipDiv;
+const initOption = "event";
+d3.select("#loadingImage")
+    .attr("src", "images/spinner-"+ initOption + ".gif");
+
 const allID = "all";
 const otherPostID = "otherPosts";
 const otherID = "other";
 const rainbow = ["#17becf", "#1f77b4", "#5bb641", "#2ca02c", "#ffe709", "#ff7f0e", "#d62728", "#9f78ef", "#676767"];
+
 
 const taxonomy = [
     {id: allID, subTopic: false},
