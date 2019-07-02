@@ -5,8 +5,9 @@ const streamStepUnit = 0.5; // half hour
 const formatTimeLegend = d3.timeFormat("%B %d, %-I:%M:%S %p");
 // const formatTimeReadData = d3.timeFormat("%Y %B %d %-I%p");
 const formatTimeReadData = d3.timeFormat("%-m/%-d %-I%p");
+const formatTimeDetailBox = d3.timeFormat("%B %d, %-I:%M %p");
 const topics = ["message", "location"];
-const topicColor = ["#919191", "#660000"];
+const topicColor = ["#919191", "#770000"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -16,6 +17,9 @@ const bisect = d3.bisector(d => {
 }).left;
 const initOption = "resource";
 const columns = ["time", "location", "account", "message"];
+const firstStrike = [1586200114000, 1586204242000];
+const secondStrike = [1586350794000, 1586356642000];
+const thirdStrike = [1586459159000, 1586468448000];
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
@@ -281,7 +285,10 @@ function drawGraph() {
         .attr("fill", (d, i) => {
             return taxonomy.find(d => d.id === keyList[i]).color;
         });
-    // initDataSelection(dataSelection);
+
+    // markers
+
+
     // Running tooltip for date and time
     let tooltip = d3.select(main)
         .append("div")
@@ -389,24 +396,6 @@ function drawGraph() {
         // .on('end', dragended);
 
     dashedGroup.call(drag);
-
-    // highlight layers
-    // svg.selectAll(".layer")
-    //     .attr("opacity", 1)
-    //     .on("mouseover", function (d, i) {
-    //         svg.selectAll(".layer").transition()
-    //             .duration(250)
-    //             .attr("opacity", function (d, j) {
-    //                 return j != i ? 0.5 : 1;
-    //             })
-    //     })
-    //     .on("mouseout", function (d, i) {
-    //         svg.selectAll(".layer")
-    //             .transition()
-    //             .duration(250)
-    //             .attr("opacity", "1");
-    //     })
-    // ;
 
     g.append("rect")
         .attr('class', 'overlay')
@@ -538,22 +527,12 @@ function updateStream() {
     let newchartstack = d3.select("#streamG")
         .selectAll("path").data(stacks,d=>d.key);
 
-    let enterArr = newchartstack.enter()._groups[0];
-    let enterItem = (enterArr.includes(undefined) && enterArr.length > 1);
-    let exitArr = newchartstack.exit()._groups[0];
-    let exitItem = (exitArr.includes(undefined) && exitArr.length > 1);
-
-    newchartstack.enter()
-        .append('path') .attr("class", "layer")
-        .attr("opacity", 0)
-        .transition()
-        .delay(enterItem ? 1000 : 0)
-        .duration(1000)
-        .attr("d", areaGen)
-        .attr("fill", (d, i) => {
-            return taxonomy.find(d => d.id === keyList[i]).color;
-        })
-        .attr("opacity", 1);
+    let enterArr = newchartstack._enter[0];
+    let enterItem = enterArr.filter(d => d !== undefined).length;
+    let exitArr = newchartstack._exit[0];
+    let exitItem = exitArr.filter(d => d !== undefined).length;
+    let updateArr = newchartstack._groups[0];
+    let updateItem = updateArr.filter(d => d !== undefined).length;
 
     newchartstack.exit()
         .attr("opacity", 1)
@@ -563,11 +542,23 @@ function updateStream() {
 
     newchartstack
         .transition()
-        .delay(exitItem ? 1000 : 0)
+        .delay((exitItem && updateItem) ? 1000 : 0)
         .duration(1000).attr("d", areaGen)
         .attr("fill", (d, i) => {
             return taxonomy.find(d => d.id === keyList[i]).color;
         });
+
+    newchartstack.enter()
+        .append('path') .attr("class", "layer")
+        .attr("opacity", 0)
+        .transition()
+        .delay((enterItem && updateItem)? 1000 : 0)
+        .duration(1000)
+        .attr("d", areaGen)
+        .attr("fill", (d, i) => {
+            return taxonomy.find(d => d.id === keyList[i]).color;
+        })
+        .attr("opacity", 1);
 }
 
 function processStreamData(streamData00){

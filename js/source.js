@@ -21,7 +21,7 @@ const taxonomy = [
         content: [
             "tsunami", "flood"]},
 
-    {id: "aftershock", subTopic: true, color: "#ffe709", parent: "event",
+    {id: "aftershock", subTopic: true, color: "#e4d421", parent: "event",
         content: ["aftershock"]},
 
     {id: "fire", subTopic: true, color: "#ff7f0e", parent: "event",
@@ -32,24 +32,24 @@ const taxonomy = [
     {id: "resource", subTopic: false},
     {id: "water", subTopic: true, color: "#17becf", parent: "resource",
         content: [
-            "sewage", "water", "discharge", "drain", "irrigation", "pipe", "sewer", "reservoir"]},
+            "sewage", "water", "discharge", "drain", "irrigation", "sewer", "reservoir"]},
 
-    {id: "energy", subTopic: true, color: "#c4c523", parent: "resource",
+    {id: "energy", subTopic: true, color: "#b3c535", parent: "resource",
         content: [
             "blackout", "candle", "electric", "energy", "flashlight", "fuel", "gas", "generator", "nuclear", "power", "radiant", "radiation", "radio rays", "valve"]},
 
     {id: "medical", subTopic: true, color: "#f02e99", parent: "resource",
         content:  [
-            "ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "explode", "exploding", "explosion", "fatal", "first aid", "fracture", "help", "hurt", "illness", "infection", "injure", "kill", "lump", "medic", "medical", "medicine", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
+            "ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "fatal", "first aid", "fracture", "help", "hurt", "illness", "infection", "injure", "kill", "lump", "medic", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
 
     {id: "shelter", subTopic: true, color: "#039a77", parent: "resource",
         content: [
             "shelter", "housing", "building", "collapse", "construction", "house"]},
 
-    {id: "transportation", subTopic: true, color: "#956390", parent: "resource",
+    {id: "transportation", subTopic: true, color: "#725c4c", parent: "resource",
         content: [
             "bridge", "congestion", "avalanche", "highway", "lane", "logistic", "metro", "jammed", "route", "street", "traffic", "transportation"]},
-    {id: "food", subTopic: true, color: "#b27aff", parent: "resource",
+    {id: "food", subTopic: true, color: "#9f78ef", parent: "resource",
         content: ["food"]},
     {id: otherID, subTopic: false},
     {id: "rumble", subTopic: true, color: "#375d87",parent: "other", content:["rumble"]},
