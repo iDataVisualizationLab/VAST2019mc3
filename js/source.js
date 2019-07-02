@@ -1,6 +1,6 @@
 let wsRawData = [];
 let wsTooltipDiv;
-const initOption = "event";
+const initOption = "resource";
 d3.select("#loadingImage")
     .attr("src", "images/spinner-"+ initOption + ".gif");
 

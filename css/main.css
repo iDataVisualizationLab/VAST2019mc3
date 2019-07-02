@@ -16,6 +16,7 @@ body {
 #mainContent{
     position: relative;
     margin-top: 70px;
+    width: 2000px;
 }
 .header {
     position:fixed;
@@ -85,7 +86,7 @@ tr:nth-child(odd){background-color: #efefef
 tr:nth-child(even){background-color: #dadada
 }
 .column-time {
-    width: 110px;
+    width: 100px;
 }
 .column-location {
     width: 15%;

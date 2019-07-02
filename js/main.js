@@ -113,30 +113,7 @@ function getStreamData(data, dataOption){
     });
     return processStreamData(streamData00)
 }
-function getStreamOtherPostData(data){
-    wsRawData = [];
-    let streamData00 = {};
-    streamData00[otherPostID] = [];
 
-    let allKeywords = [];
-    allKeywords = taxonomy.filter(d => d.content)
-        .map(d => allKeywords.concat(d.content)).flat();
-
-    data.map(d => {
-        let flag = true;
-        for (let i = 0; i < allKeywords.length; i++){
-            if (d.message.toLowerCase().indexOf(allKeywords[i]) >= 0){
-                flag = false;
-                break;
-            }
-        }
-        if (flag){
-            streamData00[otherPostID].push(d.time);
-            wsRawData.push(d);
-        }
-    });
-    return processStreamData(streamData00);
-}
 function getStreamMultipleData(data){
     wsRawData = [];
     let streamData00 = {};
@@ -178,7 +155,58 @@ function getStreamMultipleData(data){
     });
     return processStreamData(streamData00);
 }
+function getStreamOtherPostData(data){
+    wsRawData = [];
+    let streamData00 = {};
+    streamData00[otherPostID] = [];
 
+    let allKeywords = [];
+    allKeywords = taxonomy.filter(d => d.content)
+        .map(d => allKeywords.concat(d.content)).flat();
+
+    data.map(d => {
+        let flag = true;
+        for (let i = 0; i < allKeywords.length; i++){
+            if (d.message.toLowerCase().indexOf(allKeywords[i]) >= 0){
+                flag = false;
+                break;
+            }
+        }
+        if (flag){
+            streamData00[otherPostID].push(d.time);
+            wsRawData.push(d);
+        }
+    });
+    return processStreamData(streamData00);
+}
+function processStreamData(streamData00){
+    let streamData = [];
+    let streamData11 = {};
+    // streamRawData
+    keyList = d3.keys(streamData00);
+    keyList.forEach(d => {
+        streamData11[d] = [];
+        for (let i = startDate; i < endDate; i += streamStep) {
+            // get index of that start and end
+            streamData11[d].push({
+                timestamp: i,
+                count: streamData00[d].slice(
+                    d3.bisect(streamData00[d], i),
+                    d3.bisect(streamData00[d], i+streamStep))
+                    .length
+            })
+        }
+    });
+    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
+        let obj = {};
+        obj.time = streamData11[keyList[0]][i].timestamp;
+        keyList.forEach(key => {
+            obj[key] = streamData11[key][i].count;
+        });
+        streamData.push(obj);
+    }
+    return streamData;
+}
 function getWSdata(rangedData) {
     let wsData = {};
     let timeObj = {};
@@ -557,35 +585,6 @@ function updateStream() {
             return taxonomy.find(d => d.id === keyList[i]).color;
         })
         .attr("opacity", 1);
-}
-
-function processStreamData(streamData00){
-    let streamData = [];
-    let streamData11 = {};
-    // streamRawData
-    keyList = d3.keys(streamData00);
-    keyList.forEach(d => {
-        streamData11[d] = [];
-        for (let i = startDate; i < endDate; i += streamStep) {
-            // get index of that start and end
-            streamData11[d].push({
-                timestamp: i,
-                count: streamData00[d].slice(
-                    d3.bisect(streamData00[d], i),
-                    d3.bisect(streamData00[d], i+streamStep))
-                    .length
-            })
-        }
-    });
-    for (let i = 0; i < streamData11[keyList[0]].length; i++) {
-        let obj = {};
-        obj.time = streamData11[keyList[0]][i].timestamp;
-        keyList.forEach(key => {
-            obj[key] = streamData11[key][i].count;
-        });
-        streamData.push(obj);
-    }
-    return streamData;
 }
 
 function removeChar(text){
