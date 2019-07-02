@@ -88,7 +88,7 @@ function loadData(){
                 .style("opacity", 0);
             current = initTimestamp;
             updateWindow(current);
-
+            d3.select('#loading').remove();
         }
     });
 }

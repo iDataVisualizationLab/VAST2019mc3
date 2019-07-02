@@ -3,7 +3,7 @@ let wsTooltipDiv;
 const allID = "all";
 const otherPostID = "otherPosts";
 const otherID = "other";
-const rainbow = ["#17becf", "#1f77b4", "#5bb641", "#2ca02c", "ffe709", "#ff7f0e", "#d62728", "#8d69ba", "#676767"];
+const rainbow = ["#17becf", "#1f77b4", "#5bb641", "#2ca02c", "#ffe709", "#ff7f0e", "#d62728", "#9f78ef", "#676767"];
 
 const taxonomy = [
     {id: allID, subTopic: false},
@@ -42,7 +42,7 @@ const taxonomy = [
         content:  [
             "ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "fatal", "first aid", "fracture", "help", "hurt", "illness", "infection", "injure", "kill", "lump", "medic", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
 
-    {id: "shelter", subTopic: true, color: "#039a77", parent: "resource",
+    {id: "shelter", subTopic: true, color: "#03a37e", parent: "resource",
         content: [
             "shelter", "housing", "building", "collapse", "construction", "house"]},
 
