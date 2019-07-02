@@ -15,7 +15,7 @@ const initTimestamp = 1586364211000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
-const initOption = "resource";
+const initOption = "event";
 const columns = ["time", "location", "account", "message"];
 const firstStrike = [1586200114000, 1586204242000];
 const secondStrike = [1586350794000, 1586356642000];
