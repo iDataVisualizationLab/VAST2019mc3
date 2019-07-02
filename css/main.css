@@ -125,6 +125,6 @@ tr:last-child td:last-child { border-bottom-right-radius: 10px; }
     transition: all 0.8s;
     position: absolute;
     top: 100px;
-    left: 560px;
+    left: 480px;
     z-index: 100;
 }
