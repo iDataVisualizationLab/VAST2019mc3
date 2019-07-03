@@ -1,5 +1,5 @@
-function tooltipInfo(d, wsRawData){
-    if (d.topic === "location"){
+function tooltipInfo(d, wsRawData) {
+    if (d.topic === "location") {
         let limited = wsRawData
             .slice(
                 bisect(wsRawData, +d.time),
@@ -20,8 +20,9 @@ function tooltipInfo(d, wsRawData){
     }
 }
 
-function createTableTooltip(wsTooltipDiv, info){
+function createTableTooltip(wsTooltipDiv, info, text, prevColor, topic) {
     wsTooltipDiv.selectAll("*").remove();
+    // process info text
     let table = wsTooltipDiv.append("table")
             .attr("class", "tableTooltip")
             .attr("id", "tableTooltip")
@@ -44,7 +45,6 @@ function createTableTooltip(wsTooltipDiv, info){
         .enter()
         .append("tr");
 
-    // create a cell in each row, for each column
     let cells = rows.selectAll("td")
         .data(function (row) {
             return columns.map(function (column) {
@@ -53,7 +53,28 @@ function createTableTooltip(wsTooltipDiv, info){
         })
         .enter()
         .append("td")
-        .text(d => d.column === "time"? formatTimeDetailBox(d.value):d.value);
+        .style("color", d => ((d.column === "location") && (topic === "location")) ? topicColor[1] : "#000")
+        .html(function (d) {
+            if (d.column === "time") {
+                return formatTimeDetailBox(d.value)
+            }
+            else if (d.column === "message") {
+                let sentence = d.value;
+                for (let i = 0; i < dataOption.length; i++) {
+                    for (let j = 0; j < dataOption[i].content.length; j++) {
+                        let index = sentence.toLowerCase().indexOf(dataOption[i].content[j]);
+                        if (index >= 0) {
+                            let word = sentence.slice(index).split(/\W/)[0];
+                            let replaceWord = `<span style="color: ${dataOption[i].color}"` + ">" + word + "</span>";
+                            sentence = name(sentence, word, replaceWord);
+                        }
+                    }
+                }
+                return sentence;
+            }
+            else return d.value;
+        })
+    ;
 }
 
 function highlight(info, wsData, timestep) {
@@ -81,11 +102,16 @@ function highlight(info, wsData, timestep) {
     topics.forEach(topic => {
         thisColumn.words[topic]
             .filter(d => {
-            return ((d.placed) && (eval(topic + "Info").indexOf(d.text) >= 0))
-        })
+                return ((d.placed) && (eval(topic + "Info").indexOf(d.text) >= 0))
+            })
             .forEach(d => {
                 d3.select("#" + removeChar(d.text) + timestep)
                     .classed("highlightText", true);
             })
     })
+}
+
+function name(str, replaceWhat, replaceTo) {
+    var re = new RegExp(replaceWhat, 'g');
+    return str.replace(re, replaceTo);
 }

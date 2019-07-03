@@ -90,27 +90,49 @@ function loadData(){
         }
     });
 }
-
+function countOnce(d, dataOption, streamData00, wsRawData){
+    let flag = false;
+    for (let i = 0; i < dataOption.length; i++) {
+        for (let j = 0; j < dataOption[i].content.length; j++) {
+            if (d.message.toLowerCase().indexOf(dataOption[i].content[j]) >= 0) {
+                streamData00[dataOption[i].id].push(d.time);
+                wsRawData.push(d);
+                flag = true;
+                // break out of content of this data option
+                break;
+            }
+        }
+        //break out of data options
+        if (flag) break;
+    }
+}
+function countMultiple(d, dataOption, streamData00, wsRawData){
+    let obj = {};
+    for (let i = 0; i < dataOption.length; i++) {
+        for (let j = 0; j < dataOption[i].content.length; j++) {
+            if (d.message.toLowerCase().indexOf(dataOption[i].content[j]) >= 0) {
+                streamData00[dataOption[i].id].push(d.time);
+                if (!obj[d.time]){
+                    wsRawData.push(d);
+                    obj[d.time] = true;
+                }
+                // break out of content of this data option
+                break;
+            }
+        }
+    }
+}
 function getStreamData(data, dataOption){
     wsRawData = [];
     let streamData00 = {};
+    // init streamData00
     for (let i = 0; i < dataOption.length; i++) {
         streamData00[dataOption[i].id] = [];
     }
     data.forEach(d => {
-        let flag = false;
-        for (let i = 0; i < dataOption.length; i++) {
-            for (let j = 0; j < dataOption[i].content.length; j++) {
-                if (d.message.toLowerCase().indexOf(dataOption[i].content[j]) >= 0) {
-                    streamData00[dataOption[i].id].push(d.time);
-                    wsRawData.push(d);
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag === true) break;
-        }
+        countMultiple(d, dataOption, streamData00, wsRawData);
     });
+    console.log(streamData00);
     return processStreamData(streamData00)
 }
 
@@ -127,18 +149,7 @@ function getStreamMultipleData(data){
 
     data.map(d => {
         // check with other keywords
-        let flag = false;
-        for (let i = 0; i < dataOption.length-1; i++) {
-            for (let j = 0; j < dataOption[i].content.length; j++) {
-                if (d.message.toLowerCase().indexOf(dataOption[i].content[j]) >= 0) {
-                    streamData00[dataOption[i].id].push(d.time);
-                    wsRawData.push(d);
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag) break;
-        }
+        countMultiple(d, dataOption, streamData00, wsRawData);
 
         // the rest
         let flagOther = true;
@@ -476,7 +487,7 @@ function getRangedDataScratch(data, start, end) {
 
 function splitText(text){
     return text.toLowerCase()
-        .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"\d/gi, '')
+        .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"|\d/gi, '')
         .split(" ")
         .filter(e => {
             return stopwords.indexOf(e) < 0;
@@ -589,6 +600,5 @@ function updateStream() {
 
 function removeChar(text){
     return "_" + text.toLowerCase()
-        .replace(" ", "")
         .replace(/\W/gi, '');
 }
