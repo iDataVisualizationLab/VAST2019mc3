@@ -548,6 +548,19 @@ function updateStream() {
     xScale.domain([startDate, endDate]);
     yScale.domain(d3.extent(stacks.flat().flat()));
 
+    if ((dataOption.length === 1) && (dataOption[0].subTopic)){
+        switch (dataOption[0].parent) {
+            case "event":
+                yScale.domain([0,125]);
+                break;
+            case "resource":
+                yScale.domain([0,524]);
+                break;
+            default:
+                yScale.domain([0, 782]);
+        }
+    }
+    console.log(d3.extent(stacks.flat().flat()));
     //The y Axis
     const yAxisGroup = d3.select('#yAxis');
     const yAxis = d3.axisLeft(yScale);
