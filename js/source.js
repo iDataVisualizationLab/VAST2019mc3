@@ -30,7 +30,7 @@ const taxonomy = [
         content: ["aftershock"]},
 
     {id: "fire", subTopic: true, color: "#ff7f0e", parent: "event",
-        content: ["fire"]},
+        content: ["fire", "smoke"]},
 
     // --------------------------------------
 

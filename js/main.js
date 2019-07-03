@@ -31,8 +31,8 @@ let yScale = d3.scaleLinear()
     .range([height, 0]);
 let config = {
     topWord: 70,
-    minFont: 10,
-    maxFont: 25,
+    minFont: 12,
+    maxFont: 30,
     tickFont: 12,
     legendFont: 12,
     curve: d3.curveMonotoneX
@@ -132,7 +132,6 @@ function getStreamData(data, dataOption){
     data.forEach(d => {
         countMultiple(d, dataOption, streamData00, wsRawData);
     });
-    console.log(streamData00);
     return processStreamData(streamData00)
 }
 
