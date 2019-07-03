@@ -554,10 +554,10 @@ function updateStream() {
                 yScale.domain([0,125]);
                 break;
             case "resource":
-                yScale.domain([0,200]);
+                yScale.domain([0,524]);
                 break;
             default:
-                yScale.domain([0, 800]);
+                yScale.domain([0, 782]);
         }
     }
     console.log(d3.extent(stacks.flat().flat()));
