@@ -487,7 +487,7 @@ function getRangedDataScratch(data, start, end) {
 
 function splitText(text){
     return text.toLowerCase()
-        .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"\d/gi, '')
+        .replace(/\.|\,|\(|\)|\;|\:|\[|\]|\&|\!|\’|\?|\#|\"|\d/gi, '')
         .split(" ")
         .filter(e => {
             return stopwords.indexOf(e) < 0;
@@ -600,6 +600,5 @@ function updateStream() {
 
 function removeChar(text){
     return "_" + text.toLowerCase()
-        .replace(" ", "")
         .replace(/\W/gi, '');
 }

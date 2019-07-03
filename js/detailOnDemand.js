@@ -20,40 +20,90 @@ function tooltipInfo(d, wsRawData){
     }
 }
 
-function createTableTooltip(wsTooltipDiv, info){
+function createTableTooltip(wsTooltipDiv, info, text, prevColor, topic){
     wsTooltipDiv.selectAll("*").remove();
-    let table = wsTooltipDiv.append("table")
-            .attr("class", "tableTooltip")
-            .attr("id", "tableTooltip")
-            .style("width", "100%"),
-        thead = table.append("thead"),
-        tbody = table.append("tbody");
+    // process info text
 
-    // header row
-    thead.append("tr")
-        .selectAll("th")
-        .data(columns)
-        .enter()
-        .append("th")
-        .attr("class", column => "column-" + column)
-        .text(column => capitalize(column));
-
-    // create a row for each record
-    let rows = tbody.selectAll("tr")
-        .data(info)
-        .enter()
-        .append("tr");
-
-    // create a cell in each row, for each column
-    let cells = rows.selectAll("td")
-        .data(function (row) {
-            return columns.map(function (column) {
-                return {column: column, value: row[column]}
+    if (topic === "location"){
+        let rows = createTable();
+        let cells = rows.selectAll("td")
+            .data(function (row) {
+                return columns.map(function (column) {
+                    return {column: column, value: row[column]}
+                })
             })
-        })
-        .enter()
-        .append("td")
-        .text(d => d.column === "time"? formatTimeDetailBox(d.value):d.value);
+            .enter()
+            .append("td")
+            .text(d => d.column === "time"? formatTimeDetailBox(d.value):d.value)
+            .style("color", d => d.column === "location"? topicColor[1] : "#000");
+    }
+    else {
+        info.forEach(d => {
+            d.messageArr = d.message.toLowerCase().split(text);
+            d.messageArr.splice(1,0,text);
+        });
+
+        let rows = createTable();
+
+        // create a cell in each row, for each column
+        let cells = rows.selectAll("td")
+            .data(function (row) {
+                return columns.map(function (column) {
+                    return column === "message" ?
+                        {column: column, value: row[column], array: row["messageArr"]} :
+                        {column: column, value: row[column]}
+                })
+            })
+            .enter()
+            .append("td")
+            .attr("class", cell => "cell" + cell.column)
+            .text(d => {
+                if (d.column === "time"){
+                    return formatTimeDetailBox(d.value)
+                }
+                else if (d.column === "message"){
+                    return ""
+                }
+                else return d.value;
+            });
+
+        rows.selectAll(".cellmessage")
+            .selectAll("span")
+            .data(function (d) {
+                console.log(d);
+                return d.array;
+            })
+            .enter()
+            .append("span")
+            .text(d => d)
+            .style("color", d => d.trim() === text ? prevColor : "#000");
+    }
+
+    function createTable(){
+        let table = wsTooltipDiv.append("table")
+                .attr("class", "tableTooltip")
+                .attr("id", "tableTooltip")
+                .style("width", "100%"),
+            thead = table.append("thead"),
+            tbody = table.append("tbody");
+
+        // header row
+        thead.append("tr")
+            .selectAll("th")
+            .data(columns)
+            .enter()
+            .append("th")
+            .attr("class", column => "column-" + column)
+            .text(column => capitalize(column));
+
+        // create a row for each record
+        let rows = tbody.selectAll("tr")
+            .data(info)
+            .enter()
+            .append("tr");
+
+        return rows
+    }
 }
 
 function highlight(info, wsData, timestep) {
