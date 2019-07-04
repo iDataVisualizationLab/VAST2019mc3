@@ -20,6 +20,8 @@ function boxDragEnded() {
 }
 
 function drawMap() {
+    const width = 500,
+        height = 400;
     // float box in general
     let selectionPanel = d3.select(main)
         .append("div")
@@ -45,8 +47,57 @@ function drawMap() {
         .attr("class", "floatingBoxContent")
         .attr("id", "mapContent");
 
-    let svgPanel = panelContent.append("svg")
-        .attr("width", 330)
-        .attr("height", 340);
+    let svg = panelContent.append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    let projection = d3.geoMercator()
+        .scale(1)
+        .translate([0, 0]);
+
+    let geoGenerator = d3.geoPath()
+        .projection(projection);
+
+    var url = "https://raw.githubusercontent.com/iDataVisualizationLab/VAST19_mc1/master/Dataset/StHimark.geojson";
+    d3.json(url, function(error, geojson) {
+        if (error) throw error;
+
+        var b = geoGenerator.bounds(geojson),
+            s = .85 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+            t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
+
+        projection
+            .scale(s)
+            .translate(t);
+
+        let map = svg.selectAll("path")
+            .data(geojson.features);
+
+        map
+            .enter().append("path")
+            .attr("class", "mapPath norm")
+            .attr("d", geoGenerator)
+            .attr("id", d => "map" + removeChar(d.properties.Nbrhood))
+            .attr("fill", "#636363")
+            .on("mouseover", mouseoverMap)
+            .on("mouseout", mouseoutMap)
+            // .on("click", mouseclickMap);
+
+        map.enter()
+            .append("svg:text")
+            .text(function(d) {
+                return d.properties.Nbrhood;
+            })
+            .attr("x", function(d) {
+                return geoGenerator.centroid(d)[0];
+            })
+            .attr("y", function(d) {
+                return geoGenerator.centroid(d)[1];
+            })
+            .attr("text-anchor", "middle")
+            .attr("fill", "black")
+            .attr("font-family", "sans-serif")
+            .attr('font-size', '6pt');
+    });
 
 }

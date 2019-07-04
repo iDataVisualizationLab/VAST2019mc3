@@ -2,6 +2,8 @@ let wsRawData = [];
 let wsTooltipDiv;
 let wsTooltipContainer;
 let xButton;
+let mainGroup;
+let wordstreamG;
 const initOption = "event";
 const allID = "all";
 const otherPostID = "otherPosts";
