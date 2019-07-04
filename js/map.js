@@ -79,9 +79,10 @@ function drawMap() {
             .attr("d", geoGenerator)
             .attr("id", d => "map" + removeChar(d.properties.Nbrhood))
             .attr("fill", "#636363")
+            // .on("click", mouseclickMap)
             .on("mouseover", mouseoverMap)
             .on("mouseout", mouseoutMap)
-            // .on("click", mouseclickMap);
+          ;
 
         map.enter()
             .append("svg:text")

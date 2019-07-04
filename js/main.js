@@ -56,6 +56,11 @@ let dashedGroup;
 let vertical;
 let dataOption = [];
 let wsData;
+let area = d3.area()
+    .curve(d3.curveMonotoneX)
+    .x(d => d.data.x)
+    .y0(d => d[0])
+    .y1(d => d[1]);
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -656,7 +661,6 @@ function mouseoverMap(d){
     });
     // append close button
 
-    console.log("#map" + removeChar(text));
     d3.select("#map" + removeChar(text))
         .style("fill", prevColor)
         .style("opacity", prevOpacity);
@@ -686,8 +690,9 @@ function mouseoutMap(d) {
 
 function mouseclickMap(d) {
     let text = d.properties.Nbrhood;
-    let topic = "location"
-    let allTexts = mainGroup.selectAll('.textData').filter(t => {
+    let topic = "location";
+    let allTexts = mainGroup.selectAll('.textData')
+        .filter(t => {
         return t && t.text === text && t.topic === topic;
     })._groups;
     //Select the data for the stream layers
@@ -736,7 +741,7 @@ function mouseclickMap(d) {
     wordstreamG.append('path')
         .datum(points)
         .attr('d', area)
-        .style('fill', prevColor)
+        .style('fill', topicColor[1])
         .attr("fill-opacity", 1)
         .attr("stroke", 'black')
         .attr('stroke-width', 0.3)
@@ -755,6 +760,6 @@ function mouseclickMap(d) {
     xButton.style("opacity", 0.9);
 
     d3.select("#map" + removeChar(text))
-        .style("fill", prevColor)
+        .style("fill", topicColor[1])
         .style("opacity", 1);
 }
