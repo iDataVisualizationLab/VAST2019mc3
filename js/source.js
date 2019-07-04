@@ -1,6 +1,6 @@
 let wsRawData = [];
 let wsTooltipDiv;
-const initOption = "earthquake";
+const initOption = "event";
 const allID = "all";
 const otherPostID = "otherPosts";
 const otherID = "other";

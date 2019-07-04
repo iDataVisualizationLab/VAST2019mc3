@@ -70,8 +70,8 @@ function loadData(){
                 }
             });
             console.log(data);
-            // dataOption = taxonomy.filter(d => d.parent === initOption);
-            dataOption = taxonomy.filter(d => d.id === initOption);
+            dataOption = taxonomy.filter(d => d.parent === initOption);
+            // dataOption = taxonomy.filter(d => d.id === initOption);
             streamRawData = getStreamData(data, dataOption);
             drawGraph();
             drawPanel();
