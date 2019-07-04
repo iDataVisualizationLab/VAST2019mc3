@@ -1,4 +1,3 @@
-
 function boxDragStarted() {
     let obj = d3.select(this);
     xOffset = d3.event.x - obj.node().getBoundingClientRect().x;
