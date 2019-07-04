@@ -80,11 +80,28 @@ function loadData(){
                 .attr("width", wsContainerWidth(numHourAfter))
                 .attr("height", 550);
 
-            wsTooltipDiv = d3.select("body").append("div")
+            wsTooltipContainer = d3.select("body").append("div")
+                .attr('id', "wsTooltipContainer");
+
+            wsTooltipDiv = wsTooltipContainer.append("div")
                 .attr("class", "wsTooltip")
+                .attr("id", "wsTooltip")
                 .style("opacity", 0);
+
+            xButton = wsTooltipContainer.append("div")
+                .attr("class", "close-button")
+                .style("opacity", 0)
+                .on("click", function () {
+                    wsTooltipDiv.transition()
+                        .duration(100)
+                        .style("opacity", 0);
+
+                    xButton.style("opacity", 0);
+                });
+
             current = initTimestamp;
             updateWindow(current);
+            drawMap();
             d3.select('#loading').remove();
         }
     });

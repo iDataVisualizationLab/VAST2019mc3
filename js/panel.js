@@ -23,12 +23,13 @@ function boxDragEnded() {
 }
 
 function drawPanel(){
+    const panelWidth = 300, panelHeight = 340;
     // float box in general
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("id", "configurationContainer")
         .attr("class", "floatingBox")
-        .style("left", (1200) + "px")
+        .style("left", (230) + "px")
         .style("top", (10) + "px");
 
     d3.selectAll(".floatingBox").call(d3.drag()
@@ -36,21 +37,22 @@ function drawPanel(){
         .on("drag", boxDragged)
         .on("end", boxDragEnded));
 
-    // top move/drag icon
-    selectionPanel.append("div")
-        .attr("id", "configurationContainerHeader")
-        .attr("class", "floatingBoxHeader")
-        .html("<div class='containerArrow'>" +
-            "<div class='firstArrow'>&#x2194;</div>" +
-            "<div class='secondArrow'>&#x2195;</div>" +
-            "</div>");
-
     let panelContent = selectionPanel.append("div")
-        .attr("class", "floatingBoxContent");
+        .attr("class", "floatingBoxContent")
+        .attr("id", "panelContent");
 
     let svgPanel = panelContent.append("svg")
-        .attr("width", 330)
-        .attr("height", 340);
+        .attr("width", panelWidth)
+        .attr("height", panelHeight);
+
+    panelContent.append("div")
+        .attr("class", "overlayArrow")
+        .style("top", (10) + "px")
+        .style("left", (panelWidth - 20) + "px")
+        .html("<div class='containerArrow'>"+
+                    "<div class='firstArrow'>&#x2194;</div>" +
+                    "<div class='secondArrow'>&#x2195;</div>" +
+                    "</div>");
 
     let legend = svgPanel
         .append("g");

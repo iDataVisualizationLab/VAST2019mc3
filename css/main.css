@@ -154,12 +154,82 @@ tr:first-child th:last-child { border-top-right-radius: 10px; }
 tr:last-child td:first-child { border-bottom-left-radius: 10px; }
 tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 
-/* wordstream details*/
+/* ------------- wordstream details ------------- */
 
 .highlightText{
     stroke-width: 1;
 }
+.highlightTextDetail {
+    font-weight: bold;
+    /*-webkit-text-stroke: 0.2px #4e4e4e;*/
+}
+.close-button {
+    display: inline-block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 0.16em;
+    height: 0.16em;
+    position: absolute;
+    border: none;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+    font: normal 8em/normal Arial, Helvetica, sans-serif;
+    color: rgba(0,0,0,1);
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: #197764;
+    /*transition: 0.3s;*/
+    cursor: pointer;
+}
 
+.close-button::before {
+    display: inline-block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 0.45em;
+    height: 0.1em;
+    position: absolute;
+    content: "";
+    top: 0.32em;
+    left: 0.17em;
+    border: none;
+    font: normal 20%/normal Arial, Helvetica, sans-serif;
+    color: rgba(0,0,0,1);
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: #ffffff;
+    text-shadow: none;
+    -webkit-transform: rotateZ(45deg)   ;
+    transform: rotateZ(45deg)   ;
+}
+
+.close-button::after {
+    display: inline-block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 0.45em;
+    height: 0.1em;
+    position: absolute;
+    content: "";
+    top: 0.32em;
+    left: 0.17em;
+    border: none;
+    font: normal 20%/normal Arial, Helvetica, sans-serif;
+    color: rgba(0,0,0,1);
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: #ffffff;
+    text-shadow: none;
+    -webkit-transform: rotateZ(-45deg)   ;
+    transform: rotateZ(-45deg)   ;
+}
+
+.specialHover{
+    opacity: 0.9;
+}
 /* ------------- Spinner ------------ */
 #loading {
     width: 100%;

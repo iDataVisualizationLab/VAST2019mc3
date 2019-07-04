@@ -29,6 +29,16 @@
 .floatingBoxContent{
     cursor: pointer;
 }
+.overlayArrow {
+    fill: none;
+    stroke: none;
+    pointer-events: all;
+    position: absolute;
+    background: rgba(100,100,100,0);
+    float: right;
+    height: 0px;
+}
+
 .containerArrow {
     /*width: 100px;*/
     /*height: 100px;*/

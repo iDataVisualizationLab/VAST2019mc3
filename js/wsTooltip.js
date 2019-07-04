@@ -23,6 +23,7 @@ function tooltipInfo(d, wsRawData) {
 function createTableTooltip(wsTooltipDiv, info, text, prevColor, topic) {
     wsTooltipDiv.selectAll("*").remove();
     // process info text
+
     let table = wsTooltipDiv.append("table")
             .attr("class", "tableTooltip")
             .attr("id", "tableTooltip")
@@ -65,7 +66,8 @@ function createTableTooltip(wsTooltipDiv, info, text, prevColor, topic) {
                         let index = sentence.toLowerCase().indexOf(dataOption[i].content[j]);
                         if (index >= 0) {
                             let word = sentence.slice(index).split(/\W/)[0];
-                            let replaceWord = `<span style="color: ${dataOption[i].color}"` + ">" + word + "</span>";
+                            let replaceWord =
+                                `<span class="highlightTextDetail" style="color: ${dataOption[i].color};"` + ">" + word + "</span>";
                             sentence = name(sentence, word, replaceWord);
                         }
                     }

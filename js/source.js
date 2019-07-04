@@ -1,5 +1,7 @@
 let wsRawData = [];
 let wsTooltipDiv;
+let wsTooltipContainer;
+let xButton;
 const initOption = "event";
 const allID = "all";
 const otherPostID = "otherPosts";
