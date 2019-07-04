@@ -28,8 +28,8 @@ function drawPanel(){
         .append("div")
         .attr("id", "configurationContainer")
         .attr("class", "floatingBox")
-        .style("left", (margin.left + 1) + "px")
-        .style("top", 10 + "px");
+        .style("left", (1200) + "px")
+        .style("top", (600) + "px");
 
     d3.selectAll(".floatingBox").call(d3.drag()
         .on("start", boxDragStarted)
@@ -49,7 +49,7 @@ function drawPanel(){
         .attr("class", "floatingBoxContent");
 
     let svgPanel = panelContent.append("svg")
-        .attr("width", 380)
+        .attr("width", 330)
         .attr("height", 340);
 
     let legend = svgPanel
@@ -226,8 +226,8 @@ function drawPanel(){
             if (d.content){
                 return capitalize(d.id) +
                     (d.content.length? ": " : "") +
-                    d.content.slice(0,3).map(e => " "+e) +
-                    (d.content.length>3?"...":"");
+                    d.content.slice(0,2).map(e => " "+e) +
+                    (d.content.length>2?"...":"");
             }
             else return capitalize(d.id)
         })
