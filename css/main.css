@@ -8,7 +8,59 @@
     position: absolute;
     z-index: 100;
 }
+/* --------------- MARKERS FOR STREAM GRAPH --------------*/
+#markerOverlay {
+    position: absolute;
+    background: rgba(100,100,100,0);
+    left: 0px;
+    bottom:0px;
+    right:0px;
+    height: 0px;
+}
+.marker {
+    opacity: 0.9;
+}
+.markRight {
+    background: #d62728;
+    display: inline-block;
+    height: 10px;
+    margin-left: 0px;
+    margin-top: 10px;
+    position: relative;
+    width: 10px;
+}
+.markRight:before {
+    border-bottom: 10px solid #d62728;
+    border-left: 0px solid transparent;
+    border-right: 10px solid transparent;
+    content: "";
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: -10px;
+    width: 0;
+}
 
+.markLeft {
+    background: #d62728;
+    display: inline-block;
+    height: 10px;
+    margin-left: -10px;
+    margin-top: 10px;
+    position: relative;
+    width: 10px;
+}
+.markLeft:before {
+    border-bottom: 10px solid #d62728;
+    border-left: 10px solid transparent;
+    border-right: 0px solid transparent;
+    content: "";
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: -10px;
+    width: 0;
+}
 /* -------------------- WEB LAYOUT -------------------- */
 body {
     position: absolute;

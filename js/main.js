@@ -9,15 +9,13 @@ const topics = ["message", "location"];
 const topicColor = ["#919191", "#770000"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 const initTimestamp = 1586344602000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
 const columns = ["time", "location", "account", "message"];
-const firstStrike = [1586200114000, 1586204242000];
-const secondStrike = [1586350794000, 1586356642000];
-const thirdStrike = [1586459159000, 1586468448000];
+const strikes = [1586200114000, 1586204586000, 1586351138000, 1586358018000, 1586459847000, 1586468792000];
 
 let data;
 let streamStep = streamStepUnit * hourToMS;
@@ -39,7 +37,7 @@ let config = {
 };
 let main = "#mainContent";
 let current;
-let numHourAfter = 6;
+let numHourAfter = 10;
 let wsContainer;
 let wsContainerWidth = function (numHourAfter) {
     return d3.scaleLinear()
@@ -72,14 +70,15 @@ function loadData(){
                 }
             });
             console.log(data);
-            dataOption = taxonomy.filter(d => d.parent === initOption);
+            // dataOption = taxonomy.filter(d => d.parent === initOption);
+            dataOption = taxonomy.filter(d => d.id === initOption);
             streamRawData = getStreamData(data, dataOption);
             drawGraph();
             drawPanel();
 
             wsContainer = d3.select("body").append("svg")
                 .attr("width", wsContainerWidth(numHourAfter))
-                .attr("height", 500);
+                .attr("height", 550);
 
             wsTooltipDiv = d3.select("body").append("div")
                 .attr("class", "wsTooltip")
@@ -323,7 +322,23 @@ function drawGraph() {
         });
 
     // markers
+    let markerDiv = d3.select(main).append("div")
+        .attr("id", "markerOverlay")
+        .style("top", (height+margin.top) + "px")
+        .style("left", (margin.left) + "px");
 
+    markerDiv.selectAll(".marker")
+        .data(strikes)
+        .enter()
+        .append("div")
+        .style("position", "absolute")
+        .style("left", d => xScale(d) + "px")
+        .attr("class", (d,i) => (i%2)? "marker markRight" : "marker markLeft")
+        .on("click", function(d){
+            current = d;
+            let mouseX = xScale(d);
+            updateMouseDependant(mouseX);
+        });
 
     // Running tooltip for date and time
     let tooltip = d3.select(main)
@@ -435,35 +450,36 @@ function drawGraph() {
 
     g.append("rect")
         .attr('class', 'overlay')
+        .attr("id", "overlayStreamG")
         .attr('width', width)
         .attr('height', height)
         .on("mousemove", function () {
             let mouseX = d3.mouse(this)[0];
             current = Date.parse(xScale.invert(mouseX));
             current = Math.min(Math.max(current, startDate), endDate);
-
             mouseX =  Math.min(Math.max(mouseX, 0), width);
-            // vertical line, sliding window and tooltip
-            vertical
-                .attr("x1", mouseX)
-                .attr("x2", mouseX);
-
-            dashedGroup
-                .attr("transform", "translate(" + (+slidingWindow.attr("width") + mouseX ) +
-                    ","+ height + ")");
-
-            slidingGroup
-                .attr("transform", "translate(" + (mouseX) + "," + (height - (+slidingWindow.attr("height"))) + ")");
-
-            tooltip.html(
-                '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX)) + "</text>")
-                .style("left", (mouseX + 16 + margin.left) + "px");
-
-            // get data for ws
-            updateWindow(current);
-
+            updateMouseDependant(mouseX);
         });
+    function updateMouseDependant(mouseX){
+        // vertical line, sliding window and tooltip
+        vertical
+            .attr("x1", mouseX)
+            .attr("x2", mouseX);
 
+        dashedGroup
+            .attr("transform", "translate(" + (+slidingWindow.attr("width") + mouseX ) +
+                ","+ height + ")");
+
+        slidingGroup
+            .attr("transform", "translate(" + (mouseX) + "," + (height - (+slidingWindow.attr("height"))) + ")");
+
+        tooltip.html(
+            '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX)) + "</text>")
+            .style("left", (mouseX + 16 + margin.left) + "px");
+
+        // get data for ws
+        updateWindow(current);
+    }
 }
 
 function nearestHour(milliseconds) {
