@@ -1,0 +1,10 @@
+.mapPath {
+    stroke: #4e4e4e;
+    stroke-width: .5px;
+}
+.norm {
+    fill: #dfdfdf;
+}
+.mapPath:hover {
+    fill-opacity:0.3;
+}

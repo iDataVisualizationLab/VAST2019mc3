@@ -161,7 +161,7 @@ tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 }
 .highlightTextDetail {
     font-weight: bold;
-    /*-webkit-text-stroke: 0.2px #4e4e4e;*/
+    -webkit-text-stroke: 0.2px #4e4e4e;
 }
 .close-button {
     display: inline-block;

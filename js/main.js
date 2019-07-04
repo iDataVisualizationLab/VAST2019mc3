@@ -56,6 +56,11 @@ let dashedGroup;
 let vertical;
 let dataOption = [];
 let wsData;
+let area = d3.area()
+    .curve(d3.curveMonotoneX)
+    .x(d => d.data.x)
+    .y0(d => d[0])
+    .y1(d => d[1]);
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -646,4 +651,115 @@ function updateStream() {
 function removeChar(text){
     return "_" + text.toLowerCase()
         .replace(/\W/gi, '');
+}
+function mouseoverMap(d){
+    let text = d.properties.Nbrhood;
+    let prevColor = topicColor[1];
+    let prevOpacity = 0.9
+    let allTexts = mainGroup.selectAll('.textData').filter(t => {
+        return t && t.text === text && t.topic === "location";
+    });
+    // append close button
+
+    d3.select("#map" + removeChar(text))
+        .style("fill", prevColor)
+        .style("opacity", prevOpacity);
+
+    allTexts
+        .attr("stroke", prevColor)
+        .attr("stroke-width", 1);
+}
+function mouseoutMap(d) {
+    let text = d.properties.Nbrhood;
+    let allTexts = mainGroup.selectAll('.textData')
+        .filter(t => {
+            return t.topic === "location";
+        });
+    allTexts
+        .attr("stroke", "none")
+        .attr("stroke-width", 0)
+    ;
+
+    d3.selectAll(".textData")
+        .classed("highlightText", false)
+
+    d3.select("#map" + removeChar(text))
+        .style("fill", "#dfdfdf")
+        .style("opacity", 1)
+}
+
+function mouseclickMap(d) {
+    let text = d.properties.Nbrhood;
+    let topic = "location";
+    let allTexts = mainGroup.selectAll('.textData')
+        .filter(t => {
+        return t && t.text === text && t.topic === topic;
+    })._groups;
+    //Select the data for the stream layers
+    let streamLayer = d3.select("path[topic='" + topic + "']").data()[0];
+    //Push all points
+    let points = Array();
+    //Initialize all points
+    streamLayer.forEach((elm, i) => {
+        let item = [];
+        item[0] = elm[1];
+        item[1] = elm[1];
+        item.data = elm.data;
+        points.push(item);
+    });
+    allTexts[0].forEach(t => {
+        let data = t.__data__;
+        let fontSize = data.fontSize;
+        //The point
+        let thePoint = points[data.timeStep + 1];
+        //+1 since we added 1 to the first point and 1 to the last point.
+        thePoint[1] = thePoint[0] - data.streamHeight;
+        //Set it to visible.
+        //Clone the nodes.
+        let clonedNode = t.cloneNode(true);
+        d3.select(clonedNode)
+            .attr("visibility", "visible")
+            .attr("stroke", 'none')
+            .attr("stroke-size", 0);
+
+        let clonedParentNode = t.parentNode.cloneNode(false);
+        clonedParentNode.appendChild(clonedNode);
+
+        t.parentNode.parentNode.appendChild(clonedParentNode);
+        d3.select(clonedParentNode)
+            .attr("cloned", true)
+            .attr("topic", topic)
+            .transition().duration(300)
+            .attr("transform", function (d, i) {
+                return 'translate(' + thePoint.data.x + ',' + (thePoint[1] - fontSize / 2) + ')';
+            });
+    });
+    //Add the first and the last points
+    points[0][1] = points[1][1];//First point
+    points[points.length - 1][1] = points[points.length - 2][1];//Last point
+    //Append stream
+    wordstreamG.append('path')
+        .datum(points)
+        .attr('d', area)
+        .style('fill', topicColor[1])
+        .attr("fill-opacity", 1)
+        .attr("stroke", 'black')
+        .attr('stroke-width', 0.3)
+        .attr("topic", topic)
+        .attr("wordstream", true);
+    //Hide all other texts
+    let allOtherTexts = mainGroup.selectAll('.textData').filter(t => {
+        return t && !t.cloned && t.topic === topic;
+    });
+    allOtherTexts.attr('visibility', 'hidden');
+
+    wsTooltipDiv.transition()
+        .duration(100)
+        .style("opacity", 1);
+
+    xButton.style("opacity", 0.9);
+
+    d3.select("#map" + removeChar(text))
+        .style("fill", topicColor[1])
+        .style("opacity", 1);
 }
