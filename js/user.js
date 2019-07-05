@@ -1,4 +1,5 @@
-function loadUserData(data){
+
+function getUserData(data){
     return d3.nest()
         .key(d => d.account)
         .entries(data)
@@ -13,21 +14,6 @@ function loadUserData(data){
 }
 
 function drawUserList() {
-    let accountRange = 20;
-    const svgWidth = 800, svgHeight = 525;
-    const marginU = {top: 20, right: 50, bottom: 30, left: 155},
-        widthU = svgWidth - marginU.left - marginU.right,
-        heightU = svgHeight - marginU.top - marginU.bottom;
-
-    let userData = loadUserData(data).slice(0, accountRange);
-
-    // set the ranges
-    let yU = d3.scaleBand()
-        .range([0, heightU])
-        .padding(0.2);
-
-    let xU = d3.scaleLinear()
-        .range([0, widthU]);
 
     xU.domain([0, d3.max(userData, function(d){ return d.quantity; })]);
     yU.domain(userData.map(function(d) { return d.account; }));
@@ -50,26 +36,6 @@ function drawUserList() {
         .attr("transform",
             "translate(" + marginU.left + "," + marginU.top + ")");
 
-    svg.selectAll(".bar")
-        .data(userData, d => d.account)
-        .enter()
-        .append("rect")
-        .attr("class", "bar")
-        .attr("fill", "steelblue")
-        .attr("width", d => xU(d.quantity))
-        .attr("y", d => yU(d.account))
-        .attr("height", yU.bandwidth());
-
-    svg.selectAll(".indexText")
-        .data(userData, d => d.account)
-        .enter()
-        .append("text")
-        .attr("class", "indexText")
-        .text(d => d.quantity)
-        .attr("x", d => xU(d.quantity) + 4)
-        .attr("y", d => yU(d.account)+ 15)
-        .attr("font-size", 14);
-
     let inputDiv = panelContent.append("div")
         .attr("class", "markerOverlay")
         .style("top", (10) + "px")
@@ -83,10 +49,20 @@ function drawUserList() {
         .attr("type", "number")
         .attr("value", accountRange)
         .attr("step", "1")
-        .on("change", updateUser);
+        .on("change", function () {
+            console.log(this.value);
+            accountRange = this.value;
+            let thisNearestHour = nearestHour(current);
+            let rangedData = getRangedData(wsRawData, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
+            userData = getUserData(rangedData).slice(0, accountRange);
+            updateUser();
+        });
+
+    updateUser();
 
     // add the x Axis
     svg.append("g")
+        .attr('id','xAxisU')
         .attr("transform", "translate(0," + heightU + ")")
         .call(d3.axisBottom(xU));
 
@@ -94,79 +70,81 @@ function drawUserList() {
     svg.append("g")
         .attr('id','yAxisU')
         .call(d3.axisLeft(yU));
+}
+function updateUser(){
+    const t = 600;
+    xU.domain([0, d3.max(userData, function(d){ return d.quantity; })]);
+    yU.domain(userData.map(function(d) { return d.account; }));
 
-    function updateUser(){
-        const t = 600
-        accountRange = this.value;
-        let userData = loadUserData(data).slice(0, accountRange);
+    let newSelection = d3.select("#userG")
+        .selectAll(".bar")
+        .data(userData);
 
-        xU.domain([0, d3.max(userData, function(d){ return d.quantity; })]);
-        yU
-            .domain(userData.map(function(d) { return d.account; }));
+    newSelection.exit()
+        // .attr("opacity", 1)
+        // .transition().duration(t)
+        // .attr("opacity", 0)
+        .remove();
 
-        let newSelection = d3.select("#userG")
-            .selectAll(".bar")
-            .data(userData, d => d.account);
+    newSelection
+        // .transition()
+        // .duration(t)
+        .attr("width", d => xU(d.quantity))
+        .attr("y", d => yU(d.account))
+        .attr("height", yU.bandwidth());
 
-        newSelection.exit()
-            .attr("opacity", 1)
-            .transition().duration(t)
-            .attr("opacity", 0)
-            .remove();
+    newSelection
+        .enter()
+        .append("rect")
+        .attr("y", heightU)
+        // .attr("opacity", 0)
+        // .transition()
+        // .duration(t)
+        // .attr("opacity", 1)
+        .attr("class", "bar")
+        .attr("fill", "darkslateblue")
+        .attr("width", d => xU(d.quantity))
+        .attr("y", d => yU(d.account))
+        .attr("height", yU.bandwidth());
 
-        newSelection.transition()
-            .duration(t)
-            .attr("width", d => xU(d.quantity))
-            .attr("y", d => yU(d.account))
-            .attr("height", yU.bandwidth());
+    let newTextU = d3.select("#userG").selectAll(".indexText")
+        .data(userData);
 
-        newSelection
-            .enter()
-            .append("rect")
-            .attr("y", heightU)
-            .attr("opacity", 0)
-            .transition()
-            .duration(t)
-            .attr("opacity", 1)
-            .attr("class", "bar")
-            .attr("fill", "steelblue")
-            .attr("width", d => xU(d.quantity))
-            .attr("y", d => yU(d.account))
-            .attr("height", yU.bandwidth());
+    newTextU.exit()
+        // .attr("opacity", 1)
+        // .transition().duration(t)
+        // .attr("opacity", 0)
+        .remove();
 
-        let newTextU = svg.selectAll(".indexText")
-            .data(userData, d => d.account);
+    newTextU
+        // .transition()
+        // .duration(t)
+        .text(d => d.quantity)
+        .attr("x", d => xU(d.quantity) + 4)
+        .attr("y", d => yU(d.account)+ yU.bandwidth()/2)
+        .attr("alignment-baseline", "middle");
 
-        newTextU.exit()
-            .attr("opacity", 1)
-            .transition().duration(t)
-            .attr("opacity", 0)
-            .remove();
-
-        newTextU.transition()
-            .duration(t)
-            .attr("x", d => xU(d.quantity) + 4)
-            .attr("y", d => yU(d.account)+ 15);
-
-        newTextU
-            .enter()
-            .append("text")
-            .attr("y", heightU)
-            .attr("opacity", 0)
-            .transition()
-            .duration(t)
-            .attr("opacity", 1)
-            .attr("class", "indexText")
-            .text(d => d.quantity)
-            .attr("x", d => xU(d.quantity) + 4)
-            .attr("y", d => yU(d.account)+ 15)
-            .attr("font-size", 14);
+    newTextU
+        .enter()
+        .append("text")
+        .attr("y", heightU)
+        // .attr("opacity", 0)
+        // .transition()
+        // .duration(t)
+        // .attr("opacity", 1)
+        .attr("class", "indexText")
+        .text(d => d.quantity)
+        .attr("x", d => xU(d.quantity) + 4)
+        .attr("y", d => yU(d.account)+ yU.bandwidth()/2)
+        .attr("alignment-baseline", "middle")
+        .attr("font-size", 14);
 
 
-        // add the y Axis
-        d3.select('#yAxisU')
-            .transition().duration(t)
-            .call(d3.axisLeft(yU));
-    }
+    // add the y Axis
+    d3.select('#yAxisU')
+        // .transition().duration(t)
+        .call(d3.axisLeft(yU));
 
+    d3.select("#xAxisU")
+        .call(d3.axisBottom(xU));
 }
