@@ -14,7 +14,6 @@ function getUserData(data){
 }
 
 function drawUserList() {
-
     xU.domain([0, d3.max(userData, function(d){ return d.quantity; })]);
     yU.domain(userData.map(function(d) { return d.account; }));
 
@@ -75,6 +74,33 @@ function updateUser(){
     const t = 600;
     xU.domain([0, d3.max(userData, function(d){ return d.quantity; })]);
     yU.domain(userData.map(function(d) { return d.account; }));
+
+    // sub
+    if ((dataOption.length === 1) && (dataOption[0].subTopic)){
+        switch (dataOption[0].parent) {
+            case "event":
+                xU.domain([0,20]);
+                break;
+            case "resource":
+                xU.domain([0,50]);
+                break;
+            default:
+                xU.domain([0, 70]);
+        }
+    }
+
+    if ((dataOption.length !== 1) && (dataOption[0].subTopic)){
+        switch (dataOption[0].parent) {
+            case "event":
+                xU.domain([0,20]);
+                break;
+            case "resource":
+                xU.domain([0,50]);
+                break;
+            default:
+                xU.domain([0, 70]);
+        }
+    }
 
     let newSelection = d3.select("#userG")
         .selectAll(".bar")
