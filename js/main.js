@@ -37,12 +37,12 @@ let config = {
 };
 let main = "#mainContent";
 let current;
-let numHourAfter = 10;
+let numHourAfter = 7;
 let wsContainer;
 let wsContainerWidth = function (numHourAfter) {
     return d3.scaleLinear()
         .domain([0,30])
-        .range([800, 2000])(numHourAfter);
+        .range([800, 2400])(numHourAfter);
 };
 let slidingGroup;
 let slidingWindow;
@@ -78,35 +78,12 @@ function loadData(){
             dataOption = taxonomy.filter(d => d.parent === initOption);
             // dataOption = taxonomy.filter(d => d.id === initOption);
             streamRawData = getStreamData(data, dataOption);
+            current = initTimestamp;
             drawGraph();
             drawPanel();
-
-            wsContainer = d3.select("body").append("svg")
-                .attr("width", wsContainerWidth(numHourAfter))
-                .attr("height", 550);
-
-            wsTooltipContainer = d3.select("body").append("div")
-                .attr('id', "wsTooltipContainer");
-
-            wsTooltipDiv = wsTooltipContainer.append("div")
-                .attr("class", "wsTooltip")
-                .attr("id", "wsTooltip")
-                .style("opacity", 0);
-
-            xButton = wsTooltipContainer.append("div")
-                .attr("class", "close-button")
-                .style("opacity", 0)
-                .on("click", function () {
-                    wsTooltipDiv.transition()
-                        .duration(100)
-                        .style("opacity", 0);
-
-                    xButton.style("opacity", 0);
-                });
-
-            current = initTimestamp;
             updateWindow(current);
             drawMap();
+            drawUserList();
             d3.select('#loading').remove();
         }
     });
@@ -288,7 +265,35 @@ function getWSdata(rangedData) {
 }
 
 function drawGraph() {
+    wsContainer = d3.select("body")
+        .append("svg")
+        .attr("transform", "translate(" + margin.left/2 + ",0)")
+        .attr("width", wsContainerWidth(numHourAfter))
+        .attr("height", 550);
+
+    wsTooltipContainer = d3.select("body").append("div")
+        .attr('id', "wsTooltipContainer");
+
+    wsTooltipDiv = wsTooltipContainer.append("div")
+        .attr("class", "wsTooltip")
+        .attr("id", "wsTooltip")
+        .style("opacity", 0);
+
+    xButton = wsTooltipContainer.append("div")
+        .attr("class", "close-button")
+        .style("opacity", 0)
+        .on("click", function () {
+            wsTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 0);
+
+            xButton.style("opacity", 0);
+        });
+
     let svg = d3.select(main)
+        .append("div")
+        .style("width", (width + margin.left + margin.right) + "px")
+        .attr("id", "mainGraphContainer")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
@@ -345,7 +350,7 @@ function drawGraph() {
 
     // markers
     let markerDiv = d3.select(main).append("div")
-        .attr("id", "markerOverlay")
+        .attr("class", "markerOverlay")
         .style("top", (height+margin.top) + "px")
         .style("left", (margin.left) + "px");
 
@@ -621,12 +626,14 @@ function updateStream() {
     let updateArr = newchartstack._groups[0];
     let updateItem = updateArr.filter(d => d !== undefined).length;
 
+    // exit
     newchartstack.exit()
         .attr("opacity", 1)
         .transition().duration(1000)
         .attr("opacity", 0)
         .remove();
 
+    // update
     newchartstack
         .transition()
         .delay((exitItem && updateItem) ? 1000 : 0)
@@ -635,6 +642,7 @@ function updateStream() {
             return taxonomy.find(d => d.id === keyList[i]).color;
         });
 
+    // enter
     newchartstack.enter()
         .append('path') .attr("class", "layer")
         .attr("opacity", 0)
