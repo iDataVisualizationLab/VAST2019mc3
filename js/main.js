@@ -56,11 +56,26 @@ let dashedGroup;
 let vertical;
 let dataOption = [];
 let wsData;
+let userData;
 let area = d3.area()
     .curve(d3.curveMonotoneX)
     .x(d => d.data.x)
     .y0(d => d[0])
     .y1(d => d[1]);
+
+const svgWidth = 700, svgHeight = 525;
+const marginU = {top: 20, right: 50, bottom: 30, left: 155},
+    widthU = svgWidth - marginU.left - marginU.right,
+    heightU = svgHeight - marginU.top - marginU.bottom;
+// set the ranges
+let yU = d3.scaleBand()
+    .range([0, heightU])
+    .padding(0.2);
+
+let xU = d3.scaleLinear()
+    .range([0, widthU]);
+let accountRange = 20;
+
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -82,8 +97,9 @@ function loadData(){
             drawGraph();
             drawPanel();
             updateWindow(current);
-            drawMap();
             drawUserList();
+            drawMap();
+
             d3.select('#loading').remove();
         }
     });
@@ -265,11 +281,24 @@ function getWSdata(rangedData) {
 }
 
 function drawGraph() {
-    wsContainer = d3.select("body")
+    d3.select("body")
+        .append("div")
+        .attr("id", "wsContainerDiv")
+        .on("mouseout", function () {
+            wsTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 0);
+
+            xButton.style("opacity", 0);
+        })
+    ;
+
+    wsContainer = d3.select("#wsContainerDiv")
         .append("svg")
         .attr("transform", "translate(" + margin.left/2 + ",0)")
         .attr("width", wsContainerWidth(numHourAfter))
         .attr("height", 550);
+
 
     wsTooltipContainer = d3.select("body").append("div")
         .attr('id', "wsTooltipContainer");
@@ -541,6 +570,7 @@ function updateWindow(current) {
     let thisNearestHour = nearestHour(current);
     let rangedData = getRangedData(wsRawData, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
     wsData = getWSdata(rangedData);
+    userData = getUserData(rangedData).slice(0, accountRange);
 
     let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
     let peak = d3.max(streamRangedData, d=>d.y);
@@ -560,6 +590,7 @@ function updateWindow(current) {
     wsContainer
         .attr("width", wsContainerWidth(numHourAfter));
     wordstream(wsContainer, wsData, config);
+    updateUser();
 }
 
 function stepPosition(x, startMark){
@@ -602,7 +633,6 @@ function updateStream() {
                 yScale.domain([0, 782]);
         }
     }
-    console.log(d3.extent(stacks.flat().flat()));
     //The y Axis
     const yAxisGroup = d3.select('#yAxis');
     const yAxis = d3.axisLeft(yScale);

@@ -97,7 +97,6 @@ function drawPanel(){
                 dataOption = taxonomy.filter(record => record.id === d.id);
                 streamRawData = getStreamData(data, dataOption);
             }
-            console.log(dataOption);
             updateStream();
             updateWindow(current);
         })
@@ -200,7 +199,6 @@ function drawPanel(){
                         dataOption = taxonomy.filter(d => d.parent === main.id);
                         streamRawData = getStreamData(data, dataOption);
                     }
-                    console.log(dataOption);
                     updateStream();
                     updateWindow(current);
                 })
