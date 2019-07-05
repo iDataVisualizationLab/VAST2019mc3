@@ -9,7 +9,7 @@
     z-index: 100;
 }
 /* --------------- MARKERS FOR STREAM GRAPH --------------*/
-#markerOverlay {
+.markerOverlay {
     position: absolute;
     background: rgba(100,100,100,0);
     left: 0px;
@@ -64,6 +64,7 @@
 /* -------------------- WEB LAYOUT -------------------- */
 body {
     position: absolute;
+    /*font-family: sans-serif;*/
 }
 #mainContent{
     position: relative;
@@ -93,7 +94,9 @@ body {
     line-height: 15px;
     border-radius: 4px;
 }
-
+#mainGraphContainer{
+    /*border-style: ridge;*/
+}
 /* --------------------- TABLE TOOLTIP --------------------*/
 .wsTooltip {
     position: absolute;
@@ -250,4 +253,29 @@ tr:last-child td:last-child { border-bottom-right-radius: 10px; }
     top: 100px;
     left: 480px;
     z-index: 100;
+}
+
+/* --------------- USER --------------*/
+
+input[type=number] {
+    width: 30px;
+    /*for absolutely positioning spinners*/
+    position: relative;
+    padding: 5px;
+    padding-right: 25px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: inner-spin-button !important;
+    width: 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
 }

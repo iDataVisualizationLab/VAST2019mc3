@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    .bar { fill: steelblue; }
+
+</style>
+<body>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="js/user.js"></script>
+<script>
+    d3.csv("data/YInt.csv", function (error, inputData) {
+        if (error) throw error;
+        else {
+            data = inputData.map(d => {
+                return {
+                    time: Date.parse(d.time),
+                    location: d.location,
+                    account: d.account,
+                    message: d.message
+                }
+            });
+
+            var userdata = loadUserData(data).slice(0,15);
+
+            // set the dimensions and margins of the graph
+            let margins = {top: 20, right: 40, bottom: 30, left: 100},
+                thiswidth = 960 - margins.left - margins.right,
+                thisheight = 500 - margins.top - margins.bottom;
+
+            // set the ranges
+            var y = d3.scaleBand()
+                .range([0, thisheight])
+                .padding(0.1);
+
+            var x = d3.scaleLinear()
+                .range([0, thiswidth]);
+
+            // append the svg object to the body of the page
+            // append a 'group' element to 'svg'
+            // moves the 'group' element to the top left margins
+            var svg = d3.select("body").append("svg")
+                .attr("width", thiswidth + margins.left + margins.right)
+                .attr("height", thisheight + margins.top + margins.bottom)
+                .append("g")
+                .attr("transform",
+                    "translate(" + margins.left + "," + margins.top + ")");
+
+            // format the data
+            // userdata.forEach(function(d) {
+            //     d.amount = +d.amount;
+            // });
+
+            // Scale the range of the data in the domains
+            x.domain([0, d3.max(userdata, function(d){ return d.amount; })])
+            y.domain(userdata.map(function(d) { return d.account; }));
+            //y.domain([0, d3.max(data, function(d) { return d.sales; })]);
+
+            // append the rectangles for the bar chart
+            svg.selectAll(".bar")
+                .data(userdata)
+                .enter().append("rect")
+                .attr("class", "bar")
+                //.attr("x", function(d) { return x(d.sales); })
+                .attr("width", function(d) {return x(d.amount); } )
+                .attr("y", function(d) { return y(d.account); })
+                .attr("height", y.bandwidth());
+
+            // add the x Axis
+            svg.append("g")
+                .attr("transform", "translate(0," + thisheight + ")")
+                .call(d3.axisBottom(x));
+
+            // add the y Axis
+            svg.append("g")
+                .call(d3.axisLeft(y));
+        }
+    });
+
+
+
+
+</script>
+</body>
