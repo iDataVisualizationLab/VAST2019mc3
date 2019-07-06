@@ -107,14 +107,9 @@ function updateUser(){
         .data(userData);
 
     newSelection.exit()
-        // .attr("opacity", 1)
-        // .transition().duration(t)
-        // .attr("opacity", 0)
         .remove();
 
     newSelection
-        // .transition()
-        // .duration(t)
         .attr("width", d => xU(d.quantity))
         .attr("y", d => yU(d.account))
         .attr("height", yU.bandwidth());
@@ -123,10 +118,6 @@ function updateUser(){
         .enter()
         .append("rect")
         .attr("y", heightU)
-        // .attr("opacity", 0)
-        // .transition()
-        // .duration(t)
-        // .attr("opacity", 1)
         .attr("class", "bar")
         .attr("fill", "darkslateblue")
         .attr("width", d => xU(d.quantity))
@@ -137,14 +128,9 @@ function updateUser(){
         .data(userData);
 
     newTextU.exit()
-        // .attr("opacity", 1)
-        // .transition().duration(t)
-        // .attr("opacity", 0)
         .remove();
 
     newTextU
-        // .transition()
-        // .duration(t)
         .text(d => d.quantity)
         .attr("x", d => xU(d.quantity) + 4)
         .attr("y", d => yU(d.account)+ yU.bandwidth()/2)
@@ -154,10 +140,6 @@ function updateUser(){
         .enter()
         .append("text")
         .attr("y", heightU)
-        // .attr("opacity", 0)
-        // .transition()
-        // .duration(t)
-        // .attr("opacity", 1)
         .attr("class", "indexText")
         .text(d => d.quantity)
         .attr("x", d => xU(d.quantity) + 4)
@@ -168,7 +150,6 @@ function updateUser(){
 
     // add the y Axis
     d3.select('#yAxisU')
-        // .transition().duration(t)
         .call(d3.axisLeft(yU));
 
     d3.select("#xAxisU")
