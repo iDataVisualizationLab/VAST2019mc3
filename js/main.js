@@ -62,20 +62,7 @@ let area = d3.area()
     .x(d => d.data.x)
     .y0(d => d[0])
     .y1(d => d[1]);
-
-const svgWidth = 700, svgHeight = 525;
-const marginU = {top: 20, right: 50, bottom: 30, left: 155},
-    widthU = svgWidth - marginU.left - marginU.right,
-    heightU = svgHeight - marginU.top - marginU.bottom;
-// set the ranges
-let yU = d3.scaleBand()
-    .range([0, heightU])
-    .padding(0.2);
-
-let xU = d3.scaleLinear()
-    .range([0, widthU]);
-let accountRange = 20;
-
+let rangedData;
 loadData();
 function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
@@ -99,6 +86,12 @@ function loadData(){
             updateWindow(current);
             drawUserList();
             drawMap();
+            processNetworkData(data);
+
+            d3.selectAll(".floating").call(d3.drag()
+                .on("start", boxDragStarted)
+                .on("drag", boxDragged)
+                .on("end", boxDragEnded));
 
             d3.select('#loading').remove();
         }
@@ -284,13 +277,13 @@ function drawGraph() {
     d3.select("body")
         .append("div")
         .attr("id", "wsContainerDiv")
-        .on("mouseout", function () {
-            wsTooltipDiv.transition()
-                .duration(100)
-                .style("opacity", 0);
-
-            xButton.style("opacity", 0);
-        })
+        // .on("mouseleave", function () {
+        //     wsTooltipDiv.transition()
+        //         .duration(100)
+        //         .style("opacity", 0);
+        //
+        //     xButton.style("opacity", 0);
+        // })
     ;
 
     wsContainer = d3.select("#wsContainerDiv")
@@ -568,7 +561,7 @@ function splitText(text){
 function updateWindow(current) {
     // get data for ws
     let thisNearestHour = nearestHour(current);
-    let rangedData = getRangedData(wsRawData, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
+    rangedData = getRangedData(wsRawData, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
     wsData = getWSdata(rangedData);
     userData = getUserData(rangedData).slice(0, accountRange);
 
@@ -590,7 +583,7 @@ function updateWindow(current) {
     wsContainer
         .attr("width", wsContainerWidth(numHourAfter));
     wordstream(wsContainer, wsData, config);
-    updateUser();
+    updateUserList();
 }
 
 function stepPosition(x, startMark){
@@ -689,115 +682,4 @@ function updateStream() {
 function removeChar(text){
     return "_" + text.toLowerCase()
         .replace(/\W/gi, '');
-}
-function mouseoverMap(d){
-    let text = d.properties.Nbrhood;
-    let prevColor = topicColor[1];
-    let prevOpacity = 0.9
-    let allTexts = mainGroup.selectAll('.textData').filter(t => {
-        return t && t.text === text && t.topic === "location";
-    });
-    // append close button
-
-    d3.select("#map" + removeChar(text))
-        .style("fill", prevColor)
-        .style("opacity", prevOpacity);
-
-    allTexts
-        .attr("stroke", prevColor)
-        .attr("stroke-width", 1);
-}
-function mouseoutMap(d) {
-    let text = d.properties.Nbrhood;
-    let allTexts = mainGroup.selectAll('.textData')
-        .filter(t => {
-            return t.topic === "location";
-        });
-    allTexts
-        .attr("stroke", "none")
-        .attr("stroke-width", 0)
-    ;
-
-    d3.selectAll(".textData")
-        .classed("highlightText", false)
-
-    d3.select("#map" + removeChar(text))
-        .style("fill", "#dfdfdf")
-        .style("opacity", 1)
-}
-
-function mouseclickMap(d) {
-    let text = d.properties.Nbrhood;
-    let topic = "location";
-    let allTexts = mainGroup.selectAll('.textData')
-        .filter(t => {
-        return t && t.text === text && t.topic === topic;
-    })._groups;
-    //Select the data for the stream layers
-    let streamLayer = d3.select("path[topic='" + topic + "']").data()[0];
-    //Push all points
-    let points = Array();
-    //Initialize all points
-    streamLayer.forEach((elm, i) => {
-        let item = [];
-        item[0] = elm[1];
-        item[1] = elm[1];
-        item.data = elm.data;
-        points.push(item);
-    });
-    allTexts[0].forEach(t => {
-        let data = t.__data__;
-        let fontSize = data.fontSize;
-        //The point
-        let thePoint = points[data.timeStep + 1];
-        //+1 since we added 1 to the first point and 1 to the last point.
-        thePoint[1] = thePoint[0] - data.streamHeight;
-        //Set it to visible.
-        //Clone the nodes.
-        let clonedNode = t.cloneNode(true);
-        d3.select(clonedNode)
-            .attr("visibility", "visible")
-            .attr("stroke", 'none')
-            .attr("stroke-size", 0);
-
-        let clonedParentNode = t.parentNode.cloneNode(false);
-        clonedParentNode.appendChild(clonedNode);
-
-        t.parentNode.parentNode.appendChild(clonedParentNode);
-        d3.select(clonedParentNode)
-            .attr("cloned", true)
-            .attr("topic", topic)
-            .transition().duration(300)
-            .attr("transform", function (d, i) {
-                return 'translate(' + thePoint.data.x + ',' + (thePoint[1] - fontSize / 2) + ')';
-            });
-    });
-    //Add the first and the last points
-    points[0][1] = points[1][1];//First point
-    points[points.length - 1][1] = points[points.length - 2][1];//Last point
-    //Append stream
-    wordstreamG.append('path')
-        .datum(points)
-        .attr('d', area)
-        .style('fill', topicColor[1])
-        .attr("fill-opacity", 1)
-        .attr("stroke", 'black')
-        .attr('stroke-width', 0.3)
-        .attr("topic", topic)
-        .attr("wordstream", true);
-    //Hide all other texts
-    let allOtherTexts = mainGroup.selectAll('.textData').filter(t => {
-        return t && !t.cloned && t.topic === topic;
-    });
-    allOtherTexts.attr('visibility', 'hidden');
-
-    wsTooltipDiv.transition()
-        .duration(100)
-        .style("opacity", 1);
-
-    xButton.style("opacity", 0.9);
-
-    d3.select("#map" + removeChar(text))
-        .style("fill", topicColor[1])
-        .style("opacity", 1);
 }

@@ -93,3 +93,6 @@ const colorScale = {
     }
 };
 
+const specialAcc = ["DOT-StHimark","Mrs.Tillenbottom","Terrapin Springs Schools","Emergency Manager","Social media" +
+" handle","Earthquake Prediction Center","Mrs.MommaNolan","Carol Geenin","City EOC","Wiretap Phone Company","AntiRelegation 8","St Himark Parks Department","LivesToHike79 8","St Himark Human Resources Dept."]
+
