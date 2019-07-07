@@ -292,8 +292,15 @@ function updateNetwork() {
 
     nodeSelection.exit().remove();
 
+    // re-select all so tick function can update
     nodeSelection = d3.select("#nodeG")
-        .selectAll("g.groupContent")
+        .selectAll("g.groupContent");
+
+    nodeSelection
+        .call(d3.drag()
+            .on("start", forcedragstarted)
+            .on("drag", forcedragged)
+            .on("end", forcedragended));
 
     // nodeSelection = d3.select("#nodeG")
     //     .selectAll(".g-node")
@@ -343,12 +350,12 @@ function updateNetwork() {
     //     .attr("font-size", 10)
     //     .text(d => d.name);
 
-    textSelection = d3.selectAll(".nodeText");
-
 //    restart
     simulation.nodes(nodes_data);
     simulation.force("link")
         .links(links_data);
+
+    simulation.alphaTarget(0.2).restart();
 }
 function getSpecialAccMention(data){
     data.forEach((d,i) => {
