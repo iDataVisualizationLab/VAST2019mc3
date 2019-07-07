@@ -67,7 +67,6 @@ function drawUserList() {
         });
 
     updateUserList();
-
     // add the x Axis
     svg.append("g")
         .attr('id','xAxisU')
@@ -80,6 +79,7 @@ function drawUserList() {
         .call(d3.axisLeft(yU));
 }
 function updateUserList(){
+    console.log("run")
     const t = 600;
     xU.domain([0, d3.max(userData, function(d){ return d.quantity; })]);
     yU.domain(userData.map(function(d) { return d.account; }));
@@ -159,7 +159,6 @@ function updateUserList(){
         .attr("y", d => yU(d.account)+ yU.bandwidth()/2)
         .attr("alignment-baseline", "middle")
         .attr("font-size", 14);
-
 
     // add the y Axis
     d3.select('#yAxisU')

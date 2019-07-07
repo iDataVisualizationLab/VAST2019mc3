@@ -57,7 +57,7 @@ let vertical;
 let dataOption = [];
 let wsData;
 let userData;
-let networkData;
+let networkData, nodes_data, links_data;
 let area = d3.area()
     .curve(d3.curveMonotoneX)
     .x(d => d.data.x)
@@ -82,12 +82,40 @@ function loadData(){
             // dataOption = taxonomy.filter(d => d.id === initOption);
             streamRawData = getStreamData(data, dataOption);
             current = initTimestamp;
+
             drawGraph();
             drawPanel();
-            updateWindow(current);
+
+            let thisNearestHour = nearestHour(current);
+            rangedData = getRangedData(wsRawData, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
+            wsData = getWSdata(rangedData);
+            userData = getUserData(rangedData).slice(0, accountRange);
+            networkData = processNetworkData(rangedData);
+            nodes_data = networkData.nodes;
+            links_data = networkData.links;
+
+            let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
+            let peak = d3.max(streamRangedData, d=>d.y);
+            peak = peak !== undefined ? peak : 0;
+            slidingGroup
+                .attr("transform", "translate(" + (+vertical.attr("x1")) + "," + yScale(peak) + ")")
+                .select("text")
+                .attr("x", +slidingWindow.attr("width") /2)
+                .attr("text-anchor", "middle")
+                .text(numHourAfter + (numHourAfter > 1 ? " hours" : " hour"));
+
+            slidingWindow
+                .attr("height", height - yScale(peak))
+                .attr("width", slidingWidth(numHourAfter));
+
+            wsContainer.selectAll("*").remove();
+            wsContainer
+                .attr("width", wsContainerWidth(numHourAfter));
+
+            wordstream(wsContainer, wsData, config);
+            drawNetwork();
             drawUserList();
             drawMap();
-            drawNetwork(networkData);
 
             d3.selectAll(".floating").call(d3.drag()
                 .on("start", boxDragStarted)
@@ -566,8 +594,8 @@ function updateWindow(current) {
     wsData = getWSdata(rangedData);
     userData = getUserData(rangedData).slice(0, accountRange);
     networkData = processNetworkData(rangedData);
-    let nodes = networkData.nodes;
-    let links = networkData.links;
+    nodes_data = networkData.nodes;
+    links_data = networkData.links;
 
     let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
     let peak = d3.max(streamRangedData, d=>d.y);
@@ -588,7 +616,7 @@ function updateWindow(current) {
         .attr("width", wsContainerWidth(numHourAfter));
     wordstream(wsContainer, wsData, config);
     updateUserList();
-//    updateNetwork(nodes, links);
+    updateNetwork();
 }
 
 function stepPosition(x, startMark){
