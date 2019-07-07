@@ -28,14 +28,9 @@ function drawPanel(){
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("id", "configurationContainer")
-        .attr("class", "floatingBox")
+        .attr("class", "box floating")
         .style("left", (230) + "px")
         .style("top", (10) + "px");
-
-    d3.selectAll(".floatingBox").call(d3.drag()
-        .on("start", boxDragStarted)
-        .on("drag", boxDragged)
-        .on("end", boxDragEnded));
 
     let panelContent = selectionPanel.append("div")
         .attr("class", "floatingBoxContent")
