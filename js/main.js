@@ -57,6 +57,7 @@ let vertical;
 let dataOption = [];
 let wsData;
 let userData;
+let networkData;
 let area = d3.area()
     .curve(d3.curveMonotoneX)
     .x(d => d.data.x)
@@ -86,7 +87,7 @@ function loadData(){
             updateWindow(current);
             drawUserList();
             drawMap();
-            processNetworkData(data);
+            drawNetwork(networkData);
 
             d3.selectAll(".floating").call(d3.drag()
                 .on("start", boxDragStarted)
@@ -523,7 +524,7 @@ function drawGraph() {
             .attr("transform", "translate(" + (mouseX) + "," + (height - (+slidingWindow.attr("height"))) + ")");
 
         tooltip.html(
-            '<text class = "bold">' + formatTimeLegend(xScale.invert(mouseX)) + "</text>")
+            '<text class = "bold">' + Date.parse(xScale.invert(mouseX)) + "</text>")
             .style("left", (mouseX + 16 + margin.left) + "px");
 
         // get data for ws
@@ -564,6 +565,9 @@ function updateWindow(current) {
     rangedData = getRangedData(wsRawData, thisNearestHour, thisNearestHour + numHourAfter*hourToMS);
     wsData = getWSdata(rangedData);
     userData = getUserData(rangedData).slice(0, accountRange);
+    networkData = processNetworkData(rangedData);
+    let nodes = networkData.nodes;
+    let links = networkData.links;
 
     let streamRangedData = getRangedDataScratch(highestStack, thisNearestHour,  thisNearestHour + numHourAfter*hourToMS);
     let peak = d3.max(streamRangedData, d=>d.y);
@@ -584,6 +588,7 @@ function updateWindow(current) {
         .attr("width", wsContainerWidth(numHourAfter));
     wordstream(wsContainer, wsData, config);
     updateUserList();
+//    updateNetwork(nodes, links);
 }
 
 function stepPosition(x, startMark){
