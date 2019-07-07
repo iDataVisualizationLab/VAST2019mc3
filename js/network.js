@@ -1,3 +1,4 @@
+let nodeHasLink;
 function processNetworkData(rangedData) {
     // let accounts = data.map(d => d.account);
     // let specialAcc = accounts.filter(d => d.search(/\W/g) >= 0);
@@ -84,7 +85,28 @@ function processNetworkData(rangedData) {
     links = rawLinks.filter(d => {
         return !d.dup;
     });
-    
+    let nodeHasLinkObj = {};
+
+    links.forEach(link => {
+        nodeHasLinkObj[link.source] = true;
+        nodeHasLinkObj[link.target] = true;
+    });
+
+    nodeHasLink = d3.keys(nodeHasLinkObj);
+
+    console.log(links);
+    console.log(nodeHasLink);
+    for (let i = 0; i < nodeHasLink.length; i++){
+        for (let j = i + 3; j < nodeHasLink.length; j++){
+            // dummy link
+            iArray.push({
+                source: nodeHasLink[i],
+                target: nodeHasLink[j],
+                value: 0,
+                dummy: true
+            })
+        }
+    }
     links = links.concat(iArray);
 
     function updateNodeLink(source, targetNode, message){
@@ -126,8 +148,23 @@ function drawNetwork() {
     // define simulation
     let simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.name; })
-            .distance(50).strength(0.4))
-        .force("charge", d3.forceManyBody().strength(-5))
+            .distance(d => {
+                if (d.dummy) return 120
+                else return 50
+            })
+            .strength(d => {
+                if (d.dummy) return 0.05
+                else return 3
+            }))
+        .force("charge", d3.forceManyBody().strength(d => {
+            return nodeHasLink.indexOf(d.name) >= 0 ? -40:-5
+        }))
+        // .alphaTarget(0.2)
+        .velocityDecay(0.6)
+        .force("collision", d3.forceCollide()
+            .radius(d => {
+                return nodeHasLink.indexOf(d.name) >= 0 ?25:0
+            }).strength(1))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .on("tick", tick);
 
@@ -139,7 +176,6 @@ function drawNetwork() {
         .enter()
         .append("line")
         .attr("stroke-width", d => {
-            console.log(d);
             return d.value
         })
         .attr("stroke", "gray");
@@ -162,7 +198,7 @@ function drawNetwork() {
     let circles = nodes
         .append("circle")
         .attr("fill", "maroon")
-        .attr("r", 3);
+        .attr("r", 4);
 
     let text = nodes.append("text")
         .attr("x", 10)
@@ -194,12 +230,12 @@ function drawNetwork() {
             .attr("x", d => {
                 let thisTransform = d3.select("#g" + d.name).attr("transform");
                 let thisX = +thisTransform.split(",")[0].split("(")[1];
-                return thisX > (width/2) ? 10 : (-10 - d.name.length*5)
+                return thisX > (width/2) ? 5 : (-5 - d.name.length*5)
             })
             .attr("y", d => {
                 let thisTransform = d3.select("#g" + d.name).attr("transform");
                 let thisY = +thisTransform.split(",")[1].split(")")[0];
-                return thisY > (height/2) ? 10 : -10
+                return thisY > (height/2) ? 5 : -5
             });
 
         function bound(d){

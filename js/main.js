@@ -10,7 +10,7 @@ const topicColor = ["#919191", "#770000"];
 const margin = {top: 30, right: 20, bottom: 50, left: 50},
     width = 1200 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
-const initTimestamp = 1586344602000;
+const initTimestamp = 1586217315000;
 const bisect = d3.bisector(d => {
     return d.time
 }).left;
