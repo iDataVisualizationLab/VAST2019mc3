@@ -64,6 +64,7 @@ function drawUserList() {
             accountRange = this.value;
             userData = getUserData(rangedData).slice(0, accountRange);
             updateUserList();
+            updateNetwork();
         });
 
     updateUserList();
