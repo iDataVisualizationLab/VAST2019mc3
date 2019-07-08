@@ -67,7 +67,6 @@ function drawUserList() {
         });
 
     updateUserList();
-
     // add the x Axis
     svg.append("g")
         .attr('id','xAxisU')
@@ -159,7 +158,6 @@ function updateUserList(){
         .attr("y", d => yU(d.account)+ yU.bandwidth()/2)
         .attr("alignment-baseline", "middle")
         .attr("font-size", 14);
-
 
     // add the y Axis
     d3.select('#yAxisU')
