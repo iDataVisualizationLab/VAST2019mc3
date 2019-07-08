@@ -79,7 +79,6 @@ function drawUserList() {
         .call(d3.axisLeft(yU));
 }
 function updateUserList(){
-    console.log("run")
     const t = 600;
     xU.domain([0, d3.max(userData, function(d){ return d.quantity; })]);
     yU.domain(userData.map(function(d) { return d.account; }));
