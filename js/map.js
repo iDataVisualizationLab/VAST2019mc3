@@ -1,3 +1,9 @@
+let mapData;
+let locationList;
+let colorMapData = {}
+let opacityMap = d3.scaleSqrt()
+    .domain([0, 200])
+    .range([0.2,1])
 function drawMap() {
     const width = 500,
         height = 400;
@@ -44,6 +50,7 @@ function drawMap() {
             .scale(s)
             .translate(t);
 
+        locationList = geojson.features.map(d => d.properties.Nbrhood);
         let map = svg.selectAll("path")
             .data(geojson.features);
 
@@ -52,7 +59,6 @@ function drawMap() {
             .attr("class", "mapPath norm")
             .attr("d", geoGenerator)
             .attr("id", d => "map" + removeChar(d.properties.Nbrhood))
-            .attr("fill", "#636363")
             // .on("click", mouseclickMap)
             .on("mouseover", mouseoverMap)
             .on("mouseout", mouseoutMap)
@@ -73,7 +79,9 @@ function drawMap() {
             .attr("fill", "black")
             .attr("font-family", "sans-serif")
             .attr('font-size', '6pt');
+        updateMap();
     });
+
 
 }
 function mouseoverMap(d){
@@ -185,4 +193,24 @@ function mouseclickMap(d) {
     d3.select("#map" + removeChar(text))
         .style("fill", topicColor[1])
         .style("opacity", 1);
+}
+function colorMap(d){
+
+}
+function updateMap(){
+    colorMapData = {};
+    locationList.forEach(d => {
+        colorMapData[removeChar(d)] = 0;
+    });
+
+    wsData.forEach(d => {
+        d.words.location.forEach(location => {
+            colorMapData[removeChar(location.text)] += location.frequency;
+        })
+    });
+
+    d3.selectAll(".mapPath")
+        .style("opacity", function (d) {
+            return opacityMap(colorMapData[removeChar(d.properties.Nbrhood)])
+        })
 }

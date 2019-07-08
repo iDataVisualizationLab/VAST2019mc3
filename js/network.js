@@ -10,9 +10,9 @@ let colorNode = {
     none: "#aaa"
 };
 let radiusNode = function (quantity) {
-    let thisRadius = d3.scaleLog()
+    let thisRadius = d3.scaleSqrt()
         .domain([1, 90])
-        .range([3, 10])(quantity);
+        .range([3, 15])(quantity);
     return thisRadius ? thisRadius : 3;
 };
 const v = "visible", h = "hidden";
@@ -367,7 +367,6 @@ function updateNetwork() {
         .append("circle")
         .attr("fill", d => linked(d) ? colorNode.linked : colorNode.none)
         .attr("r", d => {
-            console.log(d.name);
             return radiusNode(allUsers[d.name])
         })
         .on("mouseover", function (d) {
@@ -376,9 +375,7 @@ function updateNetwork() {
                 .attr("visibility", "visible")
         })
         .on("mouseout", function (d) {
-            if (nodeHasLink.indexOf(d.name) < 0) {
-                d3.select("#text" + d.name).attr("visibility", prev)
-            }
+            d3.select("#text" + d.name).attr("visibility", prev)
         });
 
     textSelection = groupEnter.append("text")
