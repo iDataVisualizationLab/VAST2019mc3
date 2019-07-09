@@ -200,25 +200,27 @@ function drawNetwork() {
                 else return 0.9
             }))
         .force("charge", d3.forceManyBody().strength(d => {
-            return nodeHasLink.indexOf(d.name) >= 0 ? -200 : -30
+            return nodeHasLink.indexOf(d.name) >= 0 ? -400 : -200
         }))
         // .alphaMin(0.2)
-        .velocityDecay(0.6)
-        .force("collide", d3.forceCollide()
-            .radius(d => {
-                return nodeHasLink.indexOf(d.name) >= 0 ? 25 : 3
-            })
-            .strength(1)
-        )
-        .force("center", d3.forceCenter(netWidth / 2, netHeight / 2));
+        .velocityDecay(0.75)
+        // .force("collide", d3.forceCollide()
+        //     .radius(d => {
+        //         return nodeHasLink.indexOf(d.name) >= 0 ? 25 : 3
+        //     })
+        //     .strength(1)
+        // )
+        .force("center", d3.forceCenter(netWidth / 2, netHeight / 2))
+        .force("xAxis",d3.forceX(netWidth/2).strength(d => linked(d)? 0.9 : 0.3))
+        .force("yAxis",d3.forceY(netHeight/2).strength(d => linked(d)? 0.9 : 0.3));
 
-    let strength = simulation.force('collide').strength(),
-        endTime = 3000;
-    let transitionTimer = d3.timer(elapsed => {
-        let dt = elapsed / endTime;
-        simulation.force('collide').strength(Math.pow(dt, 3) * strength);
-        if (dt >= 1.0) transitionTimer.stop();
-    });
+    // let strength = simulation.force('collide').strength(),
+    //     endTime = 3000;
+    // let transitionTimer = d3.timer(elapsed => {
+    //     let dt = elapsed / endTime;
+    //     simulation.force('collide').strength(Math.pow(dt, 3) * strength);
+    //     if (dt >= 1.0) transitionTimer.stop();
+    // });
 
     d3.select("#networkG").append("g").attr("id", "linkG");
     d3.select("#networkG").append("g").attr("id", "nodeG").attr("cursor", "pointer");
@@ -408,10 +410,10 @@ function updateNetwork() {
     simulation.force("link")
         .links(links_data);
 
-    simulation.on("tick", tick).alphaTarget(0.2).restart();
+    simulation.on("tick", tick).alphaTarget(0.3).restart();
     setTimeout(function () {
-        simulation.stop()
-    }, 10000);
+        simulation.alphaTarget(0);
+    }, 8000);
 }
 
 
