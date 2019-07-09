@@ -615,8 +615,8 @@ function updateWindow(current) {
     wsContainer
         .attr("width", wsContainerWidth(numHourAfter));
     wordstream(wsContainer, wsData, config);
-    updateUserList();
     updateNetwork();
+    updateUserList();
     updateMap();
 }
 

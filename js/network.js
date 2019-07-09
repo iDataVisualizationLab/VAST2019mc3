@@ -174,7 +174,7 @@ function drawNetwork() {
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("class", "box")
-        .style("left", (1740) + "px")
+        .style("left", (1200) + "px")
         .style("top", (10) + "px");
 
     let panelContent = selectionPanel.append("div");
@@ -203,7 +203,7 @@ function drawNetwork() {
             return linked(d) ? -400 : -200
         }))
         // .alphaMin(0.2)
-        .velocityDecay(0.75)
+        .velocityDecay(0.7)
         // .force("collide", d3.forceCollide()
         //     .radius(d => {
         //         return nodeHasLink.indexOf(d.name) >= 0 ? 25 : 3
@@ -427,6 +427,11 @@ function updateNetwork() {
 function linked(d) {
     return nodeHasLink.indexOf(d.name) >= 0
 }
+
+function linkedAcc(d) {
+    return nodeHasLink.indexOf(d) >= 0
+}
+
 
 function idize(str){
     return str.toLowerCase().split(" ").join("");
