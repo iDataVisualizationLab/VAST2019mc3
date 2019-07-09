@@ -669,7 +669,7 @@ function updateWindow(current) {
         .attr("width", thisWidth);
 
     // move map
-    d3.select("#mapDiv").style("left", (margin.left + thisWidth) + "px")
+    d3.select("#mapDiv").style("left", (30 + thisWidth) + "px")
     wordstream(wsContainer, wsData, config);
     updateNetwork();
     updateUserList();

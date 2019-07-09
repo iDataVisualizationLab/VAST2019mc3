@@ -1,0 +1,72 @@
+/* ------------------ PAGE LAYOUT ------------------- */
+body {
+    background: rgb(226, 226, 226);
+    font-family: sans-serif;
+    line-height: 1.3;
+    font-size: 15px;
+}
+h4 {
+    margin-block-end: 0;
+}
+page {
+    background: white;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+page[size="A4"] {
+    width: 21cm;
+    height: 29.7cm;
+}
+page[size="A4"][layout="landscape"] {
+    width: 29.7cm;
+    height: 21cm;
+}
+page[size="A3"] {
+    width: 29.7cm;
+    height: 42cm;
+}
+page[size="A3"][layout="landscape"] {
+    width: 42cm;
+    height: 29.7cm;
+}
+
+@media print {
+    body, page {
+        margin: 0;
+        box-shadow: 0;
+    }
+}
+
+/* ------------------ CONTENT LAYOUT ------------------- */
+div.pageContent{
+    padding: 1.3cm;
+}
+div.title{
+    text-align: center;
+}
+div.question {
+    font-weight: bold;
+}
+img.full{
+    width:26.5cm;
+    height:auto; /*maintain aspect ratio*/
+}
+img.idvl{
+    position: absolute;
+    width: 70px;
+    height: auto;
+    /*margin-left: -10px;*/
+}
+img.ttu{
+    position: absolute;
+    width: 70px;
+    height: auto;
+    margin: -0.3cm 0 0 25.5cm;
+}
+p.caption {
+    font-style: italic;
+    font-size: 13px;
+    text-align: center;
+}

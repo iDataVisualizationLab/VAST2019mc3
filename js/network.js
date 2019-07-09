@@ -1,6 +1,6 @@
 let nodeHasLink;
 let linkSelection, nodeSelection, textSelection, simulation;
-let netWidth = 600, netHeight = 525;
+let netWidth = 580, netHeight = 525;
 let allUsers;
 let radius = netWidth / 3;
 let x0 = netWidth / 2;

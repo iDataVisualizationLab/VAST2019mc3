@@ -1,4 +1,4 @@
-const svgWidth = 500, svgHeight = 525;
+const svgWidth = 480, svgHeight = 525;
 const marginU = {top: 20, right: 20, bottom: 30, left: 155},
     widthU = svgWidth - marginU.left - marginU.right,
     heightU = svgHeight - marginU.top - marginU.bottom;
@@ -33,7 +33,7 @@ function drawUserList() {
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("class", "box")
-        .style("left", (1830) + "px")
+        .style("left", (1810) + "px")
         .style("top", (10) + "px");
 
     let panelContent = selectionPanel.append("div")
