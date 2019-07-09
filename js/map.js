@@ -11,6 +11,7 @@ function drawMap() {
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("class", "box floating")
+        .attr("id", "mapDiv")
         .style("left", (1200) + "px")
         .style("top", (620) + "px");
 

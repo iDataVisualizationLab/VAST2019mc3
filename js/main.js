@@ -663,8 +663,12 @@ function updateWindow(current) {
         .attr("width", slidingWidth(numHourAfter));
 
     wsContainer.selectAll("*").remove();
+    let thisWidth = wsContainerWidth(numHourAfter)
     wsContainer
-        .attr("width", wsContainerWidth(numHourAfter));
+        .attr("width", thisWidth);
+
+    // move map
+    d3.select("#mapDiv").style("left", (margin.left + thisWidth) + "px")
     wordstream(wsContainer, wsData, config);
     updateNetwork();
     updateUserList();
