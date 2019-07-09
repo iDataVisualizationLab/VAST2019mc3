@@ -1,7 +1,7 @@
 let mapData;
 let locationList;
 let colorMapData = {}
-let opacityMap = d3.scaleSqrt()
+let opacityMap = d3.scaleLinear()
     .domain([0, 200])
     .range([0.2,1])
 function drawMap() {
@@ -203,12 +203,14 @@ function updateMap(){
         colorMapData[removeChar(d)] = 0;
     });
 
+
     wsData.forEach(d => {
         d.words.location.forEach(location => {
             colorMapData[removeChar(location.text)] += location.frequency;
         })
     });
-
+    let maxCount = d3.max(d3.keys(colorMapData).map(d => colorMapData[d]));
+    opacityMap.domain([0,maxCount]);
     d3.selectAll(".mapPath")
         .style("opacity", function (d) {
             return opacityMap(colorMapData[removeChar(d.properties.Nbrhood)])
