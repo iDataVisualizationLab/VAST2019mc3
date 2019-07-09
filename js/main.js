@@ -339,6 +339,7 @@ function drawGraph() {
     cornerButton = wsTooltipContainer.append("div")
         .style("position", "absolute")
         .style("z-index", "300")
+        .style("opacity", 0)
         // .attr("class", "close-button")
         .on("click", function () {
             wsTooltipDiv.transition()
