@@ -321,7 +321,6 @@ function drawGraph() {
         .attr("width", wsContainerWidth(numHourAfter))
         .attr("height", 550);
 
-
     wsTooltipContainer = d3.select("body").append("div")
         .attr('id', "wsTooltipContainer");
 
@@ -340,6 +339,24 @@ function drawGraph() {
 
             xButton.style("opacity", 0);
         });
+
+    cornerButton = wsTooltipContainer.append("div")
+        .style("position", "absolute")
+        .style("z-index", "300")
+        // .attr("class", "close-button")
+        .on("click", function () {
+            wsTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 0);
+
+            xButton.style("opacity", 0);
+
+            cornerButton.style("opacity", 0);
+        })
+        .text("×")
+        .style("font-size", "20px")
+        .style("cursor", "pointer")
+        .style("font-family", "sans-serif");
 
     let svg = d3.select(main)
         .append("div")

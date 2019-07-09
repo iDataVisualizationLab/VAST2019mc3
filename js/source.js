@@ -1,7 +1,7 @@
 let wsRawData = [];
 let wsTooltipDiv;
 let wsTooltipContainer;
-let xButton;
+let xButton, cornerButton;
 let mainGroup;
 let wordstreamG;
 const initOption = "event";
