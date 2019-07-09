@@ -1,7 +1,7 @@
 let mapData;
 let locationList;
 let colorMapData = {}
-let opacityMap = d3.scaleSqrt()
+let opacityMap = d3.scaleLinear()
     .domain([0, 200])
     .range([0.2,1])
 function drawMap() {
@@ -84,19 +84,20 @@ function drawMap() {
 
 
 }
+let prevOpacity;
 function mouseoverMap(d){
     let text = d.properties.Nbrhood;
     let prevColor = topicColor[1];
-    let prevOpacity = 0.9
+    prevOpacity = +d3.select("#map" + removeChar(text)).style("fill-opacity");
     let allTexts = mainGroup.selectAll('.textData').filter(t => {
         return t && t.text === text && t.topic === "location";
     });
-    // append close button
 
     d3.select("#map" + removeChar(text))
-        .style("fill", prevColor)
-        .style("opacity", prevOpacity);
+        // .style("fill-opacity", 0.1)
+        .style("stroke-width", 3);
 
+    // append close button
     allTexts
         .attr("stroke", prevColor)
         .attr("stroke-width", 1);
@@ -116,8 +117,8 @@ function mouseoutMap(d) {
         .classed("highlightText", false)
 
     d3.select("#map" + removeChar(text))
-        .style("fill", "#dfdfdf")
-        .style("opacity", 1)
+        // .style("fill-opacity", prevOpacity)
+        .style("stroke-width", 0.7)
 }
 function mouseclickMap(d) {
     let text = d.properties.Nbrhood;
@@ -203,14 +204,16 @@ function updateMap(){
         colorMapData[removeChar(d)] = 0;
     });
 
+
     wsData.forEach(d => {
         d.words.location.forEach(location => {
             colorMapData[removeChar(location.text)] += location.frequency;
         })
     });
-
+    let maxCount = d3.max(d3.keys(colorMapData).map(d => colorMapData[d]));
+    opacityMap.domain([0,maxCount]);
     d3.selectAll(".mapPath")
-        .style("opacity", function (d) {
+        .style("fill-opacity", function (d) {
             return opacityMap(colorMapData[removeChar(d.properties.Nbrhood)])
         })
 }

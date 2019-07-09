@@ -69,7 +69,7 @@ body {
 #mainContent{
     position: relative;
     margin-top: 70px;
-    width: 2000px;
+    width: 2400px;
 }
 .header {
     position:fixed;
@@ -99,6 +99,7 @@ body {
 }
 /* --------------------- TABLE TOOLTIP --------------------*/
 .wsTooltip {
+    background-color: white;
     position: absolute;
     text-align: center;
     width: auto;
@@ -109,7 +110,7 @@ body {
     z-index: 300;
     overflow: auto;
     border-radius: 12px;
-    border: 2px solid #676767;
+    border: 1px solid #676767;
 }
 .tableTooltip{
     table-layout: fixed;

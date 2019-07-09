@@ -174,7 +174,7 @@ function drawNetwork() {
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("class", "box")
-        .style("left", (1740) + "px")
+        .style("left", (1200) + "px")
         .style("top", (10) + "px");
 
     let panelContent = selectionPanel.append("div");
@@ -200,25 +200,27 @@ function drawNetwork() {
                 else return 0.9
             }))
         .force("charge", d3.forceManyBody().strength(d => {
-            return nodeHasLink.indexOf(d.name) >= 0 ? -200 : -30
+            return linked(d) ? -400 : -200
         }))
         // .alphaMin(0.2)
-        .velocityDecay(0.6)
-        .force("collide", d3.forceCollide()
-            .radius(d => {
-                return nodeHasLink.indexOf(d.name) >= 0 ? 25 : 3
-            })
-            .strength(1)
-        )
-        .force("center", d3.forceCenter(netWidth / 2, netHeight / 2));
+        .velocityDecay(0.7)
+        // .force("collide", d3.forceCollide()
+        //     .radius(d => {
+        //         return nodeHasLink.indexOf(d.name) >= 0 ? 25 : 3
+        //     })
+        //     .strength(1)
+        // )
+        .force("center", d3.forceCenter(netWidth / 2, netHeight / 2))
+        .force("xAxis",d3.forceX(netWidth/2).strength(d => linked(d)? 0.9 : 0.1))
+        .force("yAxis",d3.forceY(netHeight/2).strength(d => linked(d)? 0.9 : 0.1));
 
-    let strength = simulation.force('collide').strength(),
-        endTime = 3000;
-    let transitionTimer = d3.timer(elapsed => {
-        let dt = elapsed / endTime;
-        simulation.force('collide').strength(Math.pow(dt, 3) * strength);
-        if (dt >= 1.0) transitionTimer.stop();
-    });
+    // let strength = simulation.force('collide').strength(),
+    //     endTime = 3000;
+    // let transitionTimer = d3.timer(elapsed => {
+    //     let dt = elapsed / endTime;
+    //     simulation.force('collide').strength(Math.pow(dt, 3) * strength);
+    //     if (dt >= 1.0) transitionTimer.stop();
+    // });
 
     d3.select("#networkG").append("g").attr("id", "linkG");
     d3.select("#networkG").append("g").attr("id", "nodeG").attr("cursor", "pointer");
@@ -344,10 +346,30 @@ function updateNetwork() {
     let groupEnter = nodeSelection.enter()
         .append("g")
         .attr("class", "groupContent")
-        .attr("id", d => "g" + d.name); // each g is for one node
+        .attr("id", d => "g" + d.name)
+        .on("mouseover", function (d) {
+            // tooltip
+            let info = usertooltipInfo(d, rangedData);
+            createUserTooltip(userTooltipDiv, info, d);
+
+            userTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 1);
+
+            userTooltipDiv.style("left", (d3.event.pageX) + 20 + "px")
+                .style("top", (d3.event.pageY + 20) + "px")
+                .style("pointer-events", "none");
+        })
+        .on("mouseout", function (d) {
+            //     disable tooltip
+            userTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 0);
+        }); // each g is for one node
 
     // update
     nodeSelection.select("circle")
+        .classed("linked", d => !!linked(d))
         .attr("r", d => radiusNode(allUsers[d.name]))
         .attr("fill", d => linked(d) ? colorNode.linked : colorNode.none);
 
@@ -365,12 +387,14 @@ function updateNetwork() {
     // enter
     groupEnter
         .append("circle")
+        .classed("linked", d => !!linked(d))
         .attr("fill", d => linked(d) ? colorNode.linked : colorNode.none)
         .attr("r", d => {
             return radiusNode(allUsers[d.name])
         })
         .on("mouseover", function (d) {
             prev = d3.select("#text" + d.name).attr("visibility");
+            // view name
             d3.select("#text" + d.name)
                 .attr("visibility", "visible")
         })
@@ -403,21 +427,31 @@ function updateNetwork() {
             .on("drag", forcedragged)
             .on("end", forcedragended));
 
+
 //    restart
     simulation.nodes(nodes_data);
     simulation.force("link")
         .links(links_data);
 
-    simulation.on("tick", tick).alphaTarget(0.2).restart();
+    simulation.on("tick", tick).alphaTarget(0.3).restart();
+
     setTimeout(function () {
-        simulation.stop()
-    }, 10000);
+        simulation.alphaTarget(0);
+        nodeHasLink.forEach(d => {
+            d3.select("#g" + d).raise();
+        })
+    }, 8000);
 }
 
 
 function linked(d) {
     return nodeHasLink.indexOf(d.name) >= 0
 }
+
+function linkedAcc(d) {
+    return nodeHasLink.indexOf(d) >= 0
+}
+
 
 function idize(str){
     return str.toLowerCase().split(" ").join("");

@@ -33,7 +33,7 @@ function drawUserList() {
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("class", "box")
-        .style("left", (1200) + "px")
+        .style("left", (1840) + "px")
         .style("top", (10) + "px");
 
     let panelContent = selectionPanel.append("div")
@@ -124,6 +124,9 @@ function updateUserList(){
 
     newSelection
         .attr("width", d => xU(d.quantity))
+        .attr("fill", d => {
+            return linkedAcc(idize(d.account))? colorNode.linked:colorNode.none
+        })
         .attr("y", d => yU(d.account))
         .attr("height", yU.bandwidth());
 
@@ -132,7 +135,9 @@ function updateUserList(){
         .append("rect")
         .attr("y", heightU)
         .attr("class", "bar")
-        .attr("fill", "#444")
+        .attr("fill", d => {
+            return linkedAcc(idize(d.account))? colorNode.linked:colorNode.none
+        })
         .attr("width", d => xU(d.quantity))
         .attr("y", d => yU(d.account))
         .attr("height", yU.bandwidth());
