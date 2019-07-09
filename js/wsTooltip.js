@@ -20,10 +20,18 @@ function tooltipInfo(d, wsRawData) {
     }
 }
 
-function createTableTooltip(wsTooltipDiv, info, text, prevColor, topic) {
+function createTableTooltip(wsTooltipDiv, info, text, prevColor, topic, d) {
     wsTooltipDiv.selectAll("*").remove();
     // process info text
 
+    wsTooltipDiv.append("div")
+        .html(text + " - Number of post" +
+            (d.frequency === 1? ": " : "s: ") + d.frequency)
+        .style("height", "20px")
+        .style("padding", "5px")
+        .style("font-size", "14px")
+        .style("text-align", "middle")
+        .style("background", "white");
     let table = wsTooltipDiv.append("table")
             .attr("class", "tableTooltip")
             .attr("id", "tableTooltip")

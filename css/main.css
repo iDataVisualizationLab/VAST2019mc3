@@ -109,7 +109,7 @@ body {
     z-index: 300;
     overflow: auto;
     border-radius: 12px;
-    border: 2px solid #676767;
+    border: 1px solid #676767;
 }
 .tableTooltip{
     table-layout: fixed;
