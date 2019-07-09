@@ -1,40 +1,24 @@
-function tooltipInfo(d, wsRawData) {
-    if (d.topic === "location") {
-        let limited = wsRawData
-            .slice(
-                bisect(wsRawData, +d.time),
-                bisect(wsRawData, +d.time + hourToMS));
-        return limited
-            .filter(e => e.location === d.text);
-    }
-    else {
-        // message
-        let limited = wsRawData
-            .slice(
-                bisect(wsRawData, +d.time),
-                bisect(wsRawData, +d.time + hourToMS));
-        return limited
-            .filter(e => {
-                return e.message.toLowerCase().indexOf(d.text) >= 0;
-            });
-    }
+function usertooltipInfo(d, rangedData) {
+    return rangedData.filter(rec => {
+        return (idize(rec.account) === d.name) || idize(rec.message).indexOf(d.name) >= 0
+    })
 }
 
-function createTableTooltip(wsTooltipDiv, info, text, prevColor, topic, d) {
-    wsTooltipDiv.selectAll("*").remove();
+function createUserTooltip(userTooltipDiv, info, d) {
+    userTooltipDiv.selectAll("*").remove();
     // process info text
 
-    wsTooltipDiv.append("div")
-        .html(text + " - Number of post" +
-            (d.frequency === 1? ": " : "s: ") + d.frequency)
+    userTooltipDiv.append("div")
+        .html(d.name + " - Number of related post" +
+            (info.length === 1? ": " : "s: ") + info.length)
         .style("height", "20px")
-        .style("padding", "3px")
-        .style("font-size", "13px")
+        .style("padding", "5px")
+        .style("font-size", "14px")
         .style("text-align", "middle")
         .style("background", "white");
-    let table = wsTooltipDiv.append("table")
+
+    let table = userTooltipDiv.append("table")
             .attr("class", "tableTooltip")
-            .attr("id", "tableTooltip")
             .style("width", "100%"),
         thead = table.append("thead"),
         tbody = table.append("tbody");
@@ -62,7 +46,6 @@ function createTableTooltip(wsTooltipDiv, info, text, prevColor, topic, d) {
         })
         .enter()
         .append("td")
-        .style("color", d => ((d.column === "location") && (topic === "location")) ? topicColor[1] : "#000")
         .html(function (d) {
             if (d.column === "time") {
                 return formatTimeDetailBox(d.value)

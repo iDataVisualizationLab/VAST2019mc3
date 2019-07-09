@@ -99,6 +99,7 @@ body {
 }
 /* --------------------- TABLE TOOLTIP --------------------*/
 .wsTooltip {
+    background-color: white;
     position: absolute;
     text-align: center;
     width: auto;

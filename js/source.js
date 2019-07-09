@@ -4,6 +4,8 @@ let wsTooltipContainer;
 let xButton, cornerButton;
 let mainGroup;
 let wordstreamG;
+
+let userTooltipContainer, userTooltipDiv, userXButton, userCornerButton;
 const initOption = "event";
 const allID = "all";
 const otherPostID = "otherPosts";

@@ -124,6 +124,9 @@ function updateUserList(){
 
     newSelection
         .attr("width", d => xU(d.quantity))
+        .attr("fill", d => {
+            return linkedAcc(idize(d.account))? colorNode.linked:colorNode.none
+        })
         .attr("y", d => yU(d.account))
         .attr("height", yU.bandwidth());
 

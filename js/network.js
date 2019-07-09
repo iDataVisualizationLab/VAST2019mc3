@@ -346,7 +346,26 @@ function updateNetwork() {
     let groupEnter = nodeSelection.enter()
         .append("g")
         .attr("class", "groupContent")
-        .attr("id", d => "g" + d.name); // each g is for one node
+        .attr("id", d => "g" + d.name)
+        .on("mouseover", function (d) {
+            // tooltip
+            let info = usertooltipInfo(d, rangedData);
+            createUserTooltip(userTooltipDiv, info, d);
+
+            userTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 1);
+
+            userTooltipDiv.style("left", (d3.event.pageX) + 20 + "px")
+                .style("top", (d3.event.pageY + 20) + "px")
+                .style("pointer-events", "none");
+        })
+        .on("mouseout", function (d) {
+            //     disable tooltip
+            userTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 0);
+        }); // each g is for one node
 
     // update
     nodeSelection.select("circle")
@@ -375,6 +394,7 @@ function updateNetwork() {
         })
         .on("mouseover", function (d) {
             prev = d3.select("#text" + d.name).attr("visibility");
+            // view name
             d3.select("#text" + d.name)
                 .attr("visibility", "visible")
         })

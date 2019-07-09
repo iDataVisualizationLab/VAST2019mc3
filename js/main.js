@@ -306,13 +306,6 @@ function drawGraph() {
     d3.select("body")
         .append("div")
         .attr("id", "wsContainerDiv")
-        // .on("mouseleave", function () {
-        //     wsTooltipDiv.transition()
-        //         .duration(100)
-        //         .style("opacity", 0);
-        //
-        //     xButton.style("opacity", 0);
-        // })
     ;
 
     wsContainer = d3.select("#wsContainerDiv")
@@ -321,6 +314,7 @@ function drawGraph() {
         .attr("width", wsContainerWidth(numHourAfter))
         .attr("height", 550);
 
+    // ws tooltip
     wsTooltipContainer = d3.select("body").append("div")
         .attr('id', "wsTooltipContainer");
 
@@ -329,7 +323,45 @@ function drawGraph() {
         .attr("id", "wsTooltip")
         .style("opacity", 0);
 
-    xButton = wsTooltipContainer.append("div")
+    // xButton = wsTooltipContainer.append("div")
+    //     .attr("class", "close-button")
+    //     .style("opacity", 0)
+    //     .on("click", function () {
+    //         wsTooltipDiv.transition()
+    //             .duration(100)
+    //             .style("opacity", 0);
+    //
+    //         xButton.style("opacity", 0);
+    //     });
+    //
+    // cornerButton = wsTooltipContainer.append("div")
+    //     .style("position", "absolute")
+    //     .style("z-index", "300")
+    //     // .attr("class", "close-button")
+    //     .on("click", function () {
+    //         wsTooltipDiv.transition()
+    //             .duration(100)
+    //             .style("opacity", 0);
+    //
+    //         xButton.style("opacity", 0);
+    //
+    //         cornerButton.style("opacity", 0);
+    //     })
+    //     .text("×")
+    //     .style("font-size", "18px")
+    //     .style("cursor", "pointer")
+    //     .style("font-family", "sans-serif");
+
+    // user tooltip
+    userTooltipContainer = d3.select("body").append("div")
+        .attr('id', "userTooltipContainer");
+
+    userTooltipDiv = userTooltipContainer.append("div")
+        .attr("class", "wsTooltip")
+        .attr("id", "userTooltip")
+        .style("opacity", 0);
+
+    userXButton = userTooltipContainer.append("div")
         .attr("class", "close-button")
         .style("opacity", 0)
         .on("click", function () {
@@ -340,7 +372,7 @@ function drawGraph() {
             xButton.style("opacity", 0);
         });
 
-    cornerButton = wsTooltipContainer.append("div")
+    userCornerButton = userTooltipContainer.append("div")
         .style("position", "absolute")
         .style("z-index", "300")
         // .attr("class", "close-button")
@@ -354,7 +386,7 @@ function drawGraph() {
             cornerButton.style("opacity", 0);
         })
         .text("×")
-        .style("font-size", "20px")
+        .style("font-size", "18px")
         .style("cursor", "pointer")
         .style("font-family", "sans-serif");
 
