@@ -200,7 +200,7 @@ function drawNetwork() {
                 else return 0.9
             }))
         .force("charge", d3.forceManyBody().strength(d => {
-            return nodeHasLink.indexOf(d.name) >= 0 ? -400 : -200
+            return linked(d) ? -400 : -200
         }))
         // .alphaMin(0.2)
         .velocityDecay(0.75)
@@ -211,8 +211,8 @@ function drawNetwork() {
         //     .strength(1)
         // )
         .force("center", d3.forceCenter(netWidth / 2, netHeight / 2))
-        .force("xAxis",d3.forceX(netWidth/2).strength(d => linked(d)? 0.9 : 0.3))
-        .force("yAxis",d3.forceY(netHeight/2).strength(d => linked(d)? 0.9 : 0.3));
+        .force("xAxis",d3.forceX(netWidth/2).strength(d => linked(d)? 0.9 : 0.1))
+        .force("yAxis",d3.forceY(netHeight/2).strength(d => linked(d)? 0.9 : 0.1));
 
     // let strength = simulation.force('collide').strength(),
     //     endTime = 3000;
@@ -350,6 +350,7 @@ function updateNetwork() {
 
     // update
     nodeSelection.select("circle")
+        .classed("linked", d => !!linked(d))
         .attr("r", d => radiusNode(allUsers[d.name]))
         .attr("fill", d => linked(d) ? colorNode.linked : colorNode.none);
 
@@ -367,6 +368,7 @@ function updateNetwork() {
     // enter
     groupEnter
         .append("circle")
+        .classed("linked", d => !!linked(d))
         .attr("fill", d => linked(d) ? colorNode.linked : colorNode.none)
         .attr("r", d => {
             return radiusNode(allUsers[d.name])
@@ -405,14 +407,19 @@ function updateNetwork() {
             .on("drag", forcedragged)
             .on("end", forcedragended));
 
+
 //    restart
     simulation.nodes(nodes_data);
     simulation.force("link")
         .links(links_data);
 
     simulation.on("tick", tick).alphaTarget(0.3).restart();
+
     setTimeout(function () {
         simulation.alphaTarget(0);
+        nodeHasLink.forEach(d => {
+            d3.select("#g" + d).raise();
+        })
     }, 8000);
 }
 
