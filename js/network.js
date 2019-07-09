@@ -185,6 +185,11 @@ function drawNetwork() {
         .append("g")
         .attr("id", "networkG");
 
+    let title = panelContent.append("div")
+        .attr("class", "markerOverlay")
+        .style("top", (10) + "px")
+        .style("left", (10) + "px")
+        .html("<span style='font-family: sans-serif; font-size: 15px;'>User Interaction Network</span><br>");
 
     // define simulation
     simulation = d3.forceSimulation()

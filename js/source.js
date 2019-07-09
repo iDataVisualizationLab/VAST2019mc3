@@ -18,11 +18,11 @@ const taxonomy = [
 
     {id: "earthquake", subTopic: true, color: "#d62728", parent: "event",
         content:  [
-            "earthquake", "seismic", "quake", "quaking", "shake", "shaking", "wobble", "wobbling", "quiver", "epicenter" ]},
+             "seismic", "earthquake", "quake", "quaking", "shake", "shaking", "wobble", "wobbling", "quiver", "epicenter" ]},
 
-    {id: "groundDamage", subTopic: true, color: "#2ca02c", parent: "event",
-        content: ["mudslide",
-            "landslides", "liquefaction", "rupture", "liquifactjheion"]},
+    {id: "grounds", subTopic: true, color: "#2ca02c", parent: "event",
+        content: ["mudslide", "rupture",
+            "landslides", "liquefaction",  "liquifactjheion"]},
 
     {id: "flooding", subTopic: true, color: "#1f77b4", parent: "event",
         content: [
@@ -43,7 +43,7 @@ const taxonomy = [
 
     {id: "energy", subTopic: true, color: "#b3c535", parent: "resource",
         content: [
-            "blackout", "candle", "electric", "energy", "flashlight", "fuel", "gas", "generator", "nuclear", "power", "radiant", "radiation", "radio rays", "valve"]},
+            "blackout",  "electric", "candle", "energy", "flashlight", "fuel", "gas", "generator", "nuclear", "power", "radiant", "radiation", "radio rays", "valve"]},
 
     {id: "medical", subTopic: true, color: "#f02e99", parent: "resource",
         content:  [
@@ -55,7 +55,7 @@ const taxonomy = [
 
     {id: "transportation", subTopic: true, color: "#594337", parent: "resource",
         content: [
-            "bridge", "congestion", "avalanche", "highway", "lane", "logistic", "metro", "jammed", "route", "street", "traffic", "transportation"]},
+            "bridge","traffic",  "congestion", "avalanche", "highway", "lane", "logistic", "metro", "jammed", "route", "street", "transportation"]},
     {id: "food", subTopic: true, color: "#9f78ef", parent: "resource",
         content: ["food"]},
     {id: otherID, subTopic: false},
