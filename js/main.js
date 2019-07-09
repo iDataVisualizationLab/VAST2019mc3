@@ -323,34 +323,34 @@ function drawGraph() {
         .attr("id", "wsTooltip")
         .style("opacity", 0);
 
-    // xButton = wsTooltipContainer.append("div")
-    //     .attr("class", "close-button")
-    //     .style("opacity", 0)
-    //     .on("click", function () {
-    //         wsTooltipDiv.transition()
-    //             .duration(100)
-    //             .style("opacity", 0);
-    //
-    //         xButton.style("opacity", 0);
-    //     });
-    //
-    // cornerButton = wsTooltipContainer.append("div")
-    //     .style("position", "absolute")
-    //     .style("z-index", "300")
-    //     // .attr("class", "close-button")
-    //     .on("click", function () {
-    //         wsTooltipDiv.transition()
-    //             .duration(100)
-    //             .style("opacity", 0);
-    //
-    //         xButton.style("opacity", 0);
-    //
-    //         cornerButton.style("opacity", 0);
-    //     })
-    //     .text("×")
-    //     .style("font-size", "18px")
-    //     .style("cursor", "pointer")
-    //     .style("font-family", "sans-serif");
+    xButton = wsTooltipContainer.append("div")
+        .attr("class", "close-button")
+        .style("opacity", 0)
+        .on("click", function () {
+            wsTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 0);
+
+            xButton.style("opacity", 0);
+        });
+
+    cornerButton = wsTooltipContainer.append("div")
+        .style("position", "absolute")
+        .style("z-index", "300")
+        // .attr("class", "close-button")
+        .on("click", function () {
+            wsTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 0);
+
+            xButton.style("opacity", 0);
+
+            cornerButton.style("opacity", 0);
+        })
+        .text("×")
+        .style("font-size", "18px")
+        .style("cursor", "pointer")
+        .style("font-family", "sans-serif");
 
     // user tooltip
     userTooltipContainer = d3.select("body").append("div")
