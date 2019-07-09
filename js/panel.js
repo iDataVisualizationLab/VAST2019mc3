@@ -23,13 +23,14 @@ function boxDragEnded() {
 }
 
 function drawPanel(){
-    const panelWidth = 300, panelHeight = 340;
+    const panelWidth = 190, panelHeight = 340;
     // float box in general
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("id", "configurationContainer")
         .attr("class", "box floating")
-        .style("left", (230) + "px")
+        .style("z-index", "200")
+        .style("left", (980) + "px")
         .style("top", (10) + "px");
 
     let panelContent = selectionPanel.append("div")
@@ -37,6 +38,7 @@ function drawPanel(){
         .attr("id", "panelContent");
 
     let svgPanel = panelContent.append("svg")
+        .attr("id", "panelSvg")
         .attr("width", panelWidth)
         .attr("height", panelHeight);
 
@@ -54,7 +56,7 @@ function drawPanel(){
 
     legend
         .attr("id", "legendGroup")
-        .attr("transform", "translate(" + (margin.left/2) + "," + (margin.top/2-3) + ")");
+        .attr("transform", "translate(" + (10) + "," + (margin.top/2-3) + ")");
 
     // simple node
     legend.selectAll("circle")
@@ -95,11 +97,47 @@ function drawPanel(){
             updateStream();
             updateWindow(current);
         })
-        .on("mouseover", function () {
+        .on("mouseover", function (d) {
             d3.select(this).classed("hover", true);
+            console.log(d);
+
+            // detail text
+            d3.select("#legendText" + d.id)
+                .html(d => {
+                    if (d.content){
+                        return capitalize(d.id) +
+                            (d.content.length? ": " : "") +
+                            d.content.slice(0,2).map(e => " "+e)
+                            // +(d.content.length>2?"...":"");
+                    }
+                    else return capitalize(d.id)
+                })
+                .attr("opacity", 0)
+                .transition()
+                .duration(300)
+                .attr("opacity", 1)
+
+            // svg
+            d3.select("#panelSvg")
+                .transition()
+                .duration(300)
+                .attr("width", 235)
         })
         .on("mouseout", function () {
             d3.select(this).classed("hover", false);
+
+            d3.selectAll(".legendText")
+                .html(d => {
+                    if (d.content){
+                        return capitalize(d.id);
+                    }
+                    else return capitalize(d.id)
+                })
+
+            d3.select("#panelSvg")
+                .transition()
+                .duration(300)
+                .attr("width", panelWidth)
         });
 
     legend.select("#buttonevent").remove();
@@ -202,12 +240,51 @@ function drawPanel(){
                         .classed("hover", true);
                     d3.select("#group" + main.id)
                         .classed("hover", true);
+
+                    // text detail
+                    d3.selectAll(".legendText")
+                        .html(d => {
+                           if (d.content){
+                                 if ((d.parent === main.id) || (main.id === allID)){
+                                    return capitalize(d.id) +
+                                        (d.content.length? ": " : "") +
+                                        d.content.slice(0,2).map(e => " "+e)
+                                        // +(d.content.length>2?"...":"");
+                                }
+                                else{
+                                    return capitalize(d.id);
+                                }
+                            }
+                            else return capitalize(d.id)
+                        })
+                        .attr("opacity", 1)
+
+                    // svg
+                    d3.select("#panelSvg")
+                        .transition()
+                        .duration(300)
+                        .attr("width", 235)
                 })
                 .on("mouseout", function (){
                     d3.select("#circle" + main.id)
                         .classed("hover", false);
                     d3.select("#group" + main.id)
                         .classed("hover", false);
+
+                //    text
+                    d3.selectAll(".legendText")
+                        .html(d => {
+                            if (d.content){
+                                return capitalize(d.id);
+                            }
+                            else return capitalize(d.id)
+                        })
+
+                    // svg
+                    d3.select("#panelSvg")
+                        .transition()
+                        .duration(300)
+                        .attr("width", panelWidth)
                 });
         });
 
@@ -216,13 +293,11 @@ function drawPanel(){
         .enter()
         .append("text")
         .attr("class", "legendText")
+        .attr("id", d => "legendText" + d.id)
         .style("cursor", "text")
-        .text(d => {
+        .html(d => {
             if (d.content){
-                return capitalize(d.id) +
-                    (d.content.length? ": " : "") +
-                    d.content.slice(0,2).map(e => " "+e) +
-                    (d.content.length>2?"...":"");
+                return capitalize(d.id);
             }
             else return capitalize(d.id)
         })

@@ -1,15 +1,16 @@
 function usertooltipInfo(d, rangedData) {
+    let thisText = d.name? d.name : idize(d.account);
     return rangedData.filter(rec => {
-        return (idize(rec.account) === d.name) || idize(rec.message).indexOf(d.name) >= 0
+        return (idize(rec.account) === thisText) || idize(rec.message).indexOf(thisText) >= 0
     })
 }
 
 function createUserTooltip(userTooltipDiv, info, d) {
     userTooltipDiv.selectAll("*").remove();
     // process info text
-
+    let thisText = d.name? d.name : idize(d.account);
     userTooltipDiv.append("div")
-        .html(d.name + " - Number of related post" +
+        .html(thisText + " - Number of related post" +
             (info.length === 1? ": " : "s: ") + info.length)
         .style("height", "20px")
         .style("padding", "5px")

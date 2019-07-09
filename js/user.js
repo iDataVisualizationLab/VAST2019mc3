@@ -33,7 +33,7 @@ function drawUserList() {
     let selectionPanel = d3.select(main)
         .append("div")
         .attr("class", "box")
-        .style("left", (1840) + "px")
+        .style("left", (1830) + "px")
         .style("top", (10) + "px");
 
     let panelContent = selectionPanel.append("div")
@@ -46,6 +46,13 @@ function drawUserList() {
         .attr("id", "userG")
         .attr("transform",
             "translate(" + marginU.left + "," + marginU.top + ")");
+
+    let title = panelContent.append("div")
+        .attr("class", "markerOverlay")
+        .style("top", (10) + "px")
+        .style("left", (svgWidth - 140) + "px")
+        .html("<span style='font-family: sans-serif; font-size: 15px;'>Top content creators</span><br>");
+
 
     let inputDiv = panelContent.append("div")
         .attr("class", "markerOverlay")
@@ -140,7 +147,27 @@ function updateUserList(){
         })
         .attr("width", d => xU(d.quantity))
         .attr("y", d => yU(d.account))
-        .attr("height", yU.bandwidth());
+        .attr("height", yU.bandwidth())
+        .on("mouseover", function (d) {
+            d3.select(this).attr("opacity", 0.5)
+            let info = usertooltipInfo(d, rangedData);
+            createUserTooltip(userTooltipDiv, info, d);
+
+            userTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 1);
+
+            userTooltipDiv.style("left", (d3.event.pageX - 250 )+ "px")
+                .style("top", (d3.event.pageY + 50) + "px")
+                .style("pointer-events", "none");
+        })
+        .on("mouseout", function (d) {
+            d3.select(this).attr("opacity", 1)
+            //     disable tooltip
+            userTooltipDiv.transition()
+                .duration(100)
+                .style("opacity", 0);
+        });
 
     let newTextU = d3.select("#userG").selectAll(".indexText")
         .data(userData);

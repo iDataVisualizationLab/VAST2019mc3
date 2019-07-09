@@ -332,6 +332,8 @@ function drawGraph() {
                 .style("opacity", 0);
 
             xButton.style("opacity", 0);
+
+            cornerButton.style("opacity", 0);
         });
 
     cornerButton = wsTooltipContainer.append("div")
