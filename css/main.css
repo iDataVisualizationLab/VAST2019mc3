@@ -105,8 +105,23 @@ body {
     width: auto;
     max-width: 600px;
     height: auto;
+    max-height: 500px;
     font: 12px sans-serif;
-    pointer-events: none;
+    /*pointer-events: none;*/
+    z-index: 300;
+    overflow: auto;
+    border-radius: 12px;
+    border: 1px solid #676767;
+}
+.userTooltip {
+    background-color: white;
+    position: absolute;
+    text-align: center;
+    width: auto;
+    max-width: 600px;
+    height: auto;
+    font: 12px sans-serif;
+    /*pointer-events: none;*/
     z-index: 300;
     overflow: auto;
     border-radius: 12px;

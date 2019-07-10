@@ -306,13 +306,15 @@ function drawGraph() {
     d3.select("body")
         .append("div")
         .attr("id", "wsContainerDiv")
+
     ;
 
     wsContainer = d3.select("#wsContainerDiv")
         .append("svg")
         .attr("transform", "translate(" + margin.left/2 + ",0)")
         .attr("width", wsContainerWidth(numHourAfter))
-        .attr("height", 550);
+        .attr("height", 550)
+        ;
 
     // ws tooltip
     wsTooltipContainer = d3.select("body").append("div")
@@ -321,34 +323,33 @@ function drawGraph() {
     wsTooltipDiv = wsTooltipContainer.append("div")
         .attr("class", "wsTooltip")
         .attr("id", "wsTooltip")
-        .style("opacity", 0);
+        .style("visibility", "hidden");
 
     xButton = wsTooltipContainer.append("div")
         .attr("class", "close-button")
-        .style("opacity", 0)
+        .style("visibility", "hidden")
         .on("click", function () {
             wsTooltipDiv.transition()
                 .duration(100)
-                .style("opacity", 0);
+                .style("visibility", "hidden");
 
-            xButton.style("opacity", 0);
+            xButton.style("visibility", "hidden");
 
-            cornerButton.style("opacity", 0);
+            cornerButton.style("visibility", "hidden");
         });
 
     cornerButton = wsTooltipContainer.append("div")
         .style("position", "absolute")
         .style("z-index", "300")
-        .style("opacity", 0)
-        // .attr("class", "close-button")
+        .style("visibility", "hidden")
         .on("click", function () {
             wsTooltipDiv.transition()
                 .duration(100)
-                .style("opacity", 0);
+                .style("visibility", "hidden");
 
-            xButton.style("opacity", 0);
+            xButton.style("visibility", "hidden");
 
-            cornerButton.style("opacity", 0);
+            cornerButton.style("visibility", "hidden");
         })
         .text("×")
         .style("font-size", "18px")
@@ -360,7 +361,7 @@ function drawGraph() {
         .attr('id', "userTooltipContainer");
 
     userTooltipDiv = userTooltipContainer.append("div")
-        .attr("class", "wsTooltip")
+        .attr("class", "userTooltip")
         .attr("id", "userTooltip")
         .style("opacity", 0);
 
@@ -674,6 +675,15 @@ function updateWindow(current) {
     updateNetwork();
     updateUserList();
     updateMap();
+
+    // tooltip
+    wsTooltipDiv.transition()
+        .duration(100)
+        .style("visibility", "hidden");
+
+    xButton.style("visibility", "hidden");
+
+    cornerButton.style("visibility", "hidden");
 }
 
 function stepPosition(x, startMark){

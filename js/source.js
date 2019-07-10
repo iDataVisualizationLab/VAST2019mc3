@@ -47,7 +47,7 @@ const taxonomy = [
 
     {id: "medical", subTopic: true, color: "#f02e99", parent: "resource",
         content:  [
-            "ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "fatal", "first aid", "fracture", "help", "hurt", "illness", "infection", "injure", "kill", "lump", "medic", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
+            "ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "fatal", "first aid", "fracture",  "hurt", "illness", "infection", "injure", "kill", "lump", "medic", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
 
     {id: "shelter", subTopic: true, color: "#03a37e", parent: "resource",
         content: [
@@ -55,7 +55,7 @@ const taxonomy = [
 
     {id: "transportation", subTopic: true, color: "#594337", parent: "resource",
         content: [
-            "bridge","traffic",  "congestion", "avalanche", "highway", "lane", "logistic", "metro", "jammed", "route", "street", "transportation"]},
+            "bridge","traffic",  "congestion", "avalanche", "highway", "lane", "logistic", "jammed", "route", "street", "transportation"]},
     {id: "food", subTopic: true, color: "#9f78ef", parent: "resource",
         content: ["food"]},
     {id: otherID, subTopic: false},
