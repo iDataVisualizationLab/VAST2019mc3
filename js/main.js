@@ -41,17 +41,17 @@ let numHourAfter = 7;
 let wsContainer;
 let wsContainerWidth = function (numHourAfter) {
     return d3.scaleLinear()
-        .domain([0,30])
+        .domain([0,31])
         .range([800, 2400])(numHourAfter);
 };
 let slidingGroup;
 let slidingWindow;
 let slidingWidth = function(numHourAfter){
     return d3.scaleLinear()
-        .domain([0,30])
-        .range([0, (30/108) * width])(numHourAfter)
+        .domain([0,31])
+        .range([0, (31/108) * width])(numHourAfter)
 };
-const stepDash = slidingWidth(30)/30;
+const stepDash = slidingWidth(31)/31;
 let dashedGroup;
 let vertical;
 let dataOption = [];
@@ -687,7 +687,7 @@ function updateWindow(current) {
 }
 
 function stepPosition(x, startMark){
-    let value = Math.min(Math.max(Math.floor((x-startMark) / stepDash),1), 30);
+    let value = Math.min(Math.max(Math.floor((x-startMark) / stepDash),1), 31);
     return [value * stepDash + startMark, value]
 }
 

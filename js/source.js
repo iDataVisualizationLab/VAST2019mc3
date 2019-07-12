@@ -47,7 +47,7 @@ const taxonomy = [
 
     {id: "medical", subTopic: true, color: "#f02e99", parent: "resource",
         content:  [
-            "ambulance", "blood", "bruise", "dead", "death", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "fatal", "first aid", "fracture",  "hurt", "illness", "infection", "injure", "kill", "lump", "medic", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
+            "ambulance", "blood", "bruise", "dehydrate", "emergency", "escape", "evacuate", "evacuating", "evacuation", "fatal", "first aid", "fracture",  "hurt", "illness", "infection", "injure", "lump", "medic", "red cross", "rescue", "rescuing", "respiratory", "suffering", "swollen", "urgent", "victim", "wound"]},
 
     {id: "shelter", subTopic: true, color: "#03a37e", parent: "resource",
         content: [

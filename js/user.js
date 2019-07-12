@@ -57,12 +57,14 @@ function drawUserList() {
     let inputDiv = panelContent.append("div")
         .attr("class", "markerOverlay")
         .style("top", (10) + "px")
-        .style("left", (10) + "px");
+        .style("left", (10) + "px")
+      ;
     inputDiv.append("text")
         .html("<span style='font-family: sans-serif; font-size: 12px'>Select range</span><br>");
 
     inputDiv
         .append("input")
+        .style("width", "50px")
         .attr("id", "userRangeValue")
         .attr("type", "number")
         .attr("value", accountRange)
