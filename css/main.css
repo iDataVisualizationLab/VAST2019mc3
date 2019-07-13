@@ -156,7 +156,7 @@ body {
     width: auto;
     max-width: 600px;
     height: auto;
-    /*max-height: 500px;*/
+    max-height: 400px;
     font: 12px sans-serif;
     /*pointer-events: none;*/
     z-index: 300;
