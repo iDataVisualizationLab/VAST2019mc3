@@ -13,7 +13,7 @@
         <img src="images/ttu.jpg" class="ttu">
         <img src="images/idvl.png" class="idvl">
         <div class="title">
-            Entry Name:  <span style="font-weight: bold">"TTU-Nguyen-MC3"<br>
+            Entry Name: <span style="font-weight: bold">"TTU-Nguyen-MC3"<br>
             VAST Challenge 2019<br>
             <span style="text-decoration: underline">Mini-Challenge 3<br><br></span> </span>
         </div>
@@ -30,46 +30,195 @@
         <h4>Approximately how many hours were spent working on this submission in total?</h4>
         <span>320 hours.</span>
 
-        <h4>May we post your submission in the Visual Analytics Benchmark Repository after VAST Challenge 2019 is complete?<span style="font-weight: normal"> YES</span></h4>
+        <h4>May we post your submission in the Visual Analytics Benchmark Repository after VAST Challenge 2019 is
+            complete?<span style="font-weight: normal"> YES</span></h4>
 
         <h4>Video</h4>
         <span>
-            <a href="https://idatavisualizationlab.github.io/VAST2019mc3/">https://idatavisualizationlab.github.io/VAST2019mc3/</a>
+            <a href="https://idatavisualizationlab.github.io/VAST2019mc3/video.html">https://idatavisualizationlab.github.io/VAST2019mc3/video.html</a>
         </span><br><br>
         <hr>
         <h4>System Overview</h4>
+        The analytics application includes active, interactive components that are able to work with dynamic, streaming
+        data.
+        The main control board (A) is built as a stream graph. Each stream represents the number of posts classified as
+        the selected categories from selection panel (A1).
+        Each of these categories come with a set of keywords to decide if a message belongs to a category or not.
+
+        A sliding window across the stream graph is provided for specific selection of time frame at a particular
+        timestamp.
+        This time frame can be expanded from 1 hour to 31 hours by user. The vertical axis shows the number of posts,
+        while the horizontal axis shows the timeline.<br><br>
+
+        The other four components are depicted as panels B to E in <a href="#overviewFig">Figure 1</a>. For each change
+        in main
+        panel
+        A –
+        whether it is choosing another time frame,
+        timestamp or category selection, all other 4 panels are updated according to A.
+
+        <br><br>
+        To demonstrate the evolution of a topic, panel B provides a WordStream, showcasing the content of corresponding
+        messages for the chosen time frame and the chosen categories.
+        The WordStream consists of two topics: the keywords within content of messages and location of the message.
+        Thickness of the stream is proportional to number of posts – the global trend.
+        Users can also explore the local trend of an individual term and detail of messages.
+        <br><br>
+        Panel C is a map of St. Himark, in which the color of each neighborhood indicates the number of posts for the
+        chosen time frame and the chosen categories.
+        User can use this map for highlighting corresponding terms in the WordStream and vice versa.
+        <br><br>
+        Panel D is a network of user interaction for the chosen time frame and the chosen categories.
+        The network demonstrates the connection between users, through the account mentioning in content of messages.
+        Via this network, we can spot which one is the account that has important role in the community.
+        <br><br>
+        Panel E is an account list for ranking content creators. This chart shows the accounts the write the largest
+        number of posts for the chosen time frame and the chosen categories. From this chart, users can see who write
+        many posts but not connected to the community, exploring these points can help to detect irrelevant accounts.
+
         <img id="overviewFig" src="images/overview.png" class="full">
         <p class="caption"><span>Figure 1. System overview</span></p>
+    </div>
+</page>
+
+<page size="A3">
+    <div class="pageContent">
         <h4>Questions</h4>
         <div>The City has been using Y*INT to communicate with its citizens, even post-earthquake. However, City
             officials needs additional information to determine the best way to allocate emergency resources across
             all neighborhoods of St. Himark. Your task, using your visual analytics on the community Y*INT data, is
             to determine the types of problems that are occurring across the St. Himark. Then, advise the City on how
-            to prioritize the distribution of resources.  Keep in mind that not all sources on Y*INT are reliable,
+            to prioritize the distribution of resources. Keep in mind that not all sources on Y*INT are reliable,
             and that priorities may change over time as the state of neighborhoods also changes.<br><br></div>
 
-        <div class="question">1- Using  visual analytics, characterize conditions across the city and recommend how
+        <div class="question">1- Using visual analytics, characterize conditions across the city and recommend how
             resources
             should be
-            allocated at 5 hours and 30 hours after the earthquake.  Include evidence from the data to support these
-            recommendations.  Consider how to allocate resources such as road crews, sewer repair crews, power, and rescue teams. Limit your response to 1000 words and 12 images.</div>
+            allocated at 5 hours and 30 hours after the earthquake. Include evidence from the data to support these
+            recommendations. Consider how to allocate resources such as road crews, sewer repair crews, power, and
+            rescue teams. Limit your response to 1000 words and 12 images.
+        </div>
+
+        <br>
+        To determine the problems that are occurring across the St. Himark, we first built the taxonomy for
+        1) Types of event related to the earthquake and 2) Types of resources that needed for the situation. The
+        taxonomy:
+        <br>
+        1. Event, including:<br>
+        1.1. Earthquake: seismic, earthquake, quake, quaking, shake, shaking, wobble, wobbling, quiver, epicenter<br>
+        1.2. Grounds (ground damage): mudslide, rupture, landslides, liquefaction<br>
+        1.3. Flooding: tsunami, flood<br>
+        1.4. Aftershock: aftershock<br>
+        1.5. Fire: fire, smoke<br>
+        2. Resources, including:<br>
+        2.1. Water: sewage, water, discharge, drain, irrigation, sewer, reservoir<br>
+        2.2. Energy: blackout, electric, candle, energy, flashlight, fuel, gas, generator, nuclear, power, radiant,
+        radiation, radio rays, valve<br>
+        2.3. Medical: ambulance, blood, bruise, dehydrate, emergency, escape, evacuate, evacuating, evacuation, fatal,
+        first aid, fracture, hurt, illness, infection, injure, kill, lump, medic, red cross, rescue, rescuing,
+        respiratory, suffering, swollen, urgent, victim, wound<br>
+        2.4. Shelter: shelter, housing, building, collapse, construction, house<br>
+        2.5. Transportation: bridge, traffic, congestion, avalanche, highway, lane, logistic, jammed, route, street,
+        transportation<br>
+        2.6 Food: food<br>
+        <br>
+        Besides, we have other options for broader view:<br>
+        - All – total classified messages with all categories.<br>
+        - Other:<br>
+        + Rumble – the app for people to report about the disaster<br>
+        + Other posts: posts that don’t have any of these above-mentioned keywords.<br>
+
+        <br>
+        We built the taxonomy with an assumption that one message can belong to more than one category, e.g., a message
+        can indicate that there are needs for both water and food.
+        The reasoning for this assumption comes from the possibility that priorities for resources may change over time,
+        hence we need to take all information into account. The sliding window is flexible within the control board,
+        window width size can be adjusted to capture a
+        particular timeframe.
+        <br>
+        <span style="font-weight: bold">Characterize conditions across the city</span><br>
+
+        <img id="threeStrikesFig" src="images/Q1-1b.png" class="full">
+        <p class="caption"><span>Figure 2. Three times the earthquake strikes</span></p>
+
+    </div>
+</page>
+<page size="A3">
+    <div class="pageContent">
+        <br>
+        From the main control board in <a href="#threeStrikesFig">Figure 2</a>, selection of “Earthquake” show clearly
+        three times
+        that the
+        earthquake
+        strikes.
+        We used the these peak to specify the timestamp earthquake strikes.
+        To consolidate this point, we explore the detail from corresponding messages. The WordStream supports
+        highlighting the keywords in the corresponding categories. For example. From 2PM to 3PM, there are 36
+        messages about earthquake.
+        Especially, at 2:33PM on April 6, at Safe Town, they just recorded an earthquake. Besides, while mousing over
+        terms, WordStream highlights the co-occurrences words alongside keywords from the actual messages. Location
+        of these messages are
+        also emphasized in the “Location” stream and in the geolocation map.
+
+        <br><br>
+        The first time earthquake strike is around 2:31:30PM, April 06, 2020.<br>
+        The second time earthquake strike is around 8:34:18 AM, April 08, 2020.<br>
+        The third time earthquake strike is around 3:03:20 PM, April 09, 2020.<br>
+
+        Related events that may occur during and after earthquake are included to characterize the condition as a whole.
+        Besides earthquake, the city also suffered from related event, including: Flood, Tsunami, Aftershock.
+        Especially, a fire happen at a broad area.
+
+        <img id="eventFig" src="images/Q1-2.png" class="full">
+        <p class="caption"><span>Figure 3. Earthquake and related events that happened</span></p>
 
 
-        <div class="question">2 - Identify at least 3 times when conditions change in a way that warrants a re-allocation of
+        <div class="question">2 - Identify at least 3 times when conditions change in a way that warrants a
+            re-allocation of
             city
-            resources.  What were the conditions before and after the inflection point?  What locations were affected?  Which resources are involved? Limit your response to 1000 words and 10 images.</div>
+            resources. What were the conditions before and after the inflection point? What locations were affected?
+            Which resources are involved? Limit your response to 1000 words and 10 images.
+        </div>
 
 
-        <div class="question">3 - Take the pulse of the community.  How has the earthquake affected life in St. Himark?
-            What is the community experiencing outside the realm of the first two questions? Show decision makers summary information and relevant/characteristic examples. Limit your response to 800 words and 8 images.</div>
+        <div class="question">3 - Take the pulse of the community. How has the earthquake affected life in St. Himark?
+            What is the community experiencing outside the realm of the first two questions? Show decision makers
+            summary information and relevant/characteristic examples. Limit your response to 800 words and 8 images.
+        </div>
 
         <div class="question">4 - The data for this challenge can be analyzed either as a
-            static collection or as a dynamic stream of data, as it would occur in a real emergency.  Describe how you analyzed the data - as a static collection or a stream.  How do you think this choice affected your analysis? Limit your response to 200 words and 3 images.</div>
+            static collection or as a dynamic stream of data, as it would occur in a real emergency. Describe how you
+            analyzed the data - as a static collection or a stream. How do you think this choice affected your analysis?
+            Limit your response to 200 words and 3 images.
+        </div>
+
+        <br>
+        For this application, we analyze data as a stream. All the computation, visualization and analytics are done
+        dynamically. The system updates every time there are any changes in the main control board - panel A in <a
+            href="#overviewFig">Figure 1</a>, the changes can come from expanding the window size, moving the sliding
+        window along the horizontal axis, or changing the categories.
+
+        <br>
+        In computation: The process of cleaning data, applying the taxonomy to classify messages and scaling are done
+        with every
+        update of data. In visualization: All 5 panels for visualization update on every move of data.
+        Although there are a lot to handle and process, the computational time and rendering time is marginal.
+
+        <img src="images/Q4-1a.png" class="full">
+        <p class="caption"><span>Figure _. The overall analysis of category Event at </span></p>
+
+
+        <img src="images/Q4-1.png" class="full">
+        <p class="caption"><span>Figure _. The overall analysis of category Event at </span></p>
+
+        <img  src="images/Q4-2.png" class="full">
+        <p class="caption"><span>Figure _. The overall analysis of category Resource at</span></p>
+
+
+
 
 
     </div>
 </page>
-
-<page size="A3"></page>
 </body>
 </html>

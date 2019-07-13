@@ -17,7 +17,6 @@ function drawMap() {
 
     // top move/drag icon
     selectionPanel.append("div")
-        .attr("class", "floatingBoxHeader")
         .html("<div class='containerArrow' style='font-family: sans-serif; font-size: 15px'>" +
             "<div class='firstArrow'>&#x2194;</div>" +
             "<div class='secondArrow'>&#x2195;</div>" +
