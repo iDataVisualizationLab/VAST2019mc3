@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e93c84f3-0ae0-48a8-b2e7-42103c639602" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TTU-Nguyen-MC3/index.htm" beforeDir="false" afterPath="$PROJECT_DIR$/TTU-Nguyen-MC3/index.htm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video.html" beforeDir="false" afterPath="$PROJECT_DIR$/video.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/wordstream.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5874">
-              <caret line="919" selection-start-line="919" selection-end-line="919" />
+            <state relative-caret-position="291">
+              <caret line="901" column="59" lean-forward="true" selection-start-line="901" selection-start-column="59" selection-end-line="901" selection-end-column="59" />
               <folding>
                 <element signature="e#118#27577#0" />
               </folding>
@@ -28,28 +29,18 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TTU-Nguyen-MC3/index.htm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="252" column="41" selection-start-line="252" selection-start-column="41" selection-end-line="252" selection-end-column="41" />
+            <state relative-caret-position="-190">
+              <caret line="101" column="117" lean-forward="true" selection-start-line="101" selection-start-column="117" selection-end-line="101" selection-end-column="117" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#h4#1;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#h4#4;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#page#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#10124#10149#0" expanded="true" />
-                <element signature="e#10386#10411#0" expanded="true" />
-                <element signature="e#11069#11094#0" expanded="true" />
-                <element signature="e#12058#12083#0" expanded="true" />
-                <element signature="e#12865#12890#0" expanded="true" />
-                <element signature="e#14490#14530#0" expanded="true" />
-                <element signature="e#13956#13981#0" expanded="true" />
-                <element signature="e#14436#14461#0" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#page#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#1;n#div#0;n#page#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#2;n#div#0;n#page#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#page#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#page#1;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -58,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="646" column="4" selection-start-line="646" selection-start-column="4" selection-end-line="650" selection-end-column="35" />
+            <state relative-caret-position="374">
+              <caret line="17" column="150" selection-start-line="17" selection-start-column="150" selection-end-line="17" selection-end-column="150" />
             </state>
           </provider>
         </entry>
@@ -67,20 +58,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/video.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
-              <folding>
-                <element signature="n#style#0;n#iframe#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="462">
+              <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+            <state relative-caret-position="181">
+              <caret line="19" column="10" lean-forward="true" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -90,6 +78,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="965">
               <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -97,8 +89,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
+            <state relative-caret-position="965">
               <caret line="158" column="17" selection-start-line="158" selection-start-column="17" selection-end-line="158" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TTU-Nguyen-MC3/styles.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1342">
+              <caret line="61" column="7" selection-start-line="61" selection-start-column="7" selection-end-line="61" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -106,7 +107,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/source.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="965">
+            <state relative-caret-position="1078">
               <caret line="49" column="196" selection-start-line="49" selection-start-column="196" selection-end-line="49" selection-end-column="196" />
             </state>
           </provider>
@@ -125,10 +126,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>date.par</find>
-      <find>.node</find>
-      <find>groupContent</find>
-      <find>nodehas</find>
       <find>opacity</find>
       <find>map</find>
       <find>&quot;opacity&quot;</find>
@@ -155,6 +152,10 @@
       <find>Figure 2</find>
       <find>relo</find>
       <find>at</find>
+      <find>overviewFig</find>
+      <find>&lt;page size=&quot;A3&quot;&gt;</find>
+      <find>besides</find>
+      <find>the second</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;,</replace>
@@ -166,6 +167,11 @@
       <replace>var</replace>
       <replace>quantity</replace>
       <replace>Figure 1-2</replace>
+      <replace>Figure 2-1</replace>
+      <replace>Figure 2-2</replace>
+      <replace>Figure 2-3</replace>
+      <replace>Figure 2-4</replace>
+      <replace>Figure 2-5</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -190,21 +196,21 @@
         <option value="$PROJECT_DIR$/js/network.js" />
         <option value="$PROJECT_DIR$/TTU-Nguyen-MC3/styles.css" />
         <option value="$PROJECT_DIR$/js/map.js" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/js/source.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/user.js" />
+        <option value="$PROJECT_DIR$/css/main.css" />
+        <option value="$PROJECT_DIR$/js/main.js" />
+        <option value="$PROJECT_DIR$/TTU-Nguyen-MC3/index.htm" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/video.html" />
         <option value="$PROJECT_DIR$/lib/wordstream.js" />
-        <option value="$PROJECT_DIR$/css/main.css" />
-        <option value="$PROJECT_DIR$/TTU-Nguyen-MC3/index.htm" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="864" />
-    <option name="height" value="1177" />
+    <option name="width" value="1440" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -214,7 +220,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -262,6 +267,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -353,18 +359,21 @@
       <workItem from="1562881509343" duration="1354000" />
       <workItem from="1562940384727" duration="4464000" />
       <workItem from="1562966856256" duration="5666000" />
-      <workItem from="1562980382824" duration="13320000" />
+      <workItem from="1562980382824" duration="13602000" />
+      <workItem from="1563249155704" duration="3131000" />
+      <workItem from="1563283379889" duration="1161000" />
+      <workItem from="1563288061235" duration="5185000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="240204000" />
+    <option name="totallyTimeSpent" value="249963000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="864" height="1177" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.13179782" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13178295" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -459,13 +468,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TTU-Nguyen-MC3/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1342">
-          <caret line="61" column="7" selection-start-line="61" selection-start-column="7" selection-end-line="61" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/network.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="665">
@@ -482,26 +484,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wordstream.js">
+    <entry file="file://$PROJECT_DIR$/TTU-Nguyen-MC3/styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5874">
-          <caret line="919" selection-start-line="919" selection-end-line="919" />
-          <folding>
-            <element signature="e#118#27577#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="158" column="17" selection-start-line="158" selection-start-column="17" selection-end-line="158" selection-end-column="17" />
+        <state relative-caret-position="1342">
+          <caret line="61" column="7" selection-start-line="61" selection-start-column="7" selection-end-line="61" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/source.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="965">
+        <state relative-caret-position="1078">
           <caret line="49" column="196" selection-start-line="49" selection-start-column="196" selection-end-line="49" selection-end-column="196" />
         </state>
       </provider>
@@ -510,55 +502,63 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="965">
           <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="965">
+          <caret line="158" column="17" selection-start-line="158" selection-start-column="17" selection-end-line="158" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TTU-Nguyen-MC3/index.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-190">
+          <caret line="101" column="117" lean-forward="true" selection-start-line="101" selection-start-column="117" selection-end-line="101" selection-end-column="117" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#h4#1;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#h4#4;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#page#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#page#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="17" column="150" selection-start-line="17" selection-start-column="150" selection-end-line="17" selection-end-column="150" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/video.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+        <state relative-caret-position="462">
+          <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/wordstream.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="901" column="59" lean-forward="true" selection-start-line="901" selection-start-column="59" selection-end-line="901" selection-end-column="59" />
           <folding>
-            <element signature="n#style#0;n#iframe#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#118#27577#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="646" column="4" selection-start-line="646" selection-start-column="4" selection-end-line="650" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TTU-Nguyen-MC3/index.htm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="252" column="41" selection-start-line="252" selection-start-column="41" selection-end-line="252" selection-end-column="41" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#h4#1;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#h4#4;n#div#0;n#page#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#page#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#10124#10149#0" expanded="true" />
-            <element signature="e#10386#10411#0" expanded="true" />
-            <element signature="e#11069#11094#0" expanded="true" />
-            <element signature="e#12058#12083#0" expanded="true" />
-            <element signature="e#12865#12890#0" expanded="true" />
-            <element signature="e#14490#14530#0" expanded="true" />
-            <element signature="e#13956#13981#0" expanded="true" />
-            <element signature="e#14436#14461#0" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#page#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#div#0;n#page#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#2;n#div#0;n#page#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="181">
+          <caret line="19" column="10" lean-forward="true" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
         </state>
       </provider>
     </entry>

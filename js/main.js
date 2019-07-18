@@ -15,8 +15,9 @@ const bisect = d3.bisector(d => {
     return d.time
 }).left;
 const columns = ["time", "location", "account", "message"];
-const strikes = [1586200114000, 1586204586000, 1586351138000, 1586358018000, 1586459847000, 1586468792000];
-
+const rawStrikes = ["2020-04-06 14:00:00", "2020-04-06 15:30:00", "2020-04-08 08:00:00","2020-04-08 10:00:00", "2020-04-09 14:15:00","2020-04-09 16:45:00" ]
+// const strikes = [1586200114000, 1586204586000, 1586351138000, 1586358018000, 1586459847000, 1586468792000];
+const strikes = rawStrikes.map(d => Date.parse(d));
 let data;
 let streamStep = streamStepUnit * hourToMS;
 let streamRawData;
@@ -69,6 +70,7 @@ function loadData(){
     d3.csv("data/YInt.csv", function (error, inputData) {
         if (error) throw error;
         else {
+            console.log(inputData);
             data = inputData.map(d => {
                 return {
                     time: Date.parse(d.time),
