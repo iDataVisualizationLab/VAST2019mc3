@@ -37,10 +37,11 @@
         <span>
             <a href="https://idatavisualizationlab.github.io/VAST2019mc3/video.html">https://idatavisualizationlab.github.io/VAST2019mc3/video.html</a>
         </span><br><br>
+        <!--<span style="font-style: italic">Updated after July 12, 2019</span>-->
         <hr>
         <h3>System Overview</h3>
-        The analytics application includes active, interactive components that are able to work with dynamic, streaming
-        data.
+        The analytics application includes active, interactive components that are able to work with dynamic,
+        streaming data.
         The main control board (A) is built as a stream graph. Each stream represents the number of posts classified as
         the selected categories from selection panel (A1).
         Each of these categories come with a set of keywords to decide if a message belongs to a category or not.
@@ -50,7 +51,8 @@
         user. The vertical axis shows the number of posts,
         while the horizontal axis shows the timeline.<br><br>
 
-        The other four components are depicted as panels B to E in <a href="#overviewFig">System Overview Figure</a>. For
+        The other four components are depicted as panels B to E in <a href="#overviewFig">System Overview Figure</a>.
+        For
         each change
         in main
         panel
@@ -121,7 +123,8 @@
         hence we need to take all information into account.
 
         <h3>Questions</h3>
-        <div>The City has been using Y*INT to communicate with its citizens, even post-earthquake. However, City
+        <div style="font-weight: bold">The City has been using Y*INT to communicate with its citizens, even
+            post-earthquake. However, City
             officials needs additional information to determine the best way to allocate emergency resources across
             all neighborhoods of St. Himark. Your task, using your visual analytics on the community Y*INT data, is
             to determine the types of problems that are occurring across the St. Himark. Then, advise the City on how
@@ -129,36 +132,37 @@
             and that priorities may change over time as the state of neighborhoods also changes.<br><br></div>
 
         <div class="question">1- Using visual analytics, characterize conditions across the city and recommend how
-            resources
-            should be
-            allocated at 5 hours and 30 hours after the earthquake. Include evidence from the data to support these
+            resources should be allocated at 5 hours and 30 hours after the earthquake. Include evidence from the data to support these
             recommendations. Consider how to allocate resources such as road crews, sewer repair crews, power, and
             rescue teams. Limit your response to 1000 words and 12 images.
         </div>
         <br>
-<!--        <span style="font-weight: bold">Characterize conditions across the city</span><br>-->
 
         <img id="threeStrikesFig" src="images/Q1-1b.png" class="full">
-        <p class="caption"><span>Figure 1-1. Three times the earthquake strikes</span></p>
-    </div></page>
-        <page size="A3">
-            <div class="pageContent">
+        <p
+                class="caption"><span>Figure 1-1. Three times the earthquake strikes (upper panel) and details for
+            first strike (lower panel)</span></p>
+    </div>
+</page>
+<page size="A3">
+    <div class="pageContent">
         <br>
         From the main control board in <a href="#threeStrikesFig">Figure 1-1</a>, selection of “Earthquake” show clearly
         three times
         that the
         earthquake
-        strikes.
-        We used the these peak to specify the timestamp earthquake strikes.
-        To consolidate this point, we explore the detail from corresponding messages. The WordStream supports
-        highlighting the keywords in the corresponding categories. For example. From 2PM to 3PM, there are 36
-        messages about earthquake.
-        Especially, at 2:33PM on April 6, at Safe Town, they just recorded an earthquake. Besides, while mousing over
-        terms, WordStream highlights the co-occurrences words alongside keywords from the actual messages. Location
-        of these messages are
-        also emphasized in the “Location” stream and in the geolocation map.
+        strikes. We used the these peak to specify the timestamp earthquake strikes: <b>at around April 06, 2:31:34PM,
+        April 08, 8:34:18AM and April 09, 3:03:20 PM.</b>
 
+        To consolidate these points, we explore the detail from corresponding messages. The WordStream supports
+        highlighting the keywords in the corresponding categories. When mousing over
+        terms, WordStream highlights the co-occurrences words alongside keywords from the actual messages. Location of these messages are also emphasized in the “Location” stream and in the geolocation map.
         <br><br>
+        
+        On April From 2PM to 3PM, there are 36 messages about earthquake.
+        From <a href="#threeStrikesFig">Figure 1-1</a>, at 2:33 PM on April 6, at Safe Town, they just recorded an earthquake. This would be the timestamp with the highest accuracy of the first strike.
+
+        <br>
         The first time earthquake strike is around 2:31:30PM, April 06, 2020. The locations that are suffered from
         this earthquake are Safe Town - with the Always Safe Power Company, Palace Hills, Old Town, Downtown,
         Pepper Mill, Scenic Vista and Southton.<br>
@@ -176,13 +180,17 @@
 
         <img id="q" src="images/q22.png" class="full">
         <p class="caption"><span>Figure 1-3. 30 hours after first strike</span></p>
-            </div></page>
+    </div>
+</page>
 <page size="A3">
     <div class="pageContent">
-                To characterize the needed resource at 5 hours and 30 hours after the earthquake, the window width size should be 6 and 31, respectively, to fully explore the condition.
-                <br>
-                <span style="font-weight: bold">The first strike</span><br>
-                Right after the first strike, the main concerns were food (with messages about food complain), power (related to AlwaysSafePower Company). In this strike, the effect is not very severe, because medical or emergency stream is very minimal. However, after 5 hours, main concern of people is “Shelter” (buildings).
+        To characterize the needed resource at 5 hours and 30 hours after the earthquake, the window width size should
+        be 6 and 31, respectively, to fully explore the condition.
+        <br>
+        <span style="font-weight: bold">The first strike</span><br>
+        Right after the first strike, the main concerns were food (with messages about food complain), power (related to
+        AlwaysSafePower Company). In this strike, the effect is not very severe, because medical or emergency stream is
+        very minimal. However, after 5 hours, main concern of people is “Shelter” (buildings).
 
 
         <span style="font-weight: bold">The second strike</span><br>
@@ -191,13 +199,14 @@
         Town, Scenic Vista, Broadview, Chapparal, Easton.
         <img id="1Fig" src="images/q33.png" class="full">
         <p class="caption"><span>Figure 1-4. 5 hours after second strike</span></p>
-    </div></page>
-<page size="A3">
-    <div class="pageContent">
+
         At this time, some bridges are closed, according to the DoT of St.Himark, <a href="#qFig">Figure 2-4</a>,
         therefore the road crew need to be at each particular address of each bridge to fix the bridge.
-<br>
-
+        <br>
+    </div>
+</page>
+<page size="A3">
+    <div class="pageContent">
         30 hours after second strike:<br>
         <img id="2Fig" src="images/q44.png" class="full">
         <p class="caption"><span>Figure 1-5. 30 hours after second strike</span></p>
@@ -209,13 +218,14 @@
         5 hours after:
         <img id="3Fig" src="images/q555.png" class="full">
         <p class="caption"><span>Figure 1-6. 5 hours after third strike</span></p>
-    </div></page>
-<page size="A3">
-    <div class="pageContent">
+
         In this situation, the bridges to get in and out of St.Himark are closed and opened for safety inspection,
         according to the DoT - Department of transportation. Therefore the road crew need to be at these places.
 
-
+    </div>
+</page>
+<page size="A3">
+    <div class="pageContent">
         30 hours after:<br>
         <img id="5Fig" src="images/30third.png" class="full">
         <p class="caption"><span>Figure 1-7. 30 hours after third strike</span></p>
@@ -233,11 +243,9 @@
         <br>
         <img id="reFig" src="images/Q2-1.png" class="full">
         <p class="caption"><span>Figure 2-1. Resources overview</span></p>
-    </div></page>
-<page size="A3">
-    <div class="pageContent">
+
         <span style="font-weight: bold">The first time</span>
-<br>
+        <br>
         Re allocation resources is related to changes in demand over time. From the overview of resources in Figure 2-1,
         at 12:46:39PM April 08, there are two consecutive peaks of resources. The stream of "Water" is high in the
         first peak, but went down in the second peak. Down to the
@@ -245,7 +253,10 @@
         "water" is
         emphasized. To get a deeper view, we look into Figure 2-2. The water was conteminated, and also water pipes
         were broken.
-
+    </div>
+</page>
+<page size="A3">
+    <div class="pageContent">
         <img id="wFig" src="images/Q2-2.png" class="full">
         <p class="caption"><span>Figure 2-2. Water resource</span></p>
 
@@ -259,10 +270,11 @@
         After this time, the demand for "Water" and "Transportation" reduced, also there are needs for evacuation and
         shelter, hence the changes in priority.
         <br>
-    </div></page>
+
+    </div>
+</page>
 <page size="A3">
     <div class="pageContent">
-
 
         <span style="font-weight: bold">The second time</span>
         <img id="0Fig" src="images/q66.png" class="full">
@@ -271,7 +283,8 @@
         hours after that, the situation was mitigated, shown in decline for resouce needs.
 
         <br>
-    </div></page>
+    </div>
+</page>
 <page size="A3">
     <div class="pageContent">
         <span style="font-weight: bold">The third time</span>
@@ -298,7 +311,8 @@
 
         <img id="eventFig" src="images/Q1-2.png" class="full">
         <p class="caption"><span>Figure 3. Earthquake and related events that happened</span></p>
-    </div></page>
+    </div>
+</page>
 <page size="A3">
     <div class="pageContent">
         <span style="font-weight: bold">Flooding</span><br>
@@ -325,11 +339,12 @@
                 class="caption"><span>Figure 5. (a) Event of fire; (b) Detail of events that happened in the
             city and their coressponding locations; (c) Trending of fire event concern over time</span></p>
         <br>
-    </div></page>
+    </div>
+</page>
 <page size="A3">
     <div class="pageContent">
         <span style="font-weight: bold">From the community</span>
-<br>
+        <br>
         Beside taking the messages from the keywords, we verify the events through the accounts with important roles in
         the community. We define these account by their interaction and influence to other account. By sliding the
         window along the time line, we can spot who has multi connection to the community overtime. From these
@@ -348,7 +363,7 @@
         </div>
 
         <br>
-        For this application, we analyze data as a stream. All the computation, visualization and analytics are done
+        For this application, we analyze data as a static. All the computation, visualization and analytics are done
         dynamically. The system updates every time there are any changes in the main control board - panel A in <a
             href="#overviewFig">System Overview Figure</a>, the changes can come from expanding the window size, sliding
         window, or changing the categories.
@@ -358,7 +373,8 @@
         <ul>
             <li>Computation: The following processes are applied: Cleaning data, pre-processing
                 data to be in the desired format, applying the taxonomy to classify messages, scaling. For 4 panels
-                B to E in <a href="#overviewFig">System Overview Figure</a>, each of these visualization requires a different
+                B to E in <a href="#overviewFig">System Overview Figure</a>, each of these visualization requires a
+                different
                 input data format, all these computation are done dynamically.
             </li>
             <li> Visualization: All 5 panels for visualization with coressponding processing and rendering
@@ -366,16 +382,15 @@
             </li>
         </ul>
 
-        We decide to go with this choice with purpose of making near real time analysis for earthquake situations,
-        where users can have the immediate analysis of current status.
-        Although there are a lot to handle and process, the computational time and rendering time is marginal,
-        resulting in nearly immediate changes in visualization when data updates.
+        We decide to go with this choice with purpose of making interactive analysis for earthquake situations. In future work, we will focus on processing streaming data.
+        
         <br><br>
 
         All 5 panels updated in: <br>
         Figure 7 and 8 : Changes in timestamp.<br>
         Figure 8 and 9 : Changes in categories applied.
-    </div></page>
+    </div>
+</page>
 <page size="A3">
     <div class="pageContent">
 
@@ -385,10 +400,11 @@
 
         <img src="images/Q4-1.png" class="full">
         <p class="caption"><span>Figure 8. The overall analysis of category Event at 4:35:59 PM, April 8</span></p>
-    </div></page>
+
+    </div>
+</page>
 <page size="A3">
     <div class="pageContent">
-
         <img src="images/Q4-2.png" class="full">
         <p class="caption"><span>Figure 9. The overall analysis of category Resource at 4:35:59 PM, April 8</span></p>
 

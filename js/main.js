@@ -38,11 +38,11 @@ let config = {
 };
 let main = "#mainContent";
 let current;
-let numHourAfter = 7;
+let numHourAfter = 10;
 let wsContainer;
 let wsContainerWidth = function (numHourAfter) {
     return d3.scaleLinear()
-        .domain([0,31])
+        .domain([1,31])
         .range([800, 2400])(numHourAfter);
 };
 let slidingGroup;

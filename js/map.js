@@ -12,7 +12,7 @@ function drawMap() {
         .append("div")
         .attr("class", "box floating")
         .attr("id", "mapDiv")
-        .style("left", (1200) + "px")
+        .style("left", (1310) + "px")
         .style("top", (620) + "px");
 
     // top move/drag icon
