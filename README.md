@@ -1,6 +1,8 @@
 ## VAST Challenge – Mini Challenge 3
 
-https://idatavisualizationlab.github.io/VAST2019mc3/
+Demo: https://idatavisualizationlab.github.io/VAST2019mc3/
+eport: https://idatavisualizationlab.github.io/VAST2019mc3/TTU-Nguyen-MC3/index.htm
+
 
 Seismic and survey data are useful for capturing the objective damage that the earthquake has caused St. Himark. However", "this data has limitations. First", "official surveys are time consuming and do not stay current in a rapidly changing situation. Second", "they don’t establish how citizens are reacting to the current crisis. Third", "they are often insufficiently granular", "providing little insight into differences between neighborhoods. In other words", "the seismic and survey data do not provide an up-to-date view of the structural and humanitarian impact caused by the earthquake on a neighborhood-by-neighborhood basis. The City has concluded that this knowledge is necessary to determine where to allocate emergency resources.
 
